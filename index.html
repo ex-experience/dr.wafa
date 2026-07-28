@@ -1,429 +1,1084 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Digital Runway 2026 | Editorial Fashion Experience">
-    <meta name="theme-color" content="#0a0a0a">
-    <meta name="view-transition" content="same-origin">
-    <title>The Digital Runway | تجربة سينمائية</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Dr. Wafa Alghamdi | Digital Medical Journal & Clinical Experience" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="robots" content="index, follow" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' https: data: blob:;
+                 script-src 'self' 'unsafe-inline' https://www.gstatic.com https://cdnjs.cloudflare.com;
+                 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+                 font-src 'self' https://fonts.gstatic.com data:;
+                 img-src 'self' data: blob: https:;
+                 media-src 'self' blob: https:;
+                 connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://firebasestorage.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com;">
+  <title>د. وفاء الغامدي | المجلة الطبية الرقمية</title>
 
-    <!-- Google Fonts: Editorial & Cinematic -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;700&family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
 
-    <!-- GSAP for 2026-level Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-storage-compat.js"></script>
 
-    <style>
-        /* =========================================================
-           THE DIGITAL RUNWAY: 2026 EDITORIAL EDITION
-           ========================================================= */
-        :root {
-            --bg-color: #0a0a0a;
-            --text-primary: #f8f8f8;
-            --text-muted: #888888;
-            --accent-gold: #c5a880;
-            --velvet-red: #4a0404;
-            
-            --font-en: 'Cinzel', serif;
-            --font-ar: 'Noto Naskh Arabic', serif;
-            --font-mono: 'Space Grotesk', sans-serif;
-        }
+  <style>
+    :root{
+      --white:#fff;
+      --paper:#fbfbfc;
+      --soft:#f5f5f7;
+      --ink:#151518;
+      --muted:#76767d;
+      --rose:#d98996;
+      --rose-deep:#bd6f7c;
+      --rose-soft:#fff2f4;
+      --gold:#c8a96a;
+      --line:rgba(21,21,24,.10);
+      --danger:#b42318;
+      --success:#137333;
+      --dark:#09090b;
+      --font-ar:'Noto Kufi Arabic',sans-serif;
+      --font-en:'Inter',sans-serif;
+      --font-editorial:'Playfair Display',serif;
+      --ease:cubic-bezier(.16,1,.3,1);
+      --shadow:0 24px 70px rgba(0,0,0,.08);
+      --radius-xl:32px;
+      --radius-lg:24px;
+      --radius-md:16px;
+    }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        html, body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: var(--font-ar);
-            overflow-x: hidden;
-            overscroll-behavior: none;
-            -webkit-font-smoothing: antialiased;
-        }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--white);
+      color:var(--ink);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    html[lang="ar"] body{font-family:var(--font-ar);text-align:right}
+    html[lang="en"] body{font-family:var(--font-en);text-align:left}
+    html[lang="ar"] .en-only{display:none!important}
+    html[lang="en"] .ar-only{display:none!important}
+    a{text-decoration:none;color:inherit}
+    button,input,textarea,select{font:inherit}
+    img,video{max-width:100%;display:block}
+    ::selection{background:var(--rose);color:#fff}
 
-        /* 1. THE GRAND OPENING (Cinematic Hero) */
-        .hero {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+    .container{width:min(1240px,90vw);margin:auto}
+    .section{padding:120px 0}
+    .section.alt{background:var(--soft)}
+    .section.dark{background:var(--dark);color:#fff}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;
+      border:1px solid var(--line);border-radius:999px;
+      padding:9px 16px;font-size:.78rem;letter-spacing:.14em;
+      text-transform:uppercase;background:rgba(255,255,255,.8);
+      backdrop-filter:blur(14px)
+    }
+    .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--rose)}
+    .title{
+      font-family:var(--font-editorial);
+      font-size:clamp(2.7rem,6vw,5.6rem);
+      line-height:1.05;margin:22px 0 18px
+    }
+    html[lang="ar"] .title{font-family:var(--font-ar);line-height:1.35}
+    .lead{font-size:clamp(1rem,2vw,1.25rem);color:var(--muted);line-height:2;max-width:820px}
+    .grid{display:grid;gap:28px}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card{
+      background:#fff;border:1px solid var(--line);
+      border-radius:var(--radius-lg);padding:30px;
+      box-shadow:0 14px 45px rgba(0,0,0,.04);
+      transition:.45s var(--ease)
+    }
+    .card:hover{transform:translateY(-8px);box-shadow:var(--shadow);border-color:rgba(217,137,150,.35)}
+    .card h3{margin:0 0 12px;font-size:1.35rem}
+    .card p{margin:0;color:var(--muted);line-height:1.85}
+    .btn{
+      border:0;border-radius:999px;padding:16px 28px;cursor:pointer;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      transition:.35s var(--ease);font-weight:700
+    }
+    .btn-dark{background:var(--ink);color:#fff}
+    .btn-dark:hover{background:var(--rose);transform:translateY(-3px)}
+    .btn-light{background:#fff;color:var(--ink);border:1px solid var(--line)}
+    .btn-light:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(0,0,0,.08)}
+    .btn-rose{background:var(--rose);color:#fff}
+    .btn-rose:hover{background:var(--rose-deep);transform:translateY(-3px)}
+    .btn[disabled]{opacity:.55;cursor:not-allowed;transform:none}
 
-        .hero-video-wrapper {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1;
-        }
+    .top-nav{
+      position:fixed;inset:0 0 auto;z-index:1000;
+      height:88px;padding:0 5vw;
+      display:flex;align-items:center;justify-content:space-between;
+      background:rgba(255,255,255,.78);backdrop-filter:blur(22px);
+      border-bottom:1px solid transparent;transition:.35s var(--ease)
+    }
+    .top-nav.scrolled{height:70px;border-color:var(--line);background:rgba(255,255,255,.94)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{height:54px;width:auto}
+    .brand-text strong{display:block}
+    .brand-text span{font-size:.72rem;color:var(--muted)}
+    .nav-actions{display:flex;align-items:center;gap:10px}
+    .icon-btn{
+      width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
+      background:#fff;display:grid;place-items:center;cursor:pointer
+    }
+    .lang-btn{padding:11px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:700}
 
-        .hero-video {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            filter: contrast(1.1) brightness(0.6) saturate(0.8);
-            transform: scale(1.05); /* Room for pan animation */
-        }
+    .hero{
+      min-height:100vh;position:relative;display:grid;place-items:center;
+      background:linear-gradient(180deg,#fff7f8 0%,#fff 100%);
+      overflow:hidden
+    }
+    .hero-media{position:absolute;inset:0;z-index:0}
+    .hero-media video{width:100%;height:100%;object-fit:cover;filter:brightness(.72) saturate(.9)}
+    .hero-media::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.74) 72%,#fff)
+    }
+    .hero-content{position:relative;z-index:1;text-align:center;padding:170px 5vw 90px;max-width:1100px}
+    .hero-content .lead{margin:0 auto 36px;color:#4f4f55}
+    .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .hero-note{margin-top:26px;color:#67676d;font-size:.86rem}
 
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, transparent 0%, rgba(10,10,10,0.8) 100%);
-            z-index: 2;
-        }
+    .story-layout{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+    .story-photo{border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/5}
+    .story-photo img{width:100%;height:100%;object-fit:cover}
+    .quote{border-inline-start:4px solid var(--rose);padding-inline-start:20px;color:var(--rose-deep);font-family:var(--font-editorial);font-size:1.45rem;line-height:1.7}
+    html[lang="ar"] .quote{font-family:var(--font-ar)}
 
-        .hero-content {
-            position: relative;
-            z-index: 3;
-            text-align: center;
-            mix-blend-mode: screen;
-        }
+    .journal-card{padding:0;overflow:hidden}
+    .journal-card img{width:100%;aspect-ratio:16/10;object-fit:cover}
+    .journal-card .body{padding:25px}
+    .journal-meta{font-size:.74rem;color:var(--rose-deep);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
 
-        .kinetic-text {
-            font-family: var(--font-en);
-            font-size: clamp(4rem, 12vw, 10rem);
-            font-weight: 400;
-            letter-spacing: -0.05em;
-            text-transform: uppercase;
-            color: #fff;
-            opacity: 0; /* Hidden for GSAP */
-            filter: blur(20px);
-        }
+    .journey{
+      background:linear-gradient(135deg,#0b0b0d,#16161b);
+      color:#fff;border-radius:40px;padding:48px
+    }
+    .journey-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px}
+    .journey-step{padding:22px;border:1px solid rgba(255,255,255,.12);border-radius:20px;background:rgba(255,255,255,.03)}
+    .journey-step b{display:block;color:var(--rose);margin-bottom:8px}
+    .journey-step p{color:#b8b8bf;margin:0;line-height:1.7;font-size:.92rem}
 
-        .kinetic-subtext {
-            font-family: var(--font-ar);
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            color: var(--accent-gold);
-            margin-top: 20px;
-            opacity: 0;
-            filter: blur(10px);
-        }
+    .vr-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:32px;align-items:start}
+    .vr-panel{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:28px;padding:32px
+    }
+    .dark .lead{color:#b0b0b7}
+    .guide-list{list-style:none;padding:0;margin:24px 0 0}
+    .guide-list li{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.09);color:#c6c6cc}
+    .guide-list li strong{display:block;color:#fff;margin-bottom:6px}
+    .field{margin-bottom:18px}
+    .field label{display:block;margin-bottom:8px;font-size:.9rem;font-weight:700}
+    .input,.textarea,.select{
+      width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.15);
+      background:rgba(0,0,0,.28);color:#fff;padding:16px;outline:none
+    }
+    .input:focus,.textarea:focus,.select:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(217,137,150,.12)}
+    .textarea{min-height:120px;resize:vertical}
+    .upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+    .upload-box{
+      min-height:132px;border:1px dashed rgba(255,255,255,.27);
+      border-radius:16px;display:grid;place-items:center;text-align:center;
+      position:relative;overflow:hidden;cursor:pointer;background:rgba(0,0,0,.22)
+    }
+    .upload-box:hover{border-color:var(--rose)}
+    .upload-box input{position:absolute;inset:0;opacity:0;cursor:pointer}
+    .upload-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+    .upload-box span{font-size:.78rem;color:#aaa}
+    .consent{
+      display:flex;align-items:flex-start;gap:10px;margin:15px 0;color:#c0c0c6;font-size:.85rem;line-height:1.7
+    }
+    .consent input{margin-top:5px}
+    .status{min-height:24px;margin-top:12px;font-size:.9rem}
+    .fineprint{font-size:.76rem;color:#92929a;line-height:1.8;margin-top:16px}
 
-        /* 2. THE EDITORIAL LAYOUT (Asymmetrical Grid) */
-        .editorial-section {
-            padding: 15vh 5vw;
-            background: var(--bg-color);
-            position: relative;
-            z-index: 10;
-        }
+    .early-form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .early-form .full{grid-column:1/-1}
+    .light-input{
+      width:100%;border:1px solid var(--line);border-radius:14px;padding:15px;background:#fff;outline:none
+    }
+    .light-input:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(217,137,150,.12)}
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 40px;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
+    footer{padding:80px 5vw 36px;text-align:center;border-top:1px solid var(--line)}
+    footer img{height:74px;margin:0 auto 24px}
+    .footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin:26px 0;color:var(--muted);font-size:.9rem}
 
-        .grid-item {
-            position: relative;
-            overflow: hidden;
-            opacity: 0; /* For ScrollTrigger */
-            transform: translateY(50px);
-        }
+    .fab{
+      position:fixed;right:24px;bottom:24px;z-index:1200;
+      width:66px;height:66px;border-radius:50%;border:0;background:var(--ink);color:#fff;
+      display:grid;place-items:center;cursor:pointer;box-shadow:0 18px 50px rgba(0,0,0,.28)
+    }
+    html[dir="rtl"] .fab{right:24px;left:auto}
+    html[dir="ltr"] .fab{left:auto;right:24px}
 
-        .grid-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(20%) contrast(1.1);
-            transition: filter 0.5s ease, transform 0.5s ease;
-        }
+    .assistant{
+      position:fixed;right:24px;bottom:102px;z-index:1199;
+      width:min(410px,calc(100vw - 28px));height:min(650px,74vh);
+      background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:0 30px 90px rgba(0,0,0,.18);
+      display:flex;flex-direction:column;overflow:hidden;
+      opacity:0;visibility:hidden;transform:translateY(18px) scale(.97);transition:.4s var(--ease)
+    }
+    .assistant.open{opacity:1;visibility:visible;transform:none}
+    .assistant-head{padding:20px;background:var(--rose-soft);display:flex;justify-content:space-between;align-items:center}
+    .assistant-head h3{margin:0;font-size:1.1rem}
+    .assistant-head button{border:0;background:none;font-size:1.7rem;cursor:pointer}
+    .assistant-body{flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:12px}
+    .msg{max-width:86%;padding:13px 16px;border-radius:18px;line-height:1.65;font-size:.9rem;white-space:pre-wrap}
+    .msg.bot{background:var(--soft);align-self:flex-start}
+    .msg.user{background:var(--rose);color:#fff;align-self:flex-end}
+    .assistant-form{display:flex;gap:8px;padding:14px;border-top:1px solid var(--line)}
+    .assistant-form input{flex:1;border:1px solid var(--line);border-radius:999px;padding:14px 17px;outline:none}
+    .assistant-form button{width:48px;height:48px;border-radius:50%;border:0;background:var(--ink);color:#fff;cursor:pointer}
+    .assistant-disclaimer{padding:0 16px 12px;color:#8a8a90;font-size:.69rem;line-height:1.5}
 
-        .grid-item:hover img {
-            filter: grayscale(0%) contrast(1.2);
-            transform: scale(1.03);
-        }
+    .modal{
+      position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.55);
+      display:none;align-items:center;justify-content:center;padding:18px
+    }
+    .modal.open{display:flex}
+    .modal-card{background:#fff;border-radius:24px;max-width:760px;max-height:88vh;overflow:auto;padding:30px}
+    .modal-card h2{margin-top:0}
+    .modal-card p,.modal-card li{color:var(--muted);line-height:1.8}
+    .modal-close{float:left;border:0;background:var(--soft);border-radius:999px;padding:10px 15px;cursor:pointer}
+    html[dir="ltr"] .modal-close{float:right}
 
-        /* Asymmetrical placements */
-        .item-1 { grid-column: 1 / 8; height: 80vh; margin-top: 10vh; }
-        .item-2 { grid-column: 9 / 13; height: 50vh; }
-        .item-3 { grid-column: 2 / 6; height: 60vh; margin-top: -15vh; z-index: 2;}
-        .item-4 { grid-column: 7 / 12; height: 70vh; margin-top: 10vh; }
-
-        .editorial-text {
-            grid-column: 8 / 13;
-            align-self: center;
-            padding: 40px 0;
-        }
-
-        .editorial-text h2 {
-            font-size: clamp(2.5rem, 4vw, 4rem);
-            line-height: 1.2;
-            margin-bottom: 20px;
-            color: var(--text-primary);
-        }
-
-        .editorial-text p {
-            font-family: var(--font-mono);
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            text-align: justify;
-            direction: ltr;
-        }
-
-        /* 3. THE DIGITAL CURTAIN DROP (Exit Intent) */
-        .velvet-curtain {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            background: linear-gradient(180deg, #1a0101 0%, var(--velvet-red) 100%);
-            z-index: 999999;
-            transform: translateY(-100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            pointer-events: none;
-        }
-
-        .curtain-text {
-            font-family: var(--font-ar);
-            font-size: clamp(2rem, 5vw, 4rem);
-            color: var(--accent-gold);
-            text-align: center;
-            opacity: 0;
-        }
-
-        .curtain-sub {
-            font-family: var(--font-en);
-            font-size: 1.2rem;
-            color: #fff;
-            letter-spacing: 0.4em;
-            margin-top: 20px;
-            opacity: 0;
-        }
-
-        /* Nav */
-        .nav-bar {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            padding: 30px 5vw;
-            display: flex;
-            justify-content: space-between;
-            z-index: 100;
-            font-family: var(--font-mono);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-size: 0.8rem;
-            color: #fff;
-            mix-blend-mode: difference;
-        }
-
-        @media (max-width: 900px) {
-            .grid-container { display: flex; flex-direction: column; gap: 20px; }
-            .grid-item { width: 100%; height: 60vh !important; margin-top: 0 !important; }
-            .editorial-text { padding: 20px; }
-        }
-    </style>
+    @media(max-width:960px){
+      .grid-3{grid-template-columns:1fr 1fr}
+      .story-layout,.vr-wrap{grid-template-columns:1fr}
+      .journey-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:680px){
+      .section{padding:82px 0}
+      .top-nav{height:72px;padding:0 4vw}
+      .brand-text{display:none}
+      .hero-content{padding-top:130px}
+      .grid-2,.grid-3,.early-form{grid-template-columns:1fr}
+      .early-form .full{grid-column:auto}
+      .journey{padding:26px;border-radius:26px}
+      .journey-grid{grid-template-columns:1fr}
+      .upload-grid{grid-template-columns:1fr 1fr}
+      .vr-panel{padding:22px}
+      .assistant{right:14px;bottom:92px}
+      .fab{right:16px;bottom:16px}
+    }
+  </style>
 </head>
+
 <body>
-
-    <!-- AUDIO: Subtle whisper/atmosphere (Can be unmuted via JS if user interacts) -->
-    <audio id="whisper-audio" src="https://assets.mixkit.co/active_storage/sfx/2864/2864-preview.mp3" preload="auto"></audio>
-
-    <!-- NAVIGATION -->
-    <nav class="nav-bar">
-        <div>Vogue Edition</div>
-        <div>Experience 2026</div>
-    </nav>
-
-    <!-- SCENE 1: THE GRAND OPENING -->
-    <section class="hero">
-        <div class="hero-video-wrapper">
-            <!-- Utilizing the provided cinematic video -->
-            <video src="20260728-0318-22.9222226.mp4" class="hero-video" autoplay muted loop playsinline></video>
-        </div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="kinetic-text">L'Élégance</h1>
-            <p class="kinetic-subtext">حيث يتشكل الجمال من العدم</p>
-        </div>
-    </section>
-
-    <!-- SCENE 2: THE EDITORIAL LAYOUT -->
-    <section class="editorial-section">
-        <div class="grid-container">
-            
-            <div class="grid-item item-1 parallax-fast">
-                <!-- Using Dr. Wafa's portrait for high-fashion editorial look -->
-                <img src="image_11.png" alt="Editorial Fashion 1">
-            </div>
-            
-            <div class="editorial-text">
-                <h2>هندسة<br>التفاصيل.</h2>
-                <p>The intersection of aesthetic precision and cinematic storytelling. We do not merely capture faces; we architect confidence. Light, shadow, and symmetry are woven together to create a lasting digital imprint.</p>
-            </div>
-
-            <div class="grid-item item-2 parallax-slow">
-                <img src="image_4.png" alt="Editorial Details">
-            </div>
-
-            <div class="grid-item item-3 parallax-fast">
-                <img src="image_5.png" alt="Skin Texture">
-            </div>
-
-            <div class="grid-item item-4 parallax-slow">
-                <img src="image_9.png" alt="Best Skin Ever">
-            </div>
-
-        </div>
-    </section>
-
-    <div style="height: 20vh; background: var(--bg-color);"></div>
-
-    <!-- SCENE 4: THE DIGITAL CURTAIN DROP (Exit Intent) -->
-    <div class="velvet-curtain" id="exit-curtain">
-        <div class="curtain-text">الأناقة لا تنتهي.. نراكِ قريباً في العرض القادم.</div>
-        <div class="curtain-sub">THE RUNWAY CONTINUES</div>
+  <nav class="top-nav" id="navbar">
+    <a href="#top" class="brand">
+      <img src="image.png" alt="Dr Wafa Alghamdi Logo" />
+      <div class="brand-text">
+        <strong>Dr. Wafa Alghamdi</strong>
+        <span>Digital Medical Journal</span>
+      </div>
+    </a>
+    <div class="nav-actions">
+      <button class="lang-btn" id="langBtn" type="button">
+        <span class="ar-only">EN</span>
+        <span class="en-only">العربية</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Open medical assistant" id="assistantOpenBtn">✦</button>
     </div>
+  </nav>
 
-    <!-- 2026 ANIMATION ENGINE (GSAP) -->
-    <script>
-        // Register ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger);
+  <main id="top">
+    <section class="hero">
+      <div class="hero-media">
+        <video src="20260728-0318-22.9222226.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="hero-content">
+        <span class="eyebrow">
+          <span class="ar-only">الطب. الفن. الثقة الإنسانية.</span>
+          <span class="en-only">Medicine. Art. Human Confidence.</span>
+        </span>
+        <h1 class="title">
+          <span class="ar-only">لا نبدأ بالإجراء.<br>نبدأ بفهمك.</span>
+          <span class="en-only">We do not begin with a procedure.<br>We begin with understanding you.</span>
+        </h1>
+        <p class="lead">
+          <span class="ar-only">منصة طبية رقمية تجمع بين المعرفة، الاستشارة الواعية، السرد السريري، والتخطيط البصري الاسترشادي قبل الإجراءات.</span>
+          <span class="en-only">A digital medical platform bringing together trusted knowledge, informed consultation, clinical storytelling, and guided visual planning before procedures.</span>
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-dark" href="#journey">
+            <span class="ar-only">ابدئي رحلتك</span><span class="en-only">Start Your Journey</span>
+          </a>
+          <a class="btn btn-light" href="#journal">
+            <span class="ar-only">اقرئي المجلة</span><span class="en-only">Explore the Journal</span>
+          </a>
+        </div>
+        <div class="hero-note">
+          <span class="ar-only">المحتوى للتثقيف العام ولا يستبدل التقييم الطبي المباشر.</span>
+          <span class="en-only">Content is for general education and does not replace direct medical assessment.</span>
+        </div>
+      </div>
+    </section>
 
-        // 1. The Grand Opening (Blooming Text Effect)
-        window.addEventListener("load", () => {
-            const tl = gsap.timeline();
+    <section class="section" id="story">
+      <div class="container story-layout">
+        <div class="story-photo"><img src="image_11.png" alt="Dr Wafa Alghamdi" /></div>
+        <div>
+          <span class="eyebrow">
+            <span class="ar-only">القصة</span><span class="en-only">The Story</span>
+          </span>
+          <h2 class="title" style="font-size:clamp(2.5rem,5vw,4.7rem)">
+            <span class="ar-only">فن أن ترى الإنسان أولاً.</span>
+            <span class="en-only">The art of seeing the person first.</span>
+          </h2>
+          <div class="quote">
+            <span class="ar-only">«أفضل نتيجة ليست التي يلاحظ فيها الجميع الإجراء، بل التي يشعر فيها الإنسان بانسجام أكبر مع نفسه.»</span>
+            <span class="en-only">“The best result is not the one everyone notices, but the one that helps a person feel more aligned with themselves.”</span>
+          </div>
+          <p class="lead" style="margin-top:28px">
+            <span class="ar-only">تجمع د. وفاء الغامدي بين الدقة الطبية، والقرار الأخلاقي، والحس الجمالي المتزن. تبدأ كل حالة بالاستماع، ثم التقييم، ثم اختيار ما يناسب الفرد دون مبالغة أو وعود غير واقعية.</span>
+            <span class="en-only">Dr. Wafa Alghamdi combines medical precision, ethical decision-making, and balanced aesthetic judgement. Every case begins with listening, assessment, and an individualised plan without exaggeration or unrealistic promises.</span>
+          </p>
+        </div>
+      </div>
+    </section>
 
-            // Pan the video slowly
-            tl.to(".hero-video", {
-                scale: 1,
-                duration: 10,
-                ease: "power2.out"
-            }, 0);
+    <section class="section alt" id="journal">
+      <div class="container">
+        <span class="eyebrow"><span class="ar-only">Wafa Journal</span><span class="en-only">Wafa Journal</span></span>
+        <h2 class="title">
+          <span class="ar-only">المجلة الطبية الرقمية.</span>
+          <span class="en-only">The digital medical journal.</span>
+        </h2>
+        <p class="lead">
+          <span class="ar-only">محتوى طبي موثوق بأسلوب تحريري وسينمائي يساعد القارئ على فهم بشرته واتخاذ قرارات أكثر وعياً.</span>
+          <span class="en-only">Trusted medical content presented through editorial and cinematic storytelling to support better-informed decisions.</span>
+        </p>
 
-            // Bloom text from blur to sharp
-            tl.to(".kinetic-text", {
-                opacity: 1,
-                filter: "blur(0px)",
-                y: 0,
-                duration: 2.5,
-                ease: "expo.out"
-            }, 0.5);
+        <div class="grid grid-3" style="margin-top:42px">
+          <article class="card journal-card">
+            <img src="image_4.png" alt="Skin Intelligence" />
+            <div class="body">
+              <div class="journal-meta">Skin Intelligence</div>
+              <h3><span class="ar-only">لماذا تعود الحبوب؟</span><span class="en-only">Why Does Acne Return?</span></h3>
+              <p><span class="ar-only">قراءة مبسطة للعوامل المحتملة وأهمية التقييم الفردي.</span><span class="en-only">A clear guide to possible factors and why individual assessment matters.</span></p>
+            </div>
+          </article>
+          <article class="card journal-card">
+            <img src="image_5.png" alt="Aesthetic Decisions" />
+            <div class="body">
+              <div class="journal-meta">Aesthetic Decisions</div>
+              <h3><span class="ar-only">متى يكون عدم الإجراء هو القرار الأفضل؟</span><span class="en-only">When Is No Procedure the Best Decision?</span></h3>
+              <p><span class="ar-only">كيف تتقدم سلامة المراجع والنتيجة المتزنة على الرغبة اللحظية.</span><span class="en-only">Why patient safety and balance must come before a momentary request.</span></p>
+            </div>
+          </article>
+          <article class="card journal-card">
+            <img src="image_9.png" alt="Recovery Journal" />
+            <div class="body">
+              <div class="journal-meta">Recovery Journal</div>
+              <h3><span class="ar-only">ما بعد الإجراء: ماذا تتوقعين؟</span><span class="en-only">After the Procedure: What to Expect</span></h3>
+              <p><span class="ar-only">رحلة التعافي من أول يوم إلى النتيجة التدريجية.</span><span class="en-only">A transparent recovery journey from day one to gradual results.</span></p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-            tl.to(".kinetic-subtext", {
-                opacity: 1,
-                filter: "blur(0px)",
-                duration: 2,
-                ease: "power3.out"
-            }, 1.5);
-        });
+    <section class="section" id="journey">
+      <div class="container">
+        <div class="journey">
+          <span class="eyebrow" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15)">
+            <span class="ar-only">Confidence Journey</span><span class="en-only">Confidence Journey</span>
+          </span>
+          <h2 class="title" style="font-size:clamp(2.4rem,5vw,4.8rem)">
+            <span class="ar-only">رحلتك قبل الوصول إلى العيادة.</span>
+            <span class="en-only">Your journey before arriving at the clinic.</span>
+          </h2>
+          <div class="journey-grid">
+            <div class="journey-step"><b>01</b><p><span class="ar-only">اختيار الهدف أو المشكلة الأساسية.</span><span class="en-only">Choose your primary concern or goal.</span></p></div>
+            <div class="journey-step"><b>02</b><p><span class="ar-only">قراءة المحتوى المعتمد والمتعلق بحالتك.</span><span class="en-only">Read approved content relevant to your concern.</span></p></div>
+            <div class="journey-step"><b>03</b><p><span class="ar-only">رفع المعلومات والصور عند الحاجة وبموافقة واضحة.</span><span class="en-only">Submit information and images only with explicit consent.</span></p></div>
+            <div class="journey-step"><b>04</b><p><span class="ar-only">تحويل الطلب إلى الفريق لتحديد الخطوة المناسبة.</span><span class="en-only">Route the request to the team for the appropriate next step.</span></p></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        // 2. The Editorial Grid (Parallax & Reveal)
-        const gridItems = document.querySelectorAll('.grid-item');
-        
-        gridItems.forEach((item, index) => {
-            // Fade & slide up reveal
-            gsap.to(item, {
-                scrollTrigger: {
-                    trigger: item,
-                    start: "top 85%",
-                },
-                opacity: 1,
-                y: 0,
-                duration: 1.5,
-                ease: "power3.out"
-            });
+    <section class="section dark" id="visual-consultation">
+      <div class="container">
+        <span class="eyebrow" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)">
+          <span class="ar-only">Visual Consultation Preview</span>
+          <span class="en-only">Visual Consultation Preview</span>
+        </span>
+        <h2 class="title">
+          <span class="ar-only">تصور بصري استرشادي قبل الإجراء.</span>
+          <span class="en-only">A guided visual preview before treatment.</span>
+        </h2>
+        <p class="lead">
+          <span class="ar-only">أداة تواصل تساعدك على مناقشة أهدافك مع الدكتورة. المحاكاة ليست ضماناً للنتيجة النهائية، ولا تُعد تشخيصاً أو خطة علاجية مستقلة.</span>
+          <span class="en-only">A communication tool to support discussion with the doctor. The preview is not a guarantee of the final result and is not an independent diagnosis or treatment plan.</span>
+        </p>
 
-            // Parallax Effect based on classes
-            if(item.classList.contains('parallax-fast')) {
-                gsap.to(item.querySelector('img'), {
-                    yPercent: 20,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: item,
-                        start: "top bottom",
-                        end: "bottom top",
-                        scrub: true
-                    } 
-                });
-            } else if (item.classList.contains('parallax-slow')) {
-                gsap.to(item.querySelector('img'), {
-                    yPercent: -15,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: item,
-                        start: "top bottom",
-                        end: "bottom top",
-                        scrub: true
-                    } 
-                });
-            }
-        });
+        <div class="vr-wrap" style="margin-top:42px">
+          <div class="vr-panel">
+            <h3><span class="ar-only">إرشادات التصوير</span><span class="en-only">Photography Guidelines</span></h3>
+            <ul class="guide-list">
+              <li><strong><span class="ar-only">إضاءة أمامية واضحة</span><span class="en-only">Clear front lighting</span></strong><span class="ar-only">بدون فلاتر أو تعديل أو ظلال قوية.</span><span class="en-only">No filters, retouching, or strong shadows.</span></li>
+              <li><strong><span class="ar-only">تعبير محايد</span><span class="en-only">Neutral expression</span></strong><span class="ar-only">الحفاظ على الوجه مسترخياً وطبيعياً.</span><span class="en-only">Keep the face relaxed and natural.</span></li>
+              <li><strong><span class="ar-only">الخصوصية</span><span class="en-only">Privacy</span></strong><span class="ar-only">لا تُستخدم الصور للتسويق إلا بموافقة منفصلة.</span><span class="en-only">Images are not used for marketing without separate consent.</span></li>
+            </ul>
+          </div>
 
-        // 3. The Digital Curtain Drop (Exit Intent Algorithm)
-        const curtain = document.getElementById('exit-curtain');
-        const audio = document.getElementById('whisper-audio');
-        let curtainDropped = false;
+          <div class="vr-panel">
+            <form id="vrForm" novalidate>
+              <div class="field">
+                <label for="vrName"><span class="ar-only">الاسم الكامل</span><span class="en-only">Full name</span></label>
+                <input class="input" id="vrName" type="text" maxlength="80" required />
+              </div>
+              <div class="field">
+                <label for="vrPhone"><span class="ar-only">رقم الجوال</span><span class="en-only">Mobile number</span></label>
+                <input class="input" id="vrPhone" type="tel" maxlength="20" inputmode="tel" required />
+              </div>
+              <div class="field">
+                <label for="vrGoal"><span class="ar-only">ما المنطقة أو الهدف الذي ترغبين في مناقشته؟</span><span class="en-only">Which area or goal would you like to discuss?</span></label>
+                <textarea class="textarea" id="vrGoal" maxlength="600" required></textarea>
+              </div>
 
-        // Detect mouse leaving the viewport (Desktop)
-        document.addEventListener('mouseleave', (e) => {
-            if (e.clientY <= 0 && !curtainDropped) {
-                dropCurtain();
-            }
-        });
+              <div class="upload-grid">
+                <label class="upload-box"><span><span class="ar-only">أمامية</span><span class="en-only">Front</span></span><img id="preview1" alt="" /><input id="file1" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
+                <label class="upload-box"><span><span class="ar-only">45° يمين</span><span class="en-only">45° Right</span></span><img id="preview2" alt="" /><input id="file2" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
+                <label class="upload-box"><span><span class="ar-only">45° يسار</span><span class="en-only">45° Left</span></span><img id="preview3" alt="" /><input id="file3" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
+                <label class="upload-box"><span><span class="ar-only">90° يمين</span><span class="en-only">90° Right</span></span><img id="preview4" alt="" /><input id="file4" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
+                <label class="upload-box"><span><span class="ar-only">90° يسار</span><span class="en-only">90° Left</span></span><img id="preview5" alt="" /><input id="file5" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
+                <label class="upload-box"><span><span class="ar-only">تفصيل قريب</span><span class="en-only">Close detail</span></span><img id="preview6" alt="" /><input id="file6" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
+              </div>
 
-        // Detect fast upward scroll (Mobile heuristic for exiting/refreshing)
-        let lastScrollY = window.scrollY;
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            // If scrolling up very fast at the top of the page
-            if (currentScrollY < 50 && (lastScrollY - currentScrollY) > 50 && !curtainDropped) {
-                dropCurtain();
-            }
-            lastScrollY = currentScrollY;
-        }, { passive: true });
+              <label class="consent">
+                <input type="checkbox" id="privacyConsent" required />
+                <span>
+                  <span class="ar-only">أوافق صراحة على معالجة بياناتي وصوري لغرض مراجعة طلب الاستشارة البصرية، وأؤكد أن الصور تخصني وأن عمري 18 عاماً أو أكثر.</span>
+                  <span class="en-only">I explicitly consent to processing my data and images for reviewing this visual consultation request, confirm the images are mine, and confirm I am aged 18 or over.</span>
+                </span>
+              </label>
 
-        function dropCurtain() {
-            curtainDropped = true;
-            curtain.style.pointerEvents = "all";
+              <label class="consent">
+                <input type="checkbox" id="simulationConsent" required />
+                <span>
+                  <span class="ar-only">أفهم أن أي تصور بصري هو أداة استرشادية ولا يمثل ضماناً للنتيجة الفعلية.</span>
+                  <span class="en-only">I understand that any visual preview is a guidance tool and does not guarantee the actual outcome.</span>
+                </span>
+              </label>
 
-            // Play audio whisper (if browser policy allows)
-            audio.volume = 0.5;
-            let playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => { /* Autoplay prevented */ });
-            }
+              <button class="btn btn-rose" id="vrSubmit" type="submit" style="width:100%">
+                <span class="ar-only">إرسال الطلب بأمان</span><span class="en-only">Submit Securely</span>
+              </button>
+              <div class="status" id="vrStatus" aria-live="polite"></div>
+              <p class="fineprint">
+                <span class="ar-only">يجب ضبط قواعد Firestore وStorage ومنع الوصول العام قبل النشر. لا تستخدم هذه النسخة لتخزين بيانات مرضى حقيقية قبل المراجعة القانونية والأمنية.</span>
+                <span class="en-only">Firestore and Storage rules must block public access before launch. Do not use this version for real patient data until legal and security review is complete.</span>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            // GSAP Velvet Drop
-            const cTl = gsap.timeline();
-            cTl.to(curtain, {
-                y: "0%",
-                duration: 1.2,
-                ease: "power4.inOut"
-            })
-            .to(".curtain-text", {
-                opacity: 1,
-                y: -10,
-                duration: 1,
-                ease: "power2.out"
-            }, "-=0.2")
-            .to(".curtain-sub", {
-                opacity: 1,
-                duration: 1,
-                ease: "power2.out"
-            }, "-=0.5");
+    <section class="section alt" id="early-access">
+      <div class="container grid grid-2" style="align-items:start">
+        <div>
+          <span class="eyebrow">Wafa First Access</span>
+          <h2 class="title" style="font-size:clamp(2.5rem,5vw,4.8rem)">
+            <span class="ar-only">الوصول المبكر والمجتمع الطبي.</span>
+            <span class="en-only">Early access and the medical community.</span>
+          </h2>
+          <p class="lead">
+            <span class="ar-only">أولوية للمحتوى الجديد، المواعيد، الفعاليات، برامج الموديلز، والنشرات الطبية المعتمدة.</span>
+            <span class="en-only">Priority access to new content, appointments, events, model programmes, and approved medical newsletters.</span>
+          </p>
+        </div>
 
-            // Optional: Auto-hide after a few seconds if they don't actually close
-            setTimeout(() => {
-                gsap.to(curtain, {
-                    y: "-100%",
-                    duration: 1.5,
-                    ease: "power3.inOut",
-                    onComplete: () => {
-                        curtainDropped = false;
-                        curtain.style.pointerEvents = "none";
-                        gsap.set(".curtain-text, .curtain-sub", { opacity: 0, y: 0 });
-                    }
-                });
-            }, 4000);
+        <div class="card">
+          <form id="earlyForm" class="early-form" novalidate>
+            <input class="light-input" id="earlyName" type="text" placeholder="الاسم / Name" maxlength="80" required />
+            <input class="light-input" id="earlyPhone" type="tel" placeholder="رقم الجوال / Mobile" maxlength="20" required />
+            <input class="light-input full" id="earlyEmail" type="email" placeholder="البريد الإلكتروني / Email" maxlength="120" />
+            <select class="light-input full" id="earlyInterest" required>
+              <option value="">الاهتمام / Interest</option>
+              <option value="skin">البشرة / Skin</option>
+              <option value="hair">الشعر / Hair</option>
+              <option value="laser">الليزر / Laser</option>
+              <option value="aesthetics">التجميل / Aesthetics</option>
+              <option value="models">برنامج الموديلز / Models Programme</option>
+              <option value="education">المحتوى التعليمي / Educational Content</option>
+            </select>
+            <label class="consent full" style="color:var(--muted)">
+              <input type="checkbox" id="marketingConsent" required />
+              <span><span class="ar-only">أوافق على تلقي تحديثات المنصة، ويمكنني إلغاء الاشتراك في أي وقت.</span><span class="en-only">I agree to receive platform updates and may unsubscribe at any time.</span></span>
+            </label>
+            <button class="btn btn-dark full" type="submit" id="earlySubmit">
+              <span class="ar-only">الانضمام إلى الوصول المبكر</span><span class="en-only">Join Early Access</span>
+            </button>
+            <div class="status full" id="earlyStatus" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <img src="image.png" alt="Dr Wafa Alghamdi" />
+    <p><span class="ar-only">الدقة في الممارسة. والإنسان أولاً في كل قرار.</span><span class="en-only">Precision in practice. Humanity in every decision.</span></p>
+    <div class="footer-links">
+      <a href="https://instagram.com/dr.wafagh" target="_blank" rel="noopener">Instagram</a>
+      <button type="button" class="icon-btn" style="width:auto;padding:0 16px;border-radius:999px" data-modal-open="privacyModal"><span class="ar-only">الخصوصية</span><span class="en-only">Privacy</span></button>
+      <button type="button" class="icon-btn" style="width:auto;padding:0 16px;border-radius:999px" data-modal-open="termsModal"><span class="ar-only">الشروط الطبية</span><span class="en-only">Medical Terms</span></button>
+    </div>
+    <small>© 2026 Dr. Wafa Alghamdi — Visionary Direction by フサム | experience™</small>
+  </footer>
+
+  <button class="fab" id="assistantFab" type="button" aria-label="Open assistant">✦</button>
+
+  <section class="assistant" id="assistant" aria-hidden="true">
+    <header class="assistant-head">
+      <div>
+        <small>WAFA DIGITAL CARE</small>
+        <h3><span class="ar-only">المساعد المعلوماتي</span><span class="en-only">Information Assistant</span></h3>
+      </div>
+      <button type="button" id="assistantCloseBtn" aria-label="Close">×</button>
+    </header>
+    <div class="assistant-body" id="assistantBody"></div>
+    <form class="assistant-form" id="assistantForm">
+      <input id="assistantInput" autocomplete="off" maxlength="500" />
+      <button type="submit">➤</button>
+    </form>
+    <div class="assistant-disclaimer">
+      <span class="ar-only">لا يقدم تشخيصاً أو وصفة علاجية. في الحالات الطارئة اتصلي بخدمات الطوارئ أو توجهي لأقرب منشأة صحية.</span>
+      <span class="en-only">This assistant does not diagnose or prescribe. For emergencies, contact emergency services or attend the nearest healthcare facility.</span>
+    </div>
+  </section>
+
+  <div class="modal" id="privacyModal">
+    <div class="modal-card">
+      <button class="modal-close" type="button" data-modal-close>×</button>
+      <h2><span class="ar-only">إشعار الخصوصية المبدئي</span><span class="en-only">Preliminary Privacy Notice</span></h2>
+      <p><span class="ar-only">هذه صياغة مبدئية وليست بديلاً عن مراجعة قانونية. يجب تحديد الجهة المتحكمة بالبيانات، أغراض المعالجة، مدة الاحتفاظ، آلية الحذف، وسياسة نقل البيانات قبل الإطلاق.</span><span class="en-only">This is preliminary wording and not a substitute for legal review. The data controller, processing purposes, retention periods, deletion process, and data transfer policy must be defined before launch.</span></p>
+      <ul>
+        <li><span class="ar-only">تستخدم البيانات فقط لغرض الخدمة التي وافق عليها المستخدم.</span><span class="en-only">Data is used only for the service to which the user consented.</span></li>
+        <li><span class="ar-only">لا تستخدم الصور لأغراض تسويقية دون موافقة مستقلة.</span><span class="en-only">Images are not used for marketing without separate consent.</span></li>
+        <li><span class="ar-only">يجب توفير وسيلة لطلب الوصول أو التصحيح أو الحذف.</span><span class="en-only">Users must be given a way to request access, correction, or deletion.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="modal" id="termsModal">
+    <div class="modal-card">
+      <button class="modal-close" type="button" data-modal-close>×</button>
+      <h2><span class="ar-only">الشروط الطبية</span><span class="en-only">Medical Terms</span></h2>
+      <p><span class="ar-only">المحتوى والمساعد والمحاكاة البصرية أدوات تثقيف وتواصل، ولا تشكل تشخيصاً أو وصفة أو ضماناً للنتيجة. تعتمد الخطة الطبية على تقييم مباشر من ممارس مرخص.</span><span class="en-only">Content, the assistant, and visual previews are educational and communication tools. They do not constitute diagnosis, prescription, or a guaranteed result. Medical planning depends on direct assessment by a licensed practitioner.</span></p>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================
+       1) FIREBASE CONFIGURATION
+       Replace with the production project.
+       IMPORTANT: Configure Firestore Rules, Storage Rules,
+       Firebase App Check, Authentication, and audit logging.
+       ========================================================= */
+
+    const firebaseConfig = {
+      apiKey: "REPLACE_WITH_PRODUCTION_API_KEY",
+      authDomain: "REPLACE.firebaseapp.com",
+      projectId: "REPLACE",
+      storageBucket: "REPLACE.firebasestorage.app",
+      messagingSenderId: "REPLACE",
+      appId: "REPLACE"
+    };
+
+    let firebaseReady = false;
+    let db = null;
+    let storage = null;
+    let auth = null;
+
+    try {
+      if (firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith("REPLACE")) {
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        storage = firebase.storage();
+        auth = firebase.auth();
+        firebaseReady = true;
+      }
+    } catch (error) {
+      console.error("Firebase initialisation failed:", error);
+    }
+
+    /* =========================================================
+       2) LANGUAGE
+       ========================================================= */
+    const html = document.documentElement;
+    const savedLang = localStorage.getItem("preferredLanguage");
+    if (savedLang === "ar" || savedLang === "en") {
+      html.lang = savedLang;
+      html.dir = savedLang === "ar" ? "rtl" : "ltr";
+    }
+
+    function isArabic() { return html.lang === "ar"; }
+
+    document.getElementById("langBtn").addEventListener("click", () => {
+      const next = isArabic() ? "en" : "ar";
+      html.lang = next;
+      html.dir = next === "ar" ? "rtl" : "ltr";
+      localStorage.setItem("preferredLanguage", next);
+      setAssistantPlaceholder();
+      resetAssistantGreeting();
+    });
+
+    function setAssistantPlaceholder() {
+      document.getElementById("assistantInput").placeholder =
+        isArabic() ? "اكتبي استفسارك العام..." : "Type your general question...";
+    }
+    setAssistantPlaceholder();
+
+    /* =========================================================
+       3) NAV
+       ========================================================= */
+    const navbar = document.getElementById("navbar");
+    addEventListener("scroll", () => {
+      navbar.classList.toggle("scrolled", scrollY > 40);
+    }, { passive:true });
+
+    /* =========================================================
+       4) MODALS
+       ========================================================= */
+    document.querySelectorAll("[data-modal-open]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.getElementById(btn.dataset.modalOpen).classList.add("open");
+      });
+    });
+    document.querySelectorAll("[data-modal-close]").forEach(btn => {
+      btn.addEventListener("click", () => btn.closest(".modal").classList.remove("open"));
+    });
+    document.querySelectorAll(".modal").forEach(modal => {
+      modal.addEventListener("click", e => {
+        if (e.target === modal) modal.classList.remove("open");
+      });
+    });
+
+    /* =========================================================
+       5) FILE PREVIEW & VALIDATION
+       ========================================================= */
+    const MAX_FILE_SIZE = 8 * 1024 * 1024;
+    const ALLOWED_TYPES = ["image/jpeg","image/png","image/webp"];
+
+    function validateFile(file) {
+      if (!file) return { ok:false, message:"missing" };
+      if (!ALLOWED_TYPES.includes(file.type)) return { ok:false, message:"type" };
+      if (file.size > MAX_FILE_SIZE) return { ok:false, message:"size" };
+      return { ok:true };
+    }
+
+    for (let i = 1; i <= 6; i++) {
+      const input = document.getElementById("file" + i);
+      const preview = document.getElementById("preview" + i);
+
+      input.addEventListener("change", () => {
+        const file = input.files[0];
+        const check = validateFile(file);
+
+        if (!check.ok) {
+          input.value = "";
+          preview.removeAttribute("src");
+          preview.style.display = "none";
+          alert(isArabic()
+            ? "الملف غير صالح. استخدمي JPG أو PNG أو WEBP بحجم لا يتجاوز 8MB."
+            : "Invalid file. Use JPG, PNG, or WEBP up to 8 MB.");
+          return;
         }
-    </script>
+
+        const url = URL.createObjectURL(file);
+        preview.src = url;
+        preview.style.display = "block";
+        preview.onload = () => URL.revokeObjectURL(url);
+      });
+    }
+
+    function sanitiseText(value) {
+      return String(value || "").replace(/[<>]/g, "").trim();
+    }
+
+    function validatePhone(value) {
+      return /^[0-9+\s()-]{7,20}$/.test(value);
+    }
+
+    function makeRequestId() {
+      if (crypto && crypto.randomUUID) return crypto.randomUUID();
+      return "req_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+    }
+
+    /* =========================================================
+       6) VISUAL CONSULTATION SUBMISSION
+       ========================================================= */
+    document.getElementById("vrForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const btn = document.getElementById("vrSubmit");
+      const status = document.getElementById("vrStatus");
+      const name = sanitiseText(document.getElementById("vrName").value);
+      const phone = sanitiseText(document.getElementById("vrPhone").value);
+      const goal = sanitiseText(document.getElementById("vrGoal").value);
+      const privacyConsent = document.getElementById("privacyConsent").checked;
+      const simulationConsent = document.getElementById("simulationConsent").checked;
+
+      status.style.color = "";
+      status.textContent = "";
+
+      if (!name || !validatePhone(phone) || !goal || !privacyConsent || !simulationConsent) {
+        status.style.color = "#ff9f9f";
+        status.textContent = isArabic()
+          ? "تحققي من جميع الحقول والموافقات ورقم الجوال."
+          : "Please check all fields, consents, and the mobile number.";
+        return;
+      }
+
+      const files = [];
+      for (let i = 1; i <= 6; i++) {
+        const file = document.getElementById("file" + i).files[0];
+        const check = validateFile(file);
+        if (!check.ok) {
+          status.style.color = "#ff9f9f";
+          status.textContent = isArabic()
+            ? "يجب إرفاق الصور الست بصيغة صحيحة."
+            : "All six images must be provided in a valid format.";
+          return;
+        }
+        files.push(file);
+      }
+
+      if (!firebaseReady) {
+        status.style.color = "#ffb4b4";
+        status.textContent = isArabic()
+          ? "لم يتم ربط Firebase بعد. استبدل بيانات الإعدادات في الكود قبل الاستخدام."
+          : "Firebase is not configured. Replace the configuration values before use.";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = isArabic() ? "جاري الرفع الآمن..." : "Uploading securely...";
+
+      try {
+        // Anonymous sign-in should be enabled in Firebase Authentication.
+        if (!auth.currentUser) await auth.signInAnonymously();
+
+        const uid = auth.currentUser.uid;
+        const requestId = makeRequestId();
+        const uploaded = [];
+
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const safeExt = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
+          const path = `visual-consultations/${uid}/${requestId}/angle-${i+1}.${safeExt}`;
+          const ref = storage.ref().child(path);
+
+          const metadata = {
+            contentType: file.type,
+            customMetadata: {
+              requestId,
+              ownerUid: uid,
+              angle: String(i + 1)
+            }
+          };
+
+          await ref.put(file, metadata);
+          uploaded.push({ path, angle:i + 1 });
+        }
+
+        await db.collection("VisualConsultationRequests").doc(requestId).set({
+          ownerUid: uid,
+          name,
+          phone,
+          goal,
+          language: html.lang,
+          status: "new",
+          images: uploaded,
+          privacyConsent: true,
+          simulationConsent: true,
+          consentVersion: "2026-07-28-v1",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          source: "website"
+        });
+
+        status.style.color = "#7ce39c";
+        status.textContent = isArabic()
+          ? "تم استلام الطلب بنجاح. سيقوم الفريق بمراجعته والتواصل معك."
+          : "Your request was received successfully. The team will review it and contact you.";
+
+        event.target.reset();
+        for (let i = 1; i <= 6; i++) {
+          const preview = document.getElementById("preview" + i);
+          preview.removeAttribute("src");
+          preview.style.display = "none";
+        }
+      } catch (error) {
+        console.error("Visual consultation submission failed:", error);
+        status.style.color = "#ff9f9f";
+        status.textContent = isArabic()
+          ? "تعذر إرسال الطلب. لم يتم تأكيد الاستلام. حاولي مرة أخرى أو تواصلي مع العيادة."
+          : "Submission failed and receipt was not confirmed. Please try again or contact the clinic.";
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = isArabic()
+          ? '<span class="ar-only">إرسال الطلب بأمان</span>'
+          : '<span class="en-only">Submit Securely</span>';
+      }
+    });
+
+    /* =========================================================
+       7) EARLY ACCESS
+       ========================================================= */
+    document.getElementById("earlyForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const btn = document.getElementById("earlySubmit");
+      const status = document.getElementById("earlyStatus");
+      const name = sanitiseText(document.getElementById("earlyName").value);
+      const phone = sanitiseText(document.getElementById("earlyPhone").value);
+      const email = sanitiseText(document.getElementById("earlyEmail").value);
+      const interest = document.getElementById("earlyInterest").value;
+      const consent = document.getElementById("marketingConsent").checked;
+
+      if (!name || !validatePhone(phone) || !interest || !consent) {
+        status.style.color = "var(--danger)";
+        status.textContent = isArabic()
+          ? "أكملي الحقول المطلوبة والموافقة."
+          : "Please complete the required fields and consent.";
+        return;
+      }
+
+      if (!firebaseReady) {
+        status.style.color = "var(--danger)";
+        status.textContent = isArabic()
+          ? "لم يتم ربط Firebase بعد."
+          : "Firebase is not configured.";
+        return;
+      }
+
+      btn.disabled = true;
+
+      try {
+        if (!auth.currentUser) await auth.signInAnonymously();
+
+        await db.collection("EarlyAccess").add({
+          ownerUid: auth.currentUser.uid,
+          name,
+          phone,
+          email: email || null,
+          interest,
+          marketingConsent: true,
+          consentVersion: "2026-07-28-v1",
+          language: html.lang,
+          source: "website",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        status.style.color = "var(--success)";
+        status.textContent = isArabic()
+          ? "تم تسجيلك في قائمة الوصول المبكر."
+          : "You have joined the early access list.";
+        event.target.reset();
+      } catch (error) {
+        console.error("Early access submission failed:", error);
+        status.style.color = "var(--danger)";
+        status.textContent = isArabic()
+          ? "تعذر إكمال التسجيل. حاولي مرة أخرى."
+          : "Registration could not be completed. Please try again.";
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    /* =========================================================
+       8) RESTRICTED INFORMATION ASSISTANT
+       This is intentionally not a diagnostic AI.
+       To connect a real model, call a protected server endpoint.
+       NEVER expose an AI API secret in browser JavaScript.
+       ========================================================= */
+    const assistant = document.getElementById("assistant");
+    const assistantBody = document.getElementById("assistantBody");
+
+    function openAssistant() {
+      assistant.classList.add("open");
+      assistant.setAttribute("aria-hidden","false");
+      if (!assistantBody.children.length) resetAssistantGreeting();
+    }
+    function closeAssistant() {
+      assistant.classList.remove("open");
+      assistant.setAttribute("aria-hidden","true");
+    }
+    document.getElementById("assistantFab").addEventListener("click", openAssistant);
+    document.getElementById("assistantOpenBtn").addEventListener("click", openAssistant);
+    document.getElementById("assistantCloseBtn").addEventListener("click", closeAssistant);
+
+    function appendMessage(role, text) {
+      const el = document.createElement("div");
+      el.className = "msg " + role;
+      el.textContent = text; // safer than innerHTML
+      assistantBody.appendChild(el);
+      assistantBody.scrollTop = assistantBody.scrollHeight;
+      return el;
+    }
+
+    function resetAssistantGreeting() {
+      assistantBody.innerHTML = "";
+      appendMessage("bot", isArabic()
+        ? "مرحباً بك. يمكنني تقديم معلومات عامة عن محتوى المنصة والخدمات وطريقة طلب الاستشارة. لا أقدم تشخيصاً أو وصفة علاجية."
+        : "Welcome. I can provide general information about the platform, services, and how to request a consultation. I do not diagnose or prescribe.");
+    }
+
+    function containsEmergencyTerms(text) {
+      const t = text.toLowerCase();
+      const terms = [
+        "صعوبة تنفس","اختناق","فقدان وعي","نزيف شديد","تورم شديد","ألم صدر","حساسية شديدة",
+        "difficulty breathing","unconscious","severe bleeding","chest pain","anaphylaxis","severe swelling"
+      ];
+      return terms.some(term => t.includes(term));
+    }
+
+    function localAssistantReply(text) {
+      const t = text.toLowerCase();
+
+      if (containsEmergencyTerms(text)) {
+        return isArabic()
+          ? "قد تشير الأعراض المذكورة إلى حالة تحتاج تقييماً عاجلاً. لا تنتظري رد المنصة؛ اتصلي بخدمات الطوارئ أو توجهي فوراً إلى أقرب منشأة صحية."
+          : "The symptoms mentioned may require urgent assessment. Do not wait for a platform response; contact emergency services or attend the nearest healthcare facility immediately.";
+      }
+
+      if (t.includes("بوتكس") || t.includes("botox") || t.includes("فيلر") || t.includes("filler")) {
+        return isArabic()
+          ? "يمكنني شرح الفرق العام: البوتوكس يعمل على تقليل نشاط عضلات محددة، بينما تستخدم مواد التعبئة لاستعادة أو تعديل الحجم في مناطق مختارة. تحديد الأنسب يتطلب تقييماً مباشراً للتشريح والتاريخ الطبي."
+          : "In general, botulinum toxin reduces activity in selected muscles, while fillers are used to restore or adjust volume in chosen areas. Suitability requires direct assessment of anatomy and medical history.";
+      }
+
+      if (t.includes("محاكاة") || t.includes("تصور") || t.includes("preview")) {
+        return isArabic()
+          ? "التصور البصري أداة لمناقشة الهدف قبل الإجراء، وليس ضماناً للنتيجة. يمكنك إرسال طلب عبر قسم التصور البصري بعد قراءة الموافقات."
+          : "The visual preview is a tool for discussing goals before treatment and is not a guarantee. You can submit a request through the visual consultation section after reviewing the consent information.";
+      }
+
+      if (t.includes("موعد") || t.includes("حجز") || t.includes("appointment") || t.includes("book")) {
+        return isArabic()
+          ? "يمكنك الانضمام إلى الوصول المبكر أو إرسال طلب استشارة، وسيقوم الفريق بالتواصل معك لتحديد نوع الموعد المناسب."
+          : "You can join early access or submit a consultation request. The team will contact you to determine the appropriate appointment type.";
+      }
+
+      return isArabic()
+        ? "أستطيع تقديم معلومات عامة فقط. لتقييم حالة شخصية أو تحديد علاج، يلزم التواصل مع الفريق وحجز تقييم طبي مباشر."
+        : "I can provide general information only. Personal assessment or treatment selection requires contacting the team and arranging a direct medical evaluation.";
+    }
+
+    document.getElementById("assistantForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const input = document.getElementById("assistantInput");
+      const text = sanitiseText(input.value);
+      if (!text) return;
+
+      appendMessage("user", text);
+      input.value = "";
+      const loading = appendMessage("bot", isArabic() ? "جارٍ تجهيز إجابة معلوماتية..." : "Preparing an informational reply...");
+
+      try {
+        // Production option:
+        // const response = await fetch("/api/medical-assistant", {
+        //   method: "POST",
+        //   headers: {"Content-Type":"application/json"},
+        //   body: JSON.stringify({ message:text, language:html.lang })
+        // });
+        // if (!response.ok) throw new Error("Assistant API failed");
+        // const data = await response.json();
+        // loading.textContent = data.reply;
+
+        await new Promise(resolve => setTimeout(resolve, 550));
+        loading.textContent = localAssistantReply(text);
+      } catch (error) {
+        loading.textContent = isArabic()
+          ? "تعذر تجهيز الإجابة حالياً. يرجى التواصل مع الفريق."
+          : "The reply could not be prepared. Please contact the team.";
+      }
+    });
+  </script>
+
+  <!-- =========================================================
+       FIREBASE RULES EXAMPLE - DO NOT PASTE INSIDE HTML IN PRODUCTION
+       Save as firestore.rules
+       =========================================================
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    match /VisualConsultationRequests/{requestId} {
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.name is string
+        && request.resource.data.phone is string
+        && request.resource.data.goal is string
+        && request.resource.data.privacyConsent == true
+        && request.resource.data.simulationConsent == true;
+
+      allow read, update, delete: if false;
+    }
+
+    match /EarlyAccess/{docId} {
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.marketingConsent == true;
+
+      allow read, update, delete: if false;
+    }
+  }
+}
+
+=========================================================
+FIREBASE STORAGE RULES EXAMPLE - Save as storage.rules
+=========================================================
+
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    match /visual-consultations/{uid}/{requestId}/{fileName} {
+      allow write: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.size < 8 * 1024 * 1024
+        && request.resource.contentType.matches('image/(jpeg|png|webp)');
+
+      allow read: if false;
+    }
+  }
+}
+
+=========================================================
+PRODUCTION NOTES
+=========================================================
+1. Replace Firebase credentials.
+2. Enable Anonymous Authentication only if legally and operationally approved.
+3. Enable Firebase App Check.
+4. Create a secure admin dashboard with role-based access.
+5. Do not expose private images through permanent public URLs.
+6. Use server-side access and short-lived signed URLs for authorised staff.
+7. Add image malware scanning and EXIF handling.
+8. Add a complete PDPL-compliant privacy notice and consent log.
+9. Add a human review queue for all medical enquiries.
+10. Do not connect a generative model directly from browser JavaScript.
+-->
 </body>
 </html>
