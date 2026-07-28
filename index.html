@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Dr. Wafa Alghamdi | The Sovereign Medical Magazine - Engineering Aesthetic Experiences">
     <meta name="theme-color" content="#ffffff">
-    <meta name="ex-interface" content="HX Sovereign Clinic Interface V19 - Haute Couture Editorial Edition">
+    <meta name="ex-interface" content="HX Sovereign Clinic Interface V20 - Haute Couture Video Edition">
     <meta name="robots" content="index, follow">
     
     <title>Dr. Wafa Alghamdi | The Aesthetic Journal</title>
@@ -36,7 +36,7 @@
 
     <style>
         /* =========================================================
-           EX V19: HAUTE COUTURE BEAUTY MAGAZINE THEME
+           EX V20: HAUTE COUTURE BEAUTY MAGAZINE THEME (VIDEO EDITION)
            ========================================================= */
         :root{
             --void: #ffffff;
@@ -109,8 +109,8 @@
             padding: 15px 5vw;
         }
         
-        .brand-logo img { height: 50px; filter: drop-shadow(0 4px 10px rgba(217,138,148,0.1)); transition:0.3s;}
-        .brand-logo img:hover { transform: scale(1.02); }
+        .brand-logo img { height: 50px; transform: scale(1.2); filter: drop-shadow(0 4px 10px rgba(217,138,148,0.1)); transition:0.3s;}
+        .brand-logo img:hover { transform: scale(1.25); }
 
         .nav-actions { display:flex; gap:15px; align-items:center; }
         .nav-icon {
@@ -160,8 +160,8 @@
         }
         body.lang-ar .hero-visual { border-radius: 250px 20px 250px 20px; }
         
-        .hero-image { width:100%; height:100%; object-fit:cover; filter: contrast(1.05) saturate(1.1); transition: 0.8s ease;}
-        .hero-visual:hover .hero-image { transform: scale(1.05); }
+        .hero-video { width:100%; height:100%; object-fit:cover; filter: contrast(1.05) saturate(1.1); transition: 0.8s ease;}
+        .hero-visual:hover .hero-video { transform: scale(1.05); }
         .hero-overlay { position:absolute; inset:0; background: linear-gradient(135deg, rgba(217,138,148,0.1), transparent); mix-blend-mode: overlay; pointer-events: none;}
 
         /* BUTTONS */
@@ -210,7 +210,7 @@
             transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; text-align: center;
         }
         .ed-card:hover { transform: translateY(-15px); border-color: var(--rose-vibrant); box-shadow: 0 35px 70px rgba(217, 138, 148, 0.2); }
-        .ed-card-img { width: 100%; height: 280px; object-fit: cover; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.06); transition:0.5s;}
+        .ed-card-img { width: 100%; height: 280px; object-fit: cover; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.06); transition:0.5s; background:#f4f4f4;}
         .ed-card:hover .ed-card-img { transform: scale(1.03); }
         .ed-card h3 { font-family: var(--font-mag); font-size: 2rem; color: var(--text-dark); margin-bottom: 15px; }
         .ed-card p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 30px;}
@@ -259,7 +259,7 @@
             display:grid; place-items:center; cursor:pointer;
             box-shadow: 0 15px 35px rgba(217, 138, 148, 0.4); z-index:10000; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .ex-oracle-fab:hover { transform: translateY(-8px) scale(1.08); background: var(--rose-deep); box-shadow: 0 20px 45px rgba(140, 74, 82, 0.5); }
+        .ex-oracle-fab:hover { transform: translateY(-8px) scale(1.05); background: var(--rose-deep); box-shadow: 0 20px 45px rgba(140, 74, 82, 0.5); }
         
         .ex-oracle {
             position:fixed; right:40px; bottom:140px; z-index:9999; width:min(450px, calc(100vw - 40px));
@@ -293,10 +293,10 @@
             position:fixed; inset:0; background:var(--void); z-index:2147483647; display:flex; flex-direction:column; justify-content:center; align-items:center; transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #master-loader.hide { opacity: 0; pointer-events: none; visibility: hidden; transform:scale(1.02);}
-        .loader-logo { height: 90px; margin-bottom: 40px; animation: pulse 2.5s infinite; filter: drop-shadow(0 10px 20px rgba(217, 138, 148, 0.15)); }
+        .loader-logo { height: 100px; transform: scale(1.3); margin-bottom: 40px; animation: pulse 2.5s infinite; filter: drop-shadow(0 10px 20px rgba(217, 138, 148, 0.15)); }
         .loader-bar { width: 300px; height: 2px; background: var(--border-light); border-radius: 2px; overflow: hidden; }
         .loader-fill { height: 100%; background: var(--rose-vibrant); width: 0%; transition: width 0.5s ease; }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform:scale(1);} 50% { opacity: 0.8; transform:scale(0.98);} }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform:scale(1.3);} 50% { opacity: 0.8; transform:scale(1.27);} }
 
         /* Responsive */
         @media(max-width: 900px){
@@ -379,8 +379,8 @@
             </div>
         </div>
         <div class="hero-visual reveal">
-            <!-- Hero Image: Using image_3.png (Ski goggles) from your repo -->
-            <img src="image_3.png" class="hero-image" alt="Aesthetic Dermatology">
+            <!-- Hero Video: Cinematic montage -->
+            <video src="0D8AD854-096A-4B3C-889F-FAEB2573F2FA.mov" class="hero-video" autoplay muted loop playsinline></video>
             <div class="hero-overlay"></div>
         </div>
     </div>
@@ -390,8 +390,8 @@
 <section class="section-padding bg-blush">
     <div class="founder-layout reveal">
         <div class="founder-img-wrapper">
-            <!-- Using an elegant placeholder since the portrait image is missing from the provided folder list. Once uploaded, replace with portrait file name. -->
-            <img src="https://images.unsplash.com/photo-1559548331-6fca8e7d7e63?auto=format&fit=crop&q=80&w=800" alt="Dr Wafa Alghamdi Portrait" class="founder-img">
+            <!-- Founder Portrait -->
+            <img src="image_11.png" alt="Dr Wafa Alghamdi Portrait" class="founder-img">
         </div>
         <div class="founder-content">
             <span class="ed-tag" style="background:#fff; border:1px solid var(--rose-vibrant); color:var(--rose-deep); padding: 8px 20px; border-radius:999px; font-weight:bold; font-size:0.8rem; text-transform:uppercase; margin-bottom:20px; display:inline-block;">The Founder</span>
@@ -426,8 +426,8 @@
     <div class="editorial-grid reveal">
         <article class="ed-card">
             <span class="ed-tag">Aesthetics</span>
-            <!-- Using image_8.png (Skincare facial) from your repo -->
-            <img src="image_8.png" class="ed-card-img" alt="Facial Rejuvenation">
+            <!-- Injecting Aesthetic Society Video 1 -->
+            <video src="20260728-0318-22.9222226.mp4" class="ed-card-img" autoplay muted loop playsinline></video>
             <h3 class="ar-only">تجديد شباب الوجه وشد الرقبة</h3>
             <h3 class="en-only">Facial Rejuvenation & Neck Lift</h3>
             <p class="ar-only">استراتيجيات دقيقة للتخلص من الخطوط التعبيرية (البوتكس)، استعادة الحجم المفقود (الفيلر)، وشد ترهلات الرقبة دون تغيير هويتك الأصلية.</p>
@@ -439,8 +439,8 @@
 
         <article class="ed-card">
             <span class="ed-tag">Contouring</span>
-            <!-- Using image_6.png (Camera screen lips) from your repo -->
-            <img src="image_6.png" class="ed-card-img" alt="Lip Enhancement">
+            <!-- Injecting Aesthetic Society Video 2 -->
+            <video src="20260728-0323-53.0327463.mp4" class="ed-card-img" autoplay muted loop playsinline></video>
             <h3 class="ar-only">هندسة وتوريد الشفاه</h3>
             <h3 class="en-only">Lip Architecture</h3>
             <p class="ar-only">تحسين حجم وتناسق الشفاه وفقاً لخطوط النسبة الذهبية للوجه، لضمان مظهر ممتلئ، صحي، ويبدو طبيعياً بنسبة 100%.</p>
@@ -452,8 +452,8 @@
         
         <article class="ed-card">
             <span class="ed-tag">Dermatology</span>
-            <!-- Using image_4.png (Cosmetics on magazine) from your repo -->
-            <img src="image_4.png" class="ed-card-img" alt="Skin Protocols">
+            <!-- Injecting Dr Wafa IG Video -->
+            <video src="20260728-0330-22.4076477.mp4" class="ed-card-img" autoplay muted loop playsinline></video>
             <h3 class="ar-only">بروتوكولات علاج البشرة</h3>
             <h3 class="en-only">Advanced Skin Protocols</h3>
             <p class="ar-only">برامج علاجية متكاملة للتعامل مع حب الشباب المستعصي وتصبغات البشرة، وفهم الأسباب الجذرية (الهرمونية والجرعات) لضمان عدم الانتكاس.</p>
@@ -533,7 +533,7 @@
                     </label>
                     <input type="password" class="t-input" placeholder="••••••••" required>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width:100%; padding:20px; font-size:1rem;">
+                <button type="submit" class="btn btn-primary" style="width:100%; padding:22px; font-size:1.1rem;">
                     <span class="ar-only">فتح الملف المشفر</span><span class="en-only">Unlock Secure File</span>
                 </button>
             </form>
@@ -542,24 +542,23 @@
 </section>
 
 <!-- FOOTER -->
-<footer style="background: var(--void); padding: 80px 5vw; border-top: 1px solid var(--border-light); text-align:center;">
-    <!-- Using image.png for the footer logo -->
-    <img src="image.png" alt="Dr Wafa Alghamdi" style="height:70px; margin-bottom:25px; filter: drop-shadow(0 5px 15px rgba(210,140,148,0.1));">
+<footer style="background: var(--void); padding: 100px 5vw 60px 5vw; border-top: 1px solid var(--border-light); text-align:center;">
+    <img src="image.png" alt="Dr Wafa Alghamdi" style="height:90px; margin-bottom:35px; filter: drop-shadow(0 10px 20px rgba(217,138,148,0.15)); transform: scale(1.2);">
     
-    <p style="color:var(--text-muted); font-size:1.05rem; margin-bottom:30px; font-family: var(--font-mag); font-style: italic;">
+    <p style="color:var(--text-muted); font-size:1.15rem; margin-bottom:40px; font-family: var(--font-mag); font-style: italic;">
         The Sovereign Clinic | Precision & Aesthetics<br>
         Engineering Human Confidence
     </p>
-    <div style="display:flex; justify-content:center; gap:30px; margin-bottom:40px; font-family: var(--font-mono); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.1em;">
+    <div style="display:flex; justify-content:center; gap:40px; margin-bottom:50px; font-family: var(--font-mono); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.15em;">
         <a href="https://instagram.com/dr.wafagh" target="_blank" style="color:var(--rose-deep); font-weight:bold;">Instagram</a>
         <a href="#" style="color:var(--rose-deep); font-weight:bold;">PDPL & Privacy</a>
         <a href="#" style="color:var(--rose-deep); font-weight:bold;">Clinic Terms</a>
     </div>
-    <div style="padding-top:30px; border-top: 1px solid var(--border-light);">
-        <p style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:10px;">
+    <div style="padding-top:40px; border-top: 1px solid var(--border-light);">
+        <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:15px;">
             Executive Direction by フサム | experience™
         </p>
-        <p style="font-family:var(--font-mono); font-size:0.6rem; color:#aaa; letter-spacing:0.1em;">
+        <p style="font-family:var(--font-mono); font-size:0.65rem; color:#aaa; letter-spacing:0.1em;">
             © 2026 All Rights Reserved.
         </p>
     </div>
@@ -567,46 +566,46 @@
 
 <!-- EDITORIAL AI ORACLE (Dr Wafa's Medical Concierge) -->
 <button class="ex-oracle-fab" type="button" aria-label="Open AI Assistant" onclick="window.toggleOracle(true)">
-    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
 </button>
 
 <section class="ex-oracle" id="ex-oracle" data-open="false">
     <header class="oracle-header">
         <div>
-            <div style="font-family:var(--font-mono); font-size:0.65rem; color:var(--rose-light); letter-spacing:0.2em; margin-bottom:5px;">CLINICAL AI CONCIERGE</div>
+            <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--rose-vibrant); letter-spacing:0.25em; margin-bottom:5px;">CLINICAL AI CONCIERGE</div>
             <h3 class="ar-only">مساعد د. وفاء الرقمي</h3>
             <h3 class="en-only">Dr. Wafa's Assistant</h3>
         </div>
-        <button onclick="window.toggleOracle(false)" style="background:none; border:none; font-size:2rem; color:#fff; cursor:pointer; line-height:1;">&times;</button>
+        <button onclick="window.toggleOracle(false)" style="background:none; border:none; font-size:2.5rem; color:var(--rose-deep); cursor:pointer; line-height:1;">&times;</button>
     </header>
     <div class="oracle-body" id="oracleBody"></div>
     <form class="oracle-form" onsubmit="event.preventDefault(); window.sendOracleMessage();">
-        <input id="oracleInput" class="t-input" style="padding:15px 25px; border-radius:999px; font-size:0.95rem; border-color:var(--border-light);" autocomplete="off" placeholder="Ask about treatments, bookings...">
+        <input id="oracleInput" class="t-input" style="padding:18px 30px; border-radius:999px; font-size:1rem; border-color:var(--border-light);" autocomplete="off" placeholder="Ask about treatments, bookings...">
         <button class="oracle-btn-send" type="submit">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
     </form>
 </section>
 
-<!-- WAITLIST MODAL (DROPzero) -->
+<!-- WAITLIST MODAL -->
 <div id="waitlist-modal" class="modal-overlay">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('waitlist-modal')">&times;</button>
-        <div style="font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.2em; color:var(--gold-warm); text-transform:uppercase; margin-bottom:10px; font-weight:bold;">DROPzero™ Protocol</div>
-        <h2 style="font-family:var(--font-mag); color:var(--rose-deep); margin-bottom:15px; font-size:2.2rem; line-height:1.1;">
+        <div style="font-family:var(--font-mono); font-size:0.85rem; letter-spacing:0.25em; color:var(--gold-warm); text-transform:uppercase; margin-bottom:15px; font-weight:bold;">DROPzero™ Protocol</div>
+        <h2 style="font-family:var(--font-mag); color:var(--rose-deep); margin-bottom:20px; font-size:2.8rem; line-height:1.1;">
             <span class="ar-only">قائمة الانتظار النخبوية</span><span class="en-only">Elite Waitlist</span>
         </h2>
-        <p style="color:var(--text-muted); margin-bottom:35px; line-height:1.7;">
+        <p style="color:var(--text-muted); margin-bottom:40px; line-height:1.8; font-size:1.1rem;">
             <span class="ar-only">عيادة د. وفاء تعمل بنظام النوافذ المغلقة للحجوزات. سجل بياناتك ليتم إشعارك فور إتاحة المواعيد للاستشارة أو لمحاكاة الـ VR.</span>
             <span class="en-only">Dr. Wafa's clinic operates on closed booking windows. Register to be notified immediately when appointments for consultations or VR simulations open.</span>
         </p>
         <div class="input-group">
             <input type="text" class="t-input" placeholder="Full Name / الاسم الكامل" required>
         </div>
-        <div class="input-group" style="margin-bottom:30px;">
+        <div class="input-group" style="margin-bottom:35px;">
             <input type="tel" class="t-input" placeholder="Phone Number / رقم الجوال" required>
         </div>
-        <button class="btn btn-primary" style="width:100%; padding:18px; font-size:1rem;" onclick="closeModal('waitlist-modal'); alert(document.body.classList.contains('lang-ar') ? 'تم تسجيلك في قائمة الانتظار النخبوية بنجاح.' : 'Successfully added to the Elite Waitlist.');">
+        <button class="btn btn-primary" style="width:100%; padding:22px; font-size:1.1rem;" onclick="closeModal('waitlist-modal'); alert(document.body.classList.contains('lang-ar') ? 'تم تسجيلك في قائمة الانتظار النخبوية بنجاح.' : 'Successfully added to the Elite Waitlist.');">
             <span class="ar-only">تأكيد التسجيل</span><span class="en-only">Confirm Registration</span>
         </button>
     </div>
@@ -619,14 +618,14 @@
         let loader = document.getElementById('master-loader');
         let width = 0;
         let interval = setInterval(() => {
-            width += Math.random() * 15 + 5; 
+            width += Math.random() * 20 + 5; 
             if(width > 100) width = 100;
             fill.style.width = width + '%';
             if(width === 100) {
                 clearInterval(interval);
-                setTimeout(() => { loader.classList.add('hide'); }, 600);
+                setTimeout(() => { loader.classList.add('hide'); }, 700);
             }
-        }, 150);
+        }, 120);
     });
 
     // --- SCROLL ANIMATIONS (Navbar & Reveal) ---
