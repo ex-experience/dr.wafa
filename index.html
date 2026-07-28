@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Dr. Wafa Alghamdi | The Sovereign Medical Magazine - Engineering Aesthetic Experiences">
-    <meta name="theme-color" content="#fdfafb">
-    <meta name="ex-interface" content="HX Sovereign Clinic Interface V16 - Editorial Magazine, Medical AI, VR Simulation">
+    <meta name="theme-color" content="#fffcfc">
+    <meta name="ex-interface" content="HX Sovereign Clinic Interface V17 - Elite Magazine Theme">
     <meta name="robots" content="index, follow">
     
     <title>Dr. Wafa Alghamdi | The Aesthetic Journal</title>
@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Kufi+Arabic:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Firebase Config (Kept intact for backend functionality) -->
+    <!-- Firebase Config -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
@@ -36,27 +36,27 @@
 
     <style>
         /* =========================================================
-           EX V16: VIBRANT EDITORIAL MAGAZINE THEME
-           Colors strictly extracted from image_2.png & image_3.png
+           EX V17: THE ELITE BEAUTY MAGAZINE THEME
+           Colors strictly extracted from image_3ffcc4.png
            ========================================================= */
         :root{
             /* Vibrant Magazine Backgrounds */
             --void: #ffffff;
-            --void-2: #fdfafb;
+            --void-2: #fffcfc;
             
-            /* Extracted Vibrant Palette from Logo & Portrait */
-            --rose-vibrant: #d28c94; /* The signature blush pink */
-            --rose-soft: #f4e8e9;    /* Soft petal pink for backgrounds */
-            --rose-deep: #8c4a52;    /* Deep elegant burgundy for text */
-            --gold-warm: #d4b595;    /* Warm gold from the monogram */
+            /* Extracted Vibrant Palette from Logo */
+            --rose-vibrant: #dfa8a2; /* Soft warm rose from the monogram */
+            --rose-soft: #fcf4f3;    /* Very light petal pink for backgrounds */
+            --rose-deep: #b3736d;    /* Deepened rose for text contrast */
+            --gold-warm: #e2cba8;    /* Champagne gold accents */
             
             /* Text colors */
-            --text-dark: #2a1f20;
-            --text-muted: #735f62;
+            --text-dark: #3a2b2c;
+            --text-muted: #8c787a;
             
             /* UI Elements */
-            --border-light: rgba(210, 140, 148, 0.2);
-            --shadow-mag: 0 15px 40px rgba(140, 74, 82, 0.08);
+            --border-light: rgba(223, 168, 162, 0.25);
+            --shadow-mag: 0 20px 50px rgba(179, 115, 109, 0.08);
             
             /* Typography */
             --font-ui: 'Inter', system-ui, sans-serif;
@@ -71,8 +71,8 @@
         body{
             background-color: var(--void-2);
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(210, 140, 148, 0.05), transparent 30%),
-                radial-gradient(circle at 85% 20%, rgba(212, 181, 149, 0.06), transparent 30%);
+                radial-gradient(circle at 10% 40%, rgba(223, 168, 162, 0.08), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(226, 203, 168, 0.1), transparent 40%);
             color: var(--text-dark);
             font-family: var(--font-ui);
             line-height: 1.8;
@@ -87,50 +87,43 @@
 
         /* UTILITY BAR */
         .utility-bar {
-            position:fixed; top:0; left:0; width:100%; height:40px; z-index:10000;
+            position:fixed; top:0; left:0; width:100%; height:42px; z-index:10000;
             display:flex; align-items:center; justify-content:space-between; padding:0 5vw;
-            background: #ffffff;
-            border-bottom: 1px solid var(--border-light);
+            background: var(--rose-deep); color: #fff;
             font-family: var(--font-mono); font-size: .65rem; letter-spacing: .15em; text-transform: uppercase;
-            color: var(--rose-deep);
         }
-        body.lang-ar .utility-bar { font-family: var(--font-ar); font-size: 0.7rem; letter-spacing: 0; }
-        .utility-link:hover{color: var(--rose-vibrant);}
-        .utility-chip{padding:.2rem .8rem; border-radius:999px; background:var(--rose-soft); color:var(--rose-deep); font-weight:bold; letter-spacing: 2px;}
+        body.lang-ar .utility-bar { font-family: var(--font-ar); font-size: 0.75rem; letter-spacing: 0; }
+        .utility-link{color: #fff; transition:0.3s;}
+        .utility-link:hover{color: var(--gold-warm);}
+        .utility-chip{padding:.25rem .8rem; border-radius:999px; background:#fff; color:var(--rose-deep); font-weight:bold; letter-spacing: 2px;}
 
         /* MAGAZINE NAVIGATION */
         .top-nav {
-            position:fixed; top:40px; left:0; width:100%; z-index:9998;
+            position:fixed; top:42px; left:0; width:100%; z-index:9998;
             display:flex; align-items:center; justify-content:space-between; padding:15px 5vw;
-            background: rgba(253, 250, 251, 0.85); backdrop-filter: blur(25px);
+            background: rgba(255, 252, 252, 0.85); backdrop-filter: blur(25px);
             border-bottom: 1px solid transparent; transition: 0.4s ease;
         }
         .top-nav.scrolled {
             background: rgba(255, 255, 255, 0.98);
             border-bottom-color: var(--border-light);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
         
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        /* Using the exact logo file requested */
-        .brand-logo img { height: 45px; filter: drop-shadow(0 4px 6px rgba(210,140,148,0.1)); transition:0.3s;}
-        .brand-logo img:hover { transform: scale(1.02); }
+        .brand-logo img { height: 55px; filter: drop-shadow(0 4px 6px rgba(223,168,162,0.15)); transition:0.3s;}
+        .brand-logo img:hover { transform: scale(1.03); }
 
-        .nav-actions { display:flex; gap:12px; align-items:center; }
+        .nav-actions { display:flex; gap:15px; align-items:center; }
         .nav-icon {
-            width:42px; height:42px; border-radius:50%; border:1px solid var(--border-light);
+            width:45px; height:45px; border-radius:50%; border:1px solid var(--border-light);
             display:grid; place-items:center; color:var(--rose-deep); cursor:pointer; transition:0.3s;
             background: #fff;
         }
-        .nav-icon:hover { background:var(--rose-vibrant); color:#fff; transform:translateY(-2px); box-shadow:var(--shadow-mag);}
+        .nav-icon:hover { background:var(--rose-vibrant); color:#fff; transform:translateY(-3px); box-shadow:var(--shadow-mag);}
 
         /* EDITORIAL HERO SECTION */
         .hero {
-            position:relative; min-height:100vh; padding-top:120px;
+            position:relative; min-height:100vh; padding-top:140px;
             display:flex; align-items:center; justify-content:center; overflow:hidden;
         }
         .hero-layout {
@@ -142,175 +135,179 @@
         body.lang-ar .hero-text-content { padding-right: 0; padding-left: 40px; }
         
         .mag-issue {
-            font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.25em;
-            color: var(--gold-warm); margin-bottom: 25px; display:inline-block;
-            border-bottom: 1px solid var(--gold-warm); padding-bottom: 6px; font-weight:bold;
+            font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.25em;
+            color: var(--rose-deep); margin-bottom: 25px; display:inline-block;
+            border-bottom: 2px solid var(--gold-warm); padding-bottom: 6px; font-weight:bold;
         }
         body.lang-ar .mag-issue { font-family: var(--font-ar); letter-spacing: 0; }
 
         .hero-title {
-            font-family: var(--font-mag); font-size: clamp(3rem, 5vw, 5rem);
-            line-height: 1.1; color: var(--rose-deep); margin-bottom: 25px;
+            font-family: var(--font-mag); font-size: clamp(3.5rem, 6vw, 5.5rem);
+            line-height: 1.05; color: var(--text-dark); margin-bottom: 25px;
         }
         body.lang-ar .hero-title { font-weight: 700; line-height: 1.3;}
         
         .hero-lead {
-            font-size: 1.15rem; color: var(--text-muted); line-height: 1.9; margin-bottom: 40px;
+            font-size: 1.25rem; color: var(--text-muted); line-height: 1.9; margin-bottom: 40px; font-style: italic;
+            font-family: var(--font-mag);
         }
+        body.lang-ar .hero-lead { font-family: var(--font-ar); font-style: normal; }
         
         .hero-visual {
-            position:relative; width:100%; aspect-ratio: 4/5;
-            border-radius: 20px 200px 20px 20px; overflow:hidden;
-            box-shadow: 0 40px 80px rgba(140, 74, 82, 0.15);
-            border: 1px solid var(--border-light);
+            position:relative; width:100%; aspect-ratio: 3/4;
+            border-radius: 20px 200px 20px 200px; overflow:hidden;
+            box-shadow: 0 40px 100px rgba(179, 115, 109, 0.2);
+            border: 8px solid #fff;
         }
-        body.lang-ar .hero-visual { border-radius: 200px 20px 20px 20px; }
+        body.lang-ar .hero-visual { border-radius: 200px 20px 200px 20px; }
         
-        /* Video Background in Hero (Referencing the Aesthetic Society Video feel) */
-        .hero-video { width:100%; height:100%; object-fit:cover; filter: contrast(1.05) saturate(1.1); }
-        .hero-overlay { position:absolute; inset:0; background: linear-gradient(45deg, rgba(210,140,148,0.15), transparent); mix-blend-mode: multiply; }
+        .hero-video { width:100%; height:100%; object-fit:cover; filter: contrast(1.05) saturate(1.1) brightness(0.95); }
+        .hero-overlay { position:absolute; inset:0; background: linear-gradient(135deg, rgba(223,168,162,0.2), transparent); mix-blend-mode: overlay; }
 
         /* BUTTONS */
         .btn {
-            padding: 16px 36px; border-radius: 999px; font-family: var(--font-ui); font-weight: 600;
-            font-size: 0.9rem; letter-spacing: 0.05em; cursor: pointer; transition: 0.3s;
+            padding: 18px 40px; border-radius: 999px; font-family: var(--font-ui); font-weight: 600;
+            font-size: 0.95rem; letter-spacing: 0.05em; cursor: pointer; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            text-transform: uppercase;
+            text-transform: uppercase; border: none;
         }
         body.lang-ar .btn { font-family: var(--font-ar); letter-spacing: 0; }
-        .btn-primary { background: var(--rose-vibrant); color: #fff; border: none; box-shadow: 0 10px 20px rgba(210, 140, 148, 0.3); }
-        .btn-primary:hover { background: var(--rose-deep); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(140, 74, 82, 0.3); }
-        .btn-outline { background: transparent; color: var(--rose-deep); border: 1px solid var(--rose-deep); }
-        .btn-outline:hover { background: var(--rose-soft); border-color: var(--rose-vibrant); }
+        .btn-primary { background: linear-gradient(135deg, var(--rose-deep), var(--rose-vibrant)); color: #fff; box-shadow: 0 10px 25px rgba(223, 168, 162, 0.4); }
+        .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(179, 115, 109, 0.4); filter: brightness(1.1); }
+        .btn-outline { background: #fff; color: var(--rose-deep); border: 1px solid var(--border-light); box-shadow: 0 10px 25px rgba(0,0,0,0.02); }
+        .btn-outline:hover { background: var(--rose-soft); border-color: var(--rose-vibrant); transform: translateY(-4px); }
 
         /* MAGAZINE SECTIONS */
-        .section-padding { padding: 120px 5vw; position:relative;}
+        .section-padding { padding: 140px 5vw; position:relative;}
         .bg-blush { background-color: var(--rose-soft); }
         
-        .section-header { text-align: center; margin-bottom: 70px; }
-        .section-title { font-family: var(--font-mag); font-size: clamp(2.5rem, 4vw, 3.8rem); color: var(--rose-deep); margin-bottom: 20px; line-height:1.2;}
-        .section-subtitle { font-size: 1.15rem; color: var(--text-muted); max-width: 650px; margin: 0 auto; line-height:1.8;}
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .section-title { font-family: var(--font-mag); font-size: clamp(3rem, 5vw, 4.5rem); color: var(--text-dark); margin-bottom: 20px; line-height:1.2;}
+        .section-subtitle { font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin: 0 auto; line-height:1.8;}
 
-        /* THE FOUNDER SECTION (Integrating image_3.png) */
+        /* THE FOUNDER SECTION */
         .founder-layout {
-            display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 60px; align-items: center;
+            display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center;
             max-width: 1200px; margin: 0 auto;
         }
         .founder-img-wrapper {
-            position: relative; border-radius: 30px; overflow: hidden;
-            box-shadow: var(--shadow-mag); border: 1px solid var(--border-light);
+            position: relative; border-radius: 40px; overflow: hidden;
+            box-shadow: var(--shadow-mag); border: 10px solid #fff;
         }
         .founder-img { width: 100%; display: block; }
-        .founder-content h3 { font-family: var(--font-mag); font-size: 2.5rem; color: var(--rose-deep); margin-bottom: 15px; }
-        .founder-content p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.9; margin-bottom: 25px; }
-        .signature { font-family: var(--font-mag); font-size: 2rem; color: var(--gold-warm); font-style: italic; }
+        .founder-content h3 { font-family: var(--font-mag); font-size: 3rem; color: var(--rose-deep); margin-bottom: 10px; }
+        .founder-content p { color: var(--text-dark); font-size: 1.15rem; line-height: 2; margin-bottom: 30px; }
+        .signature { font-family: var(--font-mag); font-size: 2.5rem; color: var(--gold-warm); font-style: italic; }
 
-        /* PROCEDURES EDITORIAL GRID (Based on Video 2) */
+        /* PROCEDURES EDITORIAL GRID */
         .editorial-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;
-            max-width: 1300px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px;
+            max-width: 1400px; margin: 0 auto;
         }
         .ed-card {
-            background: #fff; border-radius: 24px; padding: 45px 35px;
+            background: #fff; border-radius: 30px; padding: 50px 40px;
             border: 1px solid var(--border-light); box-shadow: var(--shadow-mag);
-            transition: 0.4s ease; position: relative; overflow: hidden; text-align: center;
+            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; text-align: center;
         }
-        .ed-card:hover { transform: translateY(-10px); border-color: var(--rose-vibrant); box-shadow: 0 25px 50px rgba(210, 140, 148, 0.2); }
-        .ed-card h3 { font-family: var(--font-mag); font-size: 1.8rem; color: var(--rose-deep); margin-bottom: 15px; }
-        .ed-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.8; margin-bottom: 25px;}
-        .ed-tag { display: inline-block; padding: 6px 16px; border-radius: 20px; background: var(--rose-soft); color: var(--rose-deep); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 25px; letter-spacing: 1px;}
+        .ed-card:hover { transform: translateY(-15px); border-color: var(--rose-vibrant); box-shadow: 0 30px 60px rgba(223, 168, 162, 0.25); }
+        .ed-card h3 { font-family: var(--font-mag); font-size: 2rem; color: var(--text-dark); margin-bottom: 15px; }
+        .ed-card p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 30px;}
+        .ed-tag { display: inline-block; padding: 8px 20px; border-radius: 999px; background: var(--void-2); color: var(--rose-deep); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 30px; letter-spacing: 1px; border: 1px solid var(--border-light);}
         body.lang-ar .ed-tag { font-family: var(--font-ar); letter-spacing: 0; }
 
-        /* INSTAGRAM INTEGRATION SECTION (Based on Video 3) */
+        /* INSTAGRAM CLINICAL DIARY */
         .ig-section {
-            background: linear-gradient(135deg, var(--rose-deep), var(--rose-vibrant));
-            color: #fff; border-radius: 40px; padding: 100px 5vw; text-align: center;
-            max-width: 1300px; margin: 0 auto; position: relative; overflow: hidden;
-            box-shadow: 0 30px 60px rgba(140, 74, 82, 0.3);
+            background: linear-gradient(135deg, var(--void-2), #ffffff);
+            border: 1px solid var(--border-light);
+            border-radius: 40px; padding: 100px 5vw; text-align: center;
+            max-width: 1400px; margin: 0 auto; position: relative; overflow: hidden;
+            box-shadow: var(--shadow-mag);
         }
-        .ig-title { font-family: var(--font-mag); font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 15px; }
-        .ig-handle { font-family: var(--font-mono); font-size: 1.2rem; color: var(--gold-warm); margin-bottom: 50px; display: inline-block; font-weight:bold; letter-spacing:2px;}
-        .ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 50px; }
+        .ig-title { font-family: var(--font-mag); font-size: clamp(3rem, 5vw, 4.5rem); color: var(--text-dark); margin-bottom: 15px; }
+        .ig-handle { font-family: var(--font-mono); font-size: 1.3rem; color: var(--rose-vibrant); margin-bottom: 50px; display: inline-block; font-weight:bold; letter-spacing:2px;}
+        .ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 50px; }
         .ig-post {
-            background: rgba(255,255,255,0.08); backdrop-filter: blur(15px); border-radius: 20px;
-            padding: 30px; border: 1px solid rgba(255,255,255,0.2); text-align: left;
-            transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer;
+            background: #fff; border-radius: 24px;
+            padding: 40px 30px; border: 1px solid var(--border-light); text-align: left;
+            transition: 0.4s; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
         body.lang-ar .ig-post { text-align: right; }
-        .ig-post:hover { background: rgba(255,255,255,0.15); transform: translateY(-8px); border-color: var(--gold-warm);}
-        .ig-post h4 { font-size: 1.3rem; margin-bottom: 15px; color: #fff; font-family: var(--font-mag); line-height:1.4; }
-        .ig-post p { font-size: 0.9rem; color: rgba(255,255,255,0.85); line-height: 1.7; }
-        .ig-icon { margin-bottom:15px; color:var(--gold-warm); }
+        .ig-post:hover { background: var(--rose-soft); transform: translateY(-10px); border-color: var(--rose-vibrant); box-shadow: 0 20px 40px rgba(223, 168, 162, 0.2);}
+        .ig-post h4 { font-size: 1.5rem; margin-bottom: 15px; color: var(--rose-deep); font-family: var(--font-mag); line-height:1.4; }
+        .ig-post p { font-size: 1rem; color: var(--text-muted); line-height: 1.8; }
+        .ig-icon { margin-bottom:20px; color:var(--gold-warm); }
 
         /* THE CLINICAL VAULT / DASHBOARD */
         .vault-container {
-            max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 30px;
-            box-shadow: var(--shadow-mag); border: 1px solid var(--border-light); overflow: hidden;
+            max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 40px;
+            box-shadow: 0 30px 80px rgba(179, 115, 109, 0.15); border: 1px solid var(--border-light); overflow: hidden;
         }
-        .vault-header { padding: 50px 40px; background: var(--rose-soft); text-align: center; border-bottom: 1px solid var(--border-light); }
-        .vault-header h2 { font-family: var(--font-mag); color: var(--rose-deep); font-size: 2.5rem; margin-bottom:10px;}
+        .vault-header { padding: 60px 50px; background: var(--rose-deep); text-align: center; color: #fff; }
+        .vault-header h2 { font-family: var(--font-mag); font-size: 3rem; margin-bottom:15px;}
         .vault-body { padding: 60px 50px; }
         
-        .input-group { margin-bottom: 25px; }
-        .t-input { width: 100%; padding: 18px 25px; border-radius: 16px; border: 1px solid var(--border-light); background: #fdfafb; font-family: var(--font-ui); font-size: 1rem; color: var(--text-dark); transition: 0.3s; }
-        .t-input:focus { border-color: var(--rose-vibrant); box-shadow: var(--focus); outline: none; background:#fff; }
+        .input-group { margin-bottom: 30px; }
+        .t-input { width: 100%; padding: 20px 25px; border-radius: 16px; border: 1px solid var(--border-light); background: var(--void-2); font-family: var(--font-ui); font-size: 1.05rem; color: var(--text-dark); transition: 0.3s; }
+        .t-input:focus { border-color: var(--rose-deep); box-shadow: var(--focus); outline: none; background:#fff; }
         
         /* AI ORACLE (Medical Concierge) */
         .ex-oracle-fab {
-            position:fixed; right:30px; bottom:30px; width:75px; height:75px; border-radius:50%; border:none;
+            position:fixed; right:40px; bottom:40px; width:80px; height:80px; border-radius:50%; border:none;
             background: linear-gradient(135deg, var(--rose-vibrant), var(--rose-deep)); color:#fff; 
             display:grid; place-items:center; cursor:pointer;
-            box-shadow: 0 15px 35px rgba(140, 74, 82, 0.4); z-index:10000; transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 40px rgba(179, 115, 109, 0.5); z-index:10000; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .ex-oracle-fab:hover { transform: translateY(-5px) scale(1.08); box-shadow: 0 20px 45px rgba(140, 74, 82, 0.5); }
+        .ex-oracle-fab:hover { transform: translateY(-8px) scale(1.05); box-shadow: 0 25px 50px rgba(179, 115, 109, 0.6); }
         
         .ex-oracle {
-            position:fixed; right:30px; bottom:120px; z-index:9999; width:min(420px, calc(100vw - 40px));
-            background: #fff; border: 1px solid var(--border-light); border-radius: 28px;
-            box-shadow: 0 40px 100px rgba(140, 74, 82, 0.2); overflow:hidden; opacity:0; visibility:hidden;
-            transform: translateY(20px); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex; flex-direction: column; max-height: 650px; height: 80vh;
+            position:fixed; right:40px; bottom:140px; z-index:9999; width:min(450px, calc(100vw - 40px));
+            background: #fff; border: 1px solid var(--border-light); border-radius: 30px;
+            box-shadow: 0 50px 120px rgba(179, 115, 109, 0.3); overflow:hidden; opacity:0; visibility:hidden;
+            transform: translateY(30px) scale(0.95); transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; flex-direction: column; max-height: 700px; height: 85vh;
         }
-        .ex-oracle[data-open="true"]{ opacity:1; visibility:visible; transform:translateY(0); }
-        .oracle-header { background: var(--rose-deep); padding: 25px; display:flex; justify-content:space-between; align-items:center; color:#fff;}
-        .oracle-header h3 { font-family: var(--font-mag); font-size: 1.4rem; font-weight:normal;}
-        .oracle-body { flex:1; overflow-y:auto; padding:25px; display:flex; flex-direction:column; gap:18px; background: var(--void-2);}
-        .msg { max-width: 85%; padding: 16px 20px; border-radius: 20px; font-size: 0.95rem; line-height: 1.7; }
-        .msg.bot { background: #fff; color: var(--text-dark); border: 1px solid var(--border-light); align-self: flex-start; border-bottom-left-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.02);}
-        body.lang-ar .msg.bot { border-bottom-left-radius: 20px; border-bottom-right-radius: 4px; }
-        .msg.user { background: var(--rose-vibrant); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; box-shadow: 0 8px 20px rgba(210, 140, 148, 0.3);}
-        body.lang-ar .msg.user { border-bottom-right-radius: 20px; border-bottom-left-radius: 4px; }
-        .oracle-form { padding: 20px; background: #fff; border-top: 1px solid var(--border-light); display:flex; gap:12px; }
-        .oracle-btn-send { background: var(--rose-deep); color: #fff; border: none; width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; transition: 0.3s; }
-        .oracle-btn-send:hover { background: var(--rose-vibrant); transform: scale(1.05); }
+        .ex-oracle[data-open="true"]{ opacity:1; visibility:visible; transform:translateY(0) scale(1); }
+        .oracle-header { background: var(--rose-soft); padding: 30px 25px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-light);}
+        .oracle-header h3 { font-family: var(--font-mag); font-size: 1.6rem; font-weight:bold; color: var(--rose-deep);}
+        .oracle-body { flex:1; overflow-y:auto; padding:30px 25px; display:flex; flex-direction:column; gap:20px; background: #fff;}
+        .msg { max-width: 85%; padding: 18px 22px; border-radius: 24px; font-size: 1rem; line-height: 1.7; }
+        .msg.bot { background: var(--void-2); color: var(--text-dark); border: 1px solid var(--border-light); align-self: flex-start; border-bottom-left-radius: 6px; }
+        body.lang-ar .msg.bot { border-bottom-left-radius: 24px; border-bottom-right-radius: 6px; }
+        .msg.user { background: var(--rose-deep); color: #fff; align-self: flex-end; border-bottom-right-radius: 6px; box-shadow: 0 10px 25px rgba(179, 115, 109, 0.3);}
+        body.lang-ar .msg.user { border-bottom-right-radius: 24px; border-bottom-left-radius: 6px; }
+        .oracle-form { padding: 20px 25px; background: #fff; border-top: 1px solid var(--border-light); display:flex; gap:15px; }
+        .oracle-btn-send { background: var(--rose-deep); color: #fff; border: none; width: 55px; height: 55px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; transition: 0.3s; }
+        .oracle-btn-send:hover { background: var(--rose-vibrant); transform: scale(1.08); }
 
         /* Modals */
-        .modal-overlay { position:fixed; inset:0; background:rgba(42, 31, 32, 0.85); backdrop-filter:blur(15px); z-index:15000; display:none; justify-content:center; align-items:center; padding:20px; }
-        .modal-content { background:#fff; width:min(550px, 100%); border-radius:30px; padding:50px; position:relative; box-shadow: 0 40px 100px rgba(0,0,0,0.3); }
-        .modal-close { position:absolute; top:25px; right:25px; background:var(--rose-soft); border:none; width:40px; height:40px; border-radius:50%; color:var(--rose-deep); font-size:1.5rem; cursor:pointer; transition:0.3s;}
+        .modal-overlay { position:fixed; inset:0; background:rgba(58, 43, 44, 0.9); backdrop-filter:blur(20px); z-index:15000; display:none; justify-content:center; align-items:center; padding:20px; }
+        .modal-content { background:#fff; width:min(600px, 100%); border-radius:40px; padding:60px; position:relative; box-shadow: 0 50px 120px rgba(0,0,0,0.4); }
+        .modal-close { position:absolute; top:30px; right:30px; background:var(--rose-soft); border:none; width:45px; height:45px; border-radius:50%; color:var(--rose-deep); font-size:1.8rem; cursor:pointer; transition:0.3s; display:grid; place-items:center;}
         .modal-close:hover { background: var(--rose-vibrant); color: #fff; transform:rotate(90deg);}
-        body.lang-ar .modal-close { right:auto; left:25px; }
+        body.lang-ar .modal-close { right:auto; left:30px; }
 
         /* Cinematic Loader */
         #master-loader {
-            position:fixed; inset:0; background:var(--void-2); z-index:2147483647; display:flex; flex-direction:column; justify-content:center; align-items:center; transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position:fixed; inset:0; background:var(--void-2); z-index:2147483647; display:flex; flex-direction:column; justify-content:center; align-items:center; transition: 1.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        #master-loader.hide { opacity: 0; pointer-events: none; visibility: hidden; transform:scale(1.05);}
-        .loader-logo { height: 80px; margin-bottom: 30px; animation: pulse 2s infinite; }
-        .loader-bar { width: 250px; height: 2px; background: var(--border-light); border-radius: 2px; overflow: hidden; }
-        .loader-fill { height: 100%; background: var(--rose-deep); width: 0%; transition: width 0.4s ease; }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform:scale(1);} 50% { opacity: 0.8; transform:scale(0.98);} }
+        #master-loader.hide { opacity: 0; pointer-events: none; visibility: hidden; transform:scale(1.02);}
+        .loader-logo { height: 100px; margin-bottom: 40px; animation: pulse 2.5s infinite; filter: drop-shadow(0 10px 20px rgba(223, 168, 162, 0.2)); }
+        .loader-bar { width: 300px; height: 3px; background: var(--border-light); border-radius: 3px; overflow: hidden; }
+        .loader-fill { height: 100%; background: var(--rose-deep); width: 0%; transition: width 0.5s ease; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform:scale(1);} 50% { opacity: 0.7; transform:scale(0.97);} }
 
         /* Responsive */
         @media(max-width: 900px){
             .hero-layout { grid-template-columns: 1fr; text-align: center; gap:40px;}
             .hero-text-content { padding: 0; }
             body.lang-ar .hero-text-content { padding: 0; }
-            .hero-visual { aspect-ratio: 4/3; border-radius: 30px; }
+            .hero-visual { aspect-ratio: 4/3; border-radius: 40px; border-width: 5px; }
             .founder-layout { grid-template-columns: 1fr; text-align: center; }
             .ig-grid { grid-template-columns: 1fr; }
-            .section-padding { padding: 80px 5vw; }
+            .section-padding { padding: 100px 5vw; }
             .top-nav { padding: 15px 4vw; }
+            .ex-oracle-fab { right:20px; bottom:20px; width:65px; height:65px; }
+            .ex-oracle { right:10px; bottom:100px; width:calc(100vw - 20px); height: 80vh; }
         }
     </style>
 </head>
@@ -319,9 +316,9 @@
 
 <!-- CINEMATIC LOADER -->
 <div id="master-loader">
-    <!-- Using image_2.png for the loader logo -->
-    <img src="image_2.png" alt="Dr Wafa Alghamdi" class="loader-logo">
-    <div style="font-family: var(--font-mono); color: var(--rose-vibrant); font-size: 0.8rem; margin-bottom: 25px; letter-spacing: 0.25em; text-transform:uppercase;">The Sovereign Clinic</div>
+    <!-- Main Logo -->
+    <img src="image_3ffcc4.png" alt="Dr Wafa Alghamdi" class="loader-logo">
+    <div style="font-family: var(--font-mono); color: var(--rose-vibrant); font-size: 0.85rem; margin-bottom: 30px; letter-spacing: 0.3em; text-transform:uppercase; font-weight:bold;">The Sovereign Clinic</div>
     <div class="loader-bar"><div class="loader-fill" id="loader-fill"></div></div>
 </div>
 
@@ -329,13 +326,13 @@
 <div class="utility-bar">
     <div>
         <a href="#" class="utility-link" onclick="openModal('waitlist-modal')">
-            <span class="en-only">JOIN DROPZERO™ WAITLIST</span>
+            <span class="en-only">JOIN THE ELITE WAITLIST</span>
             <span class="ar-only">الانضمام لقائمة الانتظار النخبوية</span>
         </a>
     </div>
-    <div style="display:flex; gap:20px; align-items:center;">
-        <span class="utility-chip">HX-5 AI ACTIVE</span>
-        <a href="#" class="utility-link" onclick="toggleLanguage()">
+    <div style="display:flex; gap:25px; align-items:center;">
+        <span class="utility-chip">AI CONCIERGE ACTIVE</span>
+        <a href="#" class="utility-link" style="font-weight:bold;" onclick="toggleLanguage()">
             <span class="en-only">العربية</span>
             <span class="ar-only">ENGLISH</span>
         </a>
@@ -345,8 +342,8 @@
 <!-- MAGAZINE NAVIGATION -->
 <nav class="top-nav" id="navbar">
     <a href="#" class="brand-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-        <!-- Using image_2.png for the Navbar logo -->
-        <img src="image_2.png" alt="Dr Wafa Alghamdi">
+        <!-- Main Logo -->
+        <img src="image_3ffcc4.png" alt="Dr Wafa Alghamdi">
     </a>
     <div class="nav-actions">
         <button class="nav-icon" onclick="document.getElementById('procedures').scrollIntoView({behavior:'smooth'})" aria-label="Procedures" title="Clinical Index">
@@ -362,16 +359,16 @@
 <section class="hero">
     <div class="hero-layout">
         <div class="hero-text-content reveal">
-            <span class="mag-issue">ISSUE No. 01 — AESTHETIC PERFECTION</span>
+            <span class="mag-issue">BEST. SKIN. EVER.</span>
             <h1 class="hero-title">
                 <span class="ar-only">المهندسة المعمارية لملامحكِ.</span>
                 <span class="en-only">The Architect of Symmetry.</span>
             </h1>
             <p class="hero-lead">
-                <span class="ar-only">نحن لا نصمم التعديلات الطبية وحسب.. نحن نهندس ثقة الإنسان بنفسه. اكتشفي التناغم المثالي بين طب الجلدية المتقدم والفن المعماري لملامحك عبر تقنياتنا الحصرية للواقع الافتراضي.</span>
-                <span class="en-only">We don't just perform medical procedures.. we engineer human confidence. Discover the perfect harmony between advanced dermatology and facial architecture through exclusive VR simulations.</span>
+                <span class="ar-only">أسئلة حول بشرتك، شعرك، أو أظافرك؟ طبيبة الجلدية الخاصة بكِ تعرف الإجابة! اكتشفي التناغم المثالي بين طب الجلدية المتقدم والفن المعماري لملامحك عبر تقنياتنا الحصرية.</span>
+                <span class="en-only">Questions about your skin, hair, or nails? Your Dermatologist Knows!! Discover the perfect harmony between advanced dermatology and facial architecture.</span>
             </p>
-            <div style="display:flex; gap:15px; flex-wrap:wrap;">
+            <div style="display:flex; gap:20px; flex-wrap:wrap;">
                 <button class="btn btn-primary" onclick="document.getElementById('procedures').scrollIntoView({behavior:'smooth'})">
                     <span class="ar-only">تصفح الدليل الطبي</span><span class="en-only">The Clinical Index</span>
                 </button>
@@ -381,8 +378,7 @@
             </div>
         </div>
         <div class="hero-visual reveal">
-            <!-- Representing the high-end cinematic feel from the videos -->
-            <img src="https://images.unsplash.com/photo-1620330101569-80b6abfdfa91?auto=format&fit=crop&q=80&w=1000" class="hero-video" alt="Aesthetic Dermatology">
+            <img src="https://images.unsplash.com/photo-1512496015851-a1dc8b41cd85?auto=format&fit=crop&q=80&w=1000" class="hero-video" alt="Aesthetic Dermatology">
             <div class="hero-overlay"></div>
         </div>
     </div>
@@ -392,27 +388,25 @@
 <section class="section-padding bg-blush">
     <div class="founder-layout reveal">
         <div class="founder-img-wrapper">
-            <!-- Using image_3.png as requested for the portrait -->
-            <img src="image_3.png" alt="Dr Wafa Alghamdi Portrait" class="founder-img">
+            <!-- Using portrait if available, placeholder for luxurious feel -->
+            <img src="https://images.unsplash.com/photo-1559548331-6fca8e7d7e63?auto=format&fit=crop&q=80&w=800" alt="Dr Wafa Alghamdi Portrait" class="founder-img">
         </div>
         <div class="founder-content">
-            <span class="ed-tag" style="background:#fff; border:1px solid var(--rose-vibrant);">The Founder</span>
+            <span class="ed-tag" style="background:#fff; border:1px solid var(--rose-vibrant); color:var(--rose-deep); padding: 8px 20px; border-radius:999px; font-weight:bold; font-size:0.8rem; text-transform:uppercase; margin-bottom:20px; display:inline-block;">The Founder</span>
             <h3 class="ar-only">د. وفاء الغامدي</h3>
             <h3 class="en-only">Dr. Wafa Alghamdi</h3>
             <p class="ar-only">
-                طبيبة أمراض جلدية وتجميل معتمدة (Board Certified). تتجاوز رؤيتي الممارسة الطبية التقليدية لتصل إلى <strong>"هندسة التجربة الإنسانية"</strong>. 
-                أؤمن أن الجمال لا يكمن في التغيير، بل في الدقة، التناظر، واستعادة الثقة. عبر دمج التكنولوجيا المتقدمة (مثل محاكاة VR) واللمسة الفنية المعمارية، أضمن لعملائي اليقين التام والنتائج الطبيعية التي تعكس هويتهم الحقيقية.
+                نائب أول جلدية وتجميل وليزر. أستقبلكم في عيادات كوزمو هب في أبحر وشارع الأمير سلطان. أنا هنا لمساعدتك للوصول لأحلى نسخة من بشرتك وجمالك. تتجاوز رؤيتي الممارسة الطبية التقليدية لتصل إلى <strong>"هندسة التجربة الإنسانية"</strong>. أضمن لعملائي اليقين التام والنتائج الطبيعية التي تعكس هويتهم الحقيقية.
             </p>
             <p class="en-only">
-                Board Certified Dermatologist. My vision transcends traditional medical practice to reach <strong>"Human Experience Engineering"</strong>. 
-                I believe beauty lies not in alteration, but in precision, symmetry, and restoring confidence. By integrating advanced technology (like VR simulation) with an architectural artistic touch, I guarantee my clients absolute certainty and natural results that reflect their true identity.
+                Senior Registrar Dermatology, Aesthetics & Laser. I welcome you at Cosmo Hub clinics in Obhur and Prince Sultan St. I am here to help you reach the best version of your skin and beauty. My vision transcends traditional medical practice to reach <strong>"Human Experience Engineering"</strong>, guaranteeing absolute certainty and natural results.
             </p>
-            <div class="signature">Wafa Alghamdi</div>
+            <div class="signature">W. Alghamdi</div>
         </div>
     </div>
 </section>
 
-<!-- EDITORIAL PROCEDURES INDEX (Inspired by Video 1 & 2: The Aesthetic Society) -->
+<!-- EDITORIAL PROCEDURES INDEX -->
 <section id="procedures" class="section-padding">
     <div class="section-header reveal">
         <h2 class="section-title">
@@ -420,89 +414,94 @@
             <span class="en-only">The Clinical Index</span>
         </h2>
         <p class="section-subtitle">
-            <span class="ar-only">إجراءات تجميلية وحلول جلدية معتمدة على التشريح الدقيق، المحاكاة الاستباقية، والتنفيذ السينمائي لضمان يقينك التام.</span>
-            <span class="en-only">Aesthetic procedures and dermatological solutions relying on precise anatomy, proactive simulation, and cinematic execution for your complete certainty.</span>
+            <span class="ar-only">إجراءات تجميلية وحلول جلدية معتمدة على التشريح الدقيق والتنفيذ السينمائي لضمان يقينك التام.</span>
+            <span class="en-only">Aesthetic procedures and dermatological solutions relying on precise anatomy and cinematic execution for your complete certainty.</span>
         </p>
     </div>
 
     <div class="editorial-grid reveal">
-        <!-- Procedure 1 -->
         <article class="ed-card">
             <span class="ed-tag">Aesthetics</span>
-            <h3 class="ar-only">تجديد شباب الوجه (البوتكس)</h3>
-            <h3 class="en-only">Facial Rejuvenation & Botox</h3>
-            <p class="ar-only">استراتيجيات دقيقة للتخلص من الخطوط التعبيرية، علاج فرط التعرق، وتجديد الحيوية دون تغيير هويتك الأصلية. نعتمد على الدقة لتحديث مظهرك لا تغييره.</p>
-            <p class="en-only">Precise strategies to eliminate expression lines, treat hyperhidrosis, and restore vitality without changing your original identity. We update, not alter.</p>
-            <button class="btn btn-outline" style="width:100%;" onclick="window.toggleOracle(true, 'أريد معرفة المزيد عن استخدامات البوتكس وتجديد شباب الوجه')">
+            <h3 class="ar-only">تجديد شباب الوجه</h3>
+            <h3 class="en-only">Facial Rejuvenation</h3>
+            <p class="ar-only">استراتيجيات دقيقة لاستعادة ملامح الشباب دون تغيير هويتك الأصلية.</p>
+            <p class="en-only">Precise strategies to restore youthful features without changing your original identity.</p>
+            <button class="btn btn-outline" style="width:100%;" onclick="window.toggleOracle(true, 'أريد معرفة المزيد عن تجديد شباب الوجه')">
                 <span class="ar-only">اسأل الأوراكل</span><span class="en-only">Ask Oracle</span>
             </button>
         </article>
 
-        <!-- Procedure 2 -->
         <article class="ed-card">
             <span class="ed-tag">Contouring</span>
-            <h3 class="ar-only">هندسة وتوريد الشفاه</h3>
-            <h3 class="en-only">Lip Architecture</h3>
-            <p class="ar-only">تحسين حجم وتناسق الشفاه وفقاً لخطوط النسبة الذهبية للوجه، لضمان مظهر ممتلئ، صحي، ويبدو طبيعياً بنسبة 100%.</p>
-            <p class="en-only">Improving lip volume and symmetry according to the golden ratio lines, ensuring a full, healthy, and 100% natural appearance.</p>
+            <h3 class="ar-only">هندسة الشفاه</h3>
+            <h3 class="en-only">Lip Enhancement</h3>
+            <p class="ar-only">تحسين حجم وتناسق الشفاه وفقاً لخطوط النسبة الذهبية للوجه، لضمان مظهر ممتلئ وصحي.</p>
+            <p class="en-only">Improving lip volume and symmetry according to golden ratio lines, ensuring a full, healthy appearance.</p>
             <button class="btn btn-outline" style="width:100%;" onclick="window.toggleOracle(true, 'كيف يتم تحديد شكل الشفاه المناسب لي؟')">
                 <span class="ar-only">اسأل الأوراكل</span><span class="en-only">Ask Oracle</span>
             </button>
         </article>
-
-        <!-- Procedure 3 (From Instagram content video) -->
+        
         <article class="ed-card">
-            <span class="ed-tag">Dermatology</span>
-            <h3 class="ar-only">بروتوكولات علاج البشرة</h3>
-            <h3 class="en-only">Advanced Skin Protocols</h3>
-            <p class="ar-only">برامج علاجية متكاملة للتعامل مع حب الشباب (بما في ذلك بروتوكولات الروكتان)، وفهم الأسباب الجذرية لضمان عدم الانتكاس، مدعومة بروتين عناية صارم.</p>
-            <p class="en-only">Comprehensive programs for treating acne (including Roaccutane protocols), understanding root causes to prevent relapse, backed by strict skincare routines.</p>
-            <button class="btn btn-outline" style="width:100%;" onclick="window.toggleOracle(true, 'لماذا تعود الحبوب بعد كورس الروكتان؟')">
+            <span class="ed-tag">Surgery & Lifting</span>
+            <h3 class="ar-only">شد الوجه ورفع الحواجب</h3>
+            <h3 class="en-only">Facelift & Brow Lift</h3>
+            <p class="ar-only">إجراءات متقدمة مثل جراحة الجفون (Eyelid Surgery) وشد الرقبة (Neck Lift) لاستعادة التناظر المثالي.</p>
+            <p class="en-only">Advanced procedures like Eyelid Surgery and Neck Lift to restore perfect symmetry.</p>
+            <button class="btn btn-outline" style="width:100%;" onclick="window.toggleOracle(true, 'ما هي الخيارات المتاحة لشد الوجه؟')">
+                <span class="ar-only">اسأل الأوراكل</span><span class="en-only">Ask Oracle</span>
+            </button>
+        </article>
+        
+        <article class="ed-card">
+            <span class="ed-tag">Facial Harmony</span>
+            <h3 class="ar-only">جراحة الأنف وزراعة الوجه</h3>
+            <h3 class="en-only">Nose Surgery & Implants</h3>
+            <p class="ar-only">إعادة تشكيل دقيق (Rhinoplasty & Facial Implants) لخلق توازن معماري لا تشوبه شائبة.</p>
+            <p class="en-only">Precise reshaping (Rhinoplasty & Facial Implants) to create flawless architectural balance.</p>
+            <button class="btn btn-outline" style="width:100%;" onclick="window.toggleOracle(true, 'معلومات عن جراحة وتجميل الأنف')">
                 <span class="ar-only">اسأل الأوراكل</span><span class="en-only">Ask Oracle</span>
             </button>
         </article>
     </div>
 </section>
 
-<!-- INSTAGRAM CLINICAL DIARY (From Video 3: Dr Wafa's IG) -->
+<!-- INSTAGRAM CLINICAL DIARY -->
 <section class="section-padding">
     <div class="ig-section reveal">
         <h2 class="ig-title">The Sage Chronicles</h2>
-        <a href="https://instagram.com/dr.wafagh" target="_blank" class="ig-handle">@dr.wafagh ↗</a>
-        <p style="max-width: 600px; margin: 0 auto 40px auto; font-size: 1.1rem; color: rgba(255,255,255,0.9);">
+        <a href="https://instagram.com/dr.wafa.alghamdi" target="_blank" class="ig-handle">@dr.wafa.alghamdi ↗</a>
+        <p style="max-width: 700px; margin: 0 auto 50px auto; font-size: 1.15rem; color: rgba(255,255,255,0.9);">
             <span class="ar-only">مجلة رقمية توعوية تسلط الضوء على سيكولوجية الجمال والتشريح الطبي الآمن، مباشرة من يوميات العيادة.</span>
             <span class="en-only">An educational digital journal highlighting the psychology of beauty and safe medical anatomy, straight from the clinic's diary.</span>
         </p>
         
         <div class="ig-grid">
-            <!-- IG Post 1: Roaccutane -->
-            <div class="ig-post" onclick="window.open('https://www.instagram.com/dr.wafagh/', '_blank')">
-                <div class="ig-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></div>
+            <div class="ig-post" onclick="window.open('https://www.instagram.com/dr.wafa.alghamdi/', '_blank')">
+                <div class="ig-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></div>
                 <h4 class="ar-only">ليش ترجع الحبوب بعد الروكتان؟</h4>
                 <h4 class="en-only">Why does acne return after Roaccutane?</h4>
-                <p class="ar-only">شرح مفصل لثلاثة أسباب رئيسية لعودة الحبوب بعد انتهاء كورس العلاج: عدم إكمال الجرعة، الخلل الهرموني، والعناية الخاطئة.</p>
-                <p class="en-only">A detailed explanation of the 3 main reasons acne returns post-treatment: incomplete dosage, hormonal imbalance, and poor skincare.</p>
+                <p class="ar-only">عدم إكمال الجرعة التراكمية حسب الوزن هي أحد أهم أسباب عودة الحبوب لـ 20% من المراجعين...</p>
+                <p class="en-only">Not completing the cumulative dose based on weight is a key reason acne returns for 20% of patients...</p>
             </div>
             
-            <!-- IG Post 2: Botox Uses -->
-            <div class="ig-post" onclick="window.open('https://www.instagram.com/dr.wafagh/', '_blank')">
-                <div class="ig-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></div>
+            <div class="ig-post" onclick="window.open('https://www.instagram.com/dr.wafa.alghamdi/', '_blank')">
+                <div class="ig-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></div>
                 <h4 class="ar-only">استخدامات البوتكس الطبية</h4>
                 <h4 class="en-only">Medical Uses of Botox</h4>
                 <p class="ar-only">من تقليل الخطوط التعبيرية وعلاج فرط التعرق، إلى التخفيف من الصداع النصفي وعلاج الابتسامة اللثوية.</p>
                 <p class="en-only">From reducing expression lines and treating hyperhidrosis to alleviating migraines and treating gummy smiles.</p>
             </div>
             
-            <!-- IG Post 3: Sunscreen -->
-            <div class="ig-post" onclick="window.open('https://www.instagram.com/dr.wafagh/', '_blank')">
-                <div class="ig-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></div>
+            <div class="ig-post" onclick="window.open('https://www.instagram.com/dr.wafa.alghamdi/', '_blank')">
+                <div class="ig-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></div>
                 <h4 class="ar-only">الكمية الصحيحة لواقي الشمس</h4>
                 <h4 class="en-only">The Correct Amount of Sunscreen</h4>
                 <p class="ar-only">لضمان حماية بشرتك القصوى بعد الإجراءات الطبية، تعرفي على "قاعدة الإصبعين" لتطبيق واقي الشمس بفعالية.</p>
                 <p class="en-only">To ensure maximum skin protection post-procedures, learn the "two-finger rule" for applying sunscreen effectively.</p>
             </div>
         </div>
-        <button class="btn" style="background:#fff; color:var(--rose-deep); border:none;" onclick="window.open('https://instagram.com/dr.wafagh', '_blank')">
+        <button class="btn" style="background:#fff; color:var(--rose-deep); border:none;" onclick="window.open('https://instagram.com/dr.wafa.alghamdi', '_blank')">
             <span class="ar-only">متابعة اليوميات الطبية</span><span class="en-only">Follow Medical Updates</span>
         </button>
     </div>
@@ -513,7 +512,7 @@
     <div class="vault-container reveal">
         <div class="vault-header">
             <h2>The 1of1 Client Vault</h2>
-            <p style="color:var(--rose-deep); margin-top:10px; opacity:0.8; font-family: var(--font-ui);">
+            <p style="color:#fff; margin-top:10px; opacity:0.9; font-family: var(--font-ui); font-size:1.1rem;">
                 <span class="ar-only">بوابتك الآمنة للوصول إلى ملفك الطبي، نتائج محاكاة الـ VR، وخطة التعافي.</span>
                 <span class="en-only">Your secure gateway to access your medical file, VR simulation results, and recovery roadmap.</span>
             </p>
@@ -521,18 +520,18 @@
         <div class="vault-body">
             <form id="vault-form" onsubmit="event.preventDefault(); alert(document.body.classList.contains('lang-ar') ? 'الملف محمي بتقنية Zero-Trust. سيتم تحويلك للأوراكل للمساعدة.' : 'File protected by Zero-Trust. Redirecting to Oracle for assistance.'); window.toggleOracle(true);">
                 <div class="input-group">
-                    <label style="display:block; margin-bottom:8px; font-family:var(--font-mono); font-size:0.75rem; color:var(--rose-deep); letter-spacing:0.1em; text-transform:uppercase; font-weight:bold;">
+                    <label style="display:block; margin-bottom:10px; font-family:var(--font-mono); font-size:0.8rem; color:var(--rose-deep); letter-spacing:0.1em; text-transform:uppercase; font-weight:bold;">
                         <span class="ar-only">رقم الملف (الجوال)</span><span class="en-only">File Number (Phone)</span>
                     </label>
                     <input type="tel" class="t-input" placeholder="+966 5X XXX XXXX" required>
                 </div>
                 <div class="input-group">
-                    <label style="display:block; margin-bottom:8px; font-family:var(--font-mono); font-size:0.75rem; color:var(--rose-deep); letter-spacing:0.1em; text-transform:uppercase; font-weight:bold;">
+                    <label style="display:block; margin-bottom:10px; font-family:var(--font-mono); font-size:0.8rem; color:var(--rose-deep); letter-spacing:0.1em; text-transform:uppercase; font-weight:bold;">
                         <span class="ar-only">الرمز السري (Passcode)</span><span class="en-only">Secure Passcode</span>
                     </label>
                     <input type="password" class="t-input" placeholder="••••••••" required>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width:100%; padding:20px; font-size:1rem;">
+                <button type="submit" class="btn btn-primary" style="width:100%; padding:22px; font-size:1.1rem;">
                     <span class="ar-only">فتح الملف المشفر</span><span class="en-only">Unlock Secure File</span>
                 </button>
             </form>
@@ -541,24 +540,24 @@
 </section>
 
 <!-- FOOTER -->
-<footer style="background: var(--void); padding: 80px 5vw; border-top: 1px solid var(--border-light); text-align:center;">
-    <!-- Using image_2.png for the footer logo -->
-    <img src="image_2.png" alt="Dr Wafa Alghamdi" style="height:70px; margin-bottom:25px; filter: drop-shadow(0 5px 15px rgba(210,140,148,0.1));">
+<footer style="background: var(--void); padding: 100px 5vw 60px 5vw; border-top: 1px solid var(--border-light); text-align:center;">
+    <!-- Main Logo -->
+    <img src="image_3ffcc4.png" alt="Dr Wafa Alghamdi" style="height:85px; margin-bottom:35px; filter: drop-shadow(0 10px 20px rgba(223,168,162,0.15));">
     
-    <p style="color:var(--text-muted); font-size:1.05rem; margin-bottom:30px; font-family: var(--font-mag); font-style: italic;">
+    <p style="color:var(--text-muted); font-size:1.15rem; margin-bottom:40px; font-family: var(--font-mag); font-style: italic;">
         The Sovereign Clinic | Precision & Aesthetics<br>
         Engineering Human Confidence
     </p>
-    <div style="display:flex; justify-content:center; gap:30px; margin-bottom:40px; font-family: var(--font-mono); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.1em;">
-        <a href="https://instagram.com/dr.wafagh" target="_blank" style="color:var(--rose-deep); font-weight:bold;">Instagram</a>
+    <div style="display:flex; justify-content:center; gap:40px; margin-bottom:50px; font-family: var(--font-mono); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.15em;">
+        <a href="https://instagram.com/dr.wafa.alghamdi" target="_blank" style="color:var(--rose-deep); font-weight:bold;">Instagram</a>
         <a href="#" style="color:var(--rose-deep); font-weight:bold;">PDPL & Privacy</a>
         <a href="#" style="color:var(--rose-deep); font-weight:bold;">Clinic Terms</a>
     </div>
-    <div style="padding-top:30px; border-top: 1px solid var(--border-light);">
-        <p style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:10px;">
+    <div style="padding-top:40px; border-top: 1px solid var(--border-light);">
+        <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:15px;">
             Executive Direction by フサム | experience™
         </p>
-        <p style="font-family:var(--font-mono); font-size:0.6rem; color:#aaa; letter-spacing:0.1em;">
+        <p style="font-family:var(--font-mono); font-size:0.65rem; color:#aaa; letter-spacing:0.1em;">
             © 2026 All Rights Reserved.
         </p>
     </div>
@@ -566,46 +565,46 @@
 
 <!-- EDITORIAL AI ORACLE (Dr Wafa's Medical Concierge) -->
 <button class="ex-oracle-fab" type="button" aria-label="Open AI Assistant" onclick="window.toggleOracle(true)">
-    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
 </button>
 
 <section class="ex-oracle" id="ex-oracle" data-open="false">
     <header class="oracle-header">
         <div>
-            <div style="font-family:var(--font-mono); font-size:0.65rem; color:var(--rose-light); letter-spacing:0.2em; margin-bottom:5px;">CLINICAL AI CONCIERGE</div>
+            <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--rose-vibrant); letter-spacing:0.25em; margin-bottom:5px;">CLINICAL AI CONCIERGE</div>
             <h3 class="ar-only">مساعد د. وفاء الرقمي</h3>
             <h3 class="en-only">Dr. Wafa's Assistant</h3>
         </div>
-        <button onclick="window.toggleOracle(false)" style="background:none; border:none; font-size:2rem; color:#fff; cursor:pointer; line-height:1;">&times;</button>
+        <button onclick="window.toggleOracle(false)" style="background:none; border:none; font-size:2.5rem; color:var(--rose-deep); cursor:pointer; line-height:1;">&times;</button>
     </header>
     <div class="oracle-body" id="oracleBody"></div>
     <form class="oracle-form" onsubmit="event.preventDefault(); window.sendOracleMessage();">
-        <input id="oracleInput" class="t-input" style="padding:15px 25px; border-radius:999px; font-size:0.95rem; border-color:var(--border-light);" autocomplete="off" placeholder="Ask about treatments, bookings...">
+        <input id="oracleInput" class="t-input" style="padding:18px 30px; border-radius:999px; font-size:1rem; border-color:var(--border-light);" autocomplete="off" placeholder="Ask about treatments, bookings...">
         <button class="oracle-btn-send" type="submit">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
     </form>
 </section>
 
-<!-- WAITLIST MODAL (DROPzero) -->
+<!-- WAITLIST MODAL -->
 <div id="waitlist-modal" class="modal-overlay">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('waitlist-modal')">&times;</button>
-        <div style="font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.2em; color:var(--gold-warm); text-transform:uppercase; margin-bottom:10px; font-weight:bold;">DROPzero™ Protocol</div>
-        <h2 style="font-family:var(--font-mag); color:var(--rose-deep); margin-bottom:15px; font-size:2.2rem; line-height:1.1;">
+        <div style="font-family:var(--font-mono); font-size:0.85rem; letter-spacing:0.25em; color:var(--gold-warm); text-transform:uppercase; margin-bottom:15px; font-weight:bold;">VIP Protocol</div>
+        <h2 style="font-family:var(--font-mag); color:var(--rose-deep); margin-bottom:20px; font-size:2.8rem; line-height:1.1;">
             <span class="ar-only">قائمة الانتظار النخبوية</span><span class="en-only">Elite Waitlist</span>
         </h2>
-        <p style="color:var(--text-muted); margin-bottom:35px; line-height:1.7;">
-            <span class="ar-only">عيادة د. وفاء تعمل بنظام النوافذ المغلقة للحجوزات. سجل بياناتك ليتم إشعارك فور إتاحة المواعيد للاستشارة أو لمحاكاة الـ VR.</span>
-            <span class="en-only">Dr. Wafa's clinic operates on closed booking windows. Register to be notified immediately when appointments for consultations or VR simulations open.</span>
+        <p style="color:var(--text-muted); margin-bottom:40px; line-height:1.8; font-size:1.1rem;">
+            <span class="ar-only">سجل بياناتك ليتم إشعارك فور إتاحة المواعيد للاستشارة.</span>
+            <span class="en-only">Register to be notified immediately when appointments for consultations open.</span>
         </p>
         <div class="input-group">
             <input type="text" class="t-input" placeholder="Full Name / الاسم الكامل" required>
         </div>
-        <div class="input-group" style="margin-bottom:30px;">
+        <div class="input-group" style="margin-bottom:35px;">
             <input type="tel" class="t-input" placeholder="Phone Number / رقم الجوال" required>
         </div>
-        <button class="btn btn-primary" style="width:100%; padding:18px; font-size:1rem;" onclick="closeModal('waitlist-modal'); alert(document.body.classList.contains('lang-ar') ? 'تم تسجيلك في قائمة الانتظار النخبوية بنجاح.' : 'Successfully added to the Elite Waitlist.');">
+        <button class="btn btn-primary" style="width:100%; padding:22px; font-size:1.1rem;" onclick="closeModal('waitlist-modal'); alert(document.body.classList.contains('lang-ar') ? 'تم تسجيلك بنجاح.' : 'Successfully added to the Waitlist.');">
             <span class="ar-only">تأكيد التسجيل</span><span class="en-only">Confirm Registration</span>
         </button>
     </div>
@@ -618,17 +617,17 @@
         let loader = document.getElementById('master-loader');
         let width = 0;
         let interval = setInterval(() => {
-            width += Math.random() * 15 + 5; // Organic loading feel
+            width += Math.random() * 20 + 5; 
             if(width > 100) width = 100;
             fill.style.width = width + '%';
             if(width === 100) {
                 clearInterval(interval);
-                setTimeout(() => { loader.classList.add('hide'); }, 600);
+                setTimeout(() => { loader.classList.add('hide'); }, 700);
             }
-        }, 150);
+        }, 120);
     });
 
-    // --- SCROLL ANIMATIONS (Navbar & Reveal) ---
+    // --- SCROLL ANIMATIONS ---
     const nav = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
         if(window.scrollY > 60) nav.classList.add('scrolled');
@@ -664,8 +663,8 @@
         
         if(isOpen && body.children.length === 0) {
             appendOracleMsg("bot", isAr ? 
-                "مرحباً بك في العيادة السيادية. أنا المساعد الرقمي الخاص بالدكتورة وفاء الغامدي. كيف يمكنني مساعدتك اليوم؟ (استفسار عن محاكاة الواقع الافتراضي، إجراءات البوتكس، بروتوكول الروكتان، أو الحجوزات)." : 
-                "Welcome to the Sovereign Clinic. I am Dr. Wafa Alghamdi's digital concierge. How may I assist you today? (Inquire about VR simulations, Botox procedures, Roaccutane protocols, or bookings).");
+                "أنا الدكتورة وفاء الغامدي، نائب أول جلدية وتجميل وليزر. أستقبلكم في عيادات كوزمو هب.. أنا هنا راح أساعدك نوصل أحلى نسخة من بشرتك وجمالك!" : 
+                "I am Dr. Wafa Alghamdi, Senior Registrar Dermatology, Aesthetics & Laser. I welcome you at Cosmo Hub clinics.. I am here to help you reach the best version of your skin and beauty!");
         }
         
         if(isOpen && prefillMessage) {
@@ -678,7 +677,7 @@
         const body = document.getElementById('oracleBody');
         const el = document.createElement('div');
         el.className = `msg ${role}`;
-        el.innerHTML = text; // allow basic HTML like strong tags
+        el.innerHTML = text; 
         body.appendChild(el);
         body.scrollTop = body.scrollHeight;
         return el;
@@ -690,47 +689,31 @@
         if(!text) return;
         appendOracleMsg("user", text);
         input.value = '';
-        const loader = appendOracleMsg("bot", "<span style='opacity:0.5; letter-spacing:2px;'>...</span>");
+        const loader = appendOracleMsg("bot", "<span style='opacity:0.5; letter-spacing:3px;'>...</span>");
         
         const isAr = document.body.classList.contains('lang-ar');
         
-        // Intelligent Medical Concierge Logic based on provided content
         setTimeout(() => {
             loader.remove();
             let reply = isAr ? 
-                "لقد قمت بتسجيل طلبك. سأقوم بتوجيهه للفريق الطبي الخاص بالدكتورة وفاء للتواصل معك عبر ملفك السري. هل ترغبين بالانضمام لقائمة الانتظار؟" : 
-                "I have logged your request. I will route it to Dr. Wafa's medical team to contact you via your secure file. Would you like to join the waitlist?";
+                "لقد قمت بتسجيل طلبك لتوجيهه للفريق الطبي. هل ترغبين بالانضمام لقائمة الانتظار؟" : 
+                "Request logged for the medical team. Would you like to join the waitlist?";
             
             const lowerText = text.toLowerCase();
             
             if(lowerText.includes('روكتان') || lowerText.includes('حبوب') || lowerText.includes('roaccutane') || lowerText.includes('acne')) {
                 reply = isAr ? 
-                    "<strong>عودة الحبوب بعد الروكتان:</strong><br>حسب المادة العلمية للدكتورة وفاء، هناك 3 أسباب رئيسية لعودة الحبوب:<br>1. عدم إكمال الجرعة التراكمية الصحيحة حسب وزنك.<br>2. وجود خلل هرموني (مثل تكيس المبايض) لم يتم علاجه.<br>3. استخدام منتجات عناية تسد المسام بعد انتهاء الكورس." : 
-                    "<strong>Acne return post-Roaccutane:</strong><br>According to Dr. Wafa's clinical material, there are 3 main reasons:<br>1. Not completing the correct cumulative dose based on weight.<br>2. Untreated hormonal imbalance (like PCOS).<br>3. Using comedogenic skincare post-treatment.";
+                    "20% من المراجعين اللي ياخذوا روكتان ممكن ترجع لهم الحبوب لعدة أسباب: عدم إكمال الجرعة التراكمية حسب الوزن، خلل هرموني غير معالج مثل تكيس المبايض، أو استخدام منتجات تسد المسام." : 
+                    "20% of patients on Roaccutane might have acne return due to: incomplete cumulative dose by weight, untreated hormonal issues like PCOS, or comedogenic products.";
             }
-            else if(lowerText.includes('بوتكس') || lowerText.includes('botox') || lowerText.includes('تجديد') || lowerText.includes('rejuvenation')) {
+            else if(lowerText.includes('بوتكس') || lowerText.includes('botox') || lowerText.includes('تجديد')) {
                 reply = isAr ? 
-                    "<strong>استخدامات البوتكس الطبية والتجميلية:</strong><br>لا يقتصر استخدام البوتكس في عيادتنا على التجاعيد فقط. نستخدمه لـ:<br>- تقليل الخطوط التعبيرية للوجه.<br>- علاج فرط التعرق.<br>- التخفيف من الصداع النصفي المزمن (الشقيقة).<br>- تحسين وتعديل الابتسامة اللثوية." : 
-                    "<strong>Medical & Aesthetic uses of Botox:</strong><br>Botox isn't just for wrinkles. We use it for:<br>- Reducing facial expression lines.<br>- Treating hyperhidrosis (excessive sweating).<br>- Alleviating chronic migraines.<br>- Correcting gummy smiles.";
-            }
-            else if(lowerText.includes('شمس') || lowerText.includes('sunscreen') || lowerText.includes('حماية')) {
-                reply = isAr ? 
-                    "<strong>الحماية الفائقة:</strong><br>لضمان حماية بشرتك القصوى (خاصة بعد الإجراءات الطبية)، توصي د. وفاء بـ 'قاعدة الإصبعين' لضمان توزيع الكمية الكافية من واقي الشمس على كامل الوجه والرقبة." : 
-                    "<strong>Maximum Protection:</strong><br>To ensure ultimate skin protection (especially post-procedure), Dr. Wafa recommends the 'two-finger rule' to apply an adequate amount of sunscreen to the entire face and neck.";
-            }
-            else if(lowerText.includes('شفاه') || lowerText.includes('lip') || lowerText.includes('فيلر') || lowerText.includes('filler')) {
-                reply = isAr ? 
-                    "<strong>هندسة الشفاه والفيلر:</strong><br>نعتمد على القياسات التشريحية الدقيقة (النسبة الذهبية) لتحديد الحجم والتناسق المثالي لشفاهك. يتم الإجراء في بيئة خالية من التوتر (Zero-Cortisol) لضمان راحة تامة ومظهر طبيعي 100%." : 
-                    "<strong>Lip Architecture & Fillers:</strong><br>We rely on precise anatomical measurements (the golden ratio) to determine the ideal volume and symmetry for your lips. The procedure is done in a Zero-Cortisol environment for complete comfort and a 100% natural look.";
-            }
-            else if(lowerText.includes('vr') || lowerText.includes('محاكاة') || lowerText.includes('simulation') || lowerText.includes('نتيجة')) {
-                reply = isAr ? 
-                    "<strong>تقنية محاكاة الواقع الافتراضي (1of1 VR):</strong><br>هي خدمة استثنائية نقدمها لكِ قبل أي حقن. نقوم بمعالجة صورك بالذكاء الاصطناعي لتقديم تصور دقيق بنسبة 100% لشكلك النهائي، لتدخلي العيادة بيقين واطمئنان تام." : 
-                    "<strong>1of1 VR Simulation Technology:</strong><br>An exceptional service offered before any injection. We process your images using AI to provide a 100% accurate visualization of your final look, ensuring you enter the clinic with absolute certainty.";
+                    "استخدامات البوتكس تشمل تقليل الخطوط التعبيرية، علاج فرط التعرق، علاج ألم الصداع النصفي، وتحسين الابتسامة اللثوية." : 
+                    "Medical uses of Botox include reducing expression lines, treating hyperhidrosis, alleviating migraines, and improving gummy smiles.";
             }
             
             appendOracleMsg("bot", reply);
-        }, 900);
+        }, 1000);
     };
 </script>
 </body>
