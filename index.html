@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Dr. Wafa Alghamdi | Senior Registrar Dermatology, Aesthetics & Laser">
     <meta name="theme-color" content="#ffffff">
-    <meta name="ex-interface" content="Clinic Interface V23 - Medical & Aesthetic Edition">
+    <meta name="ex-interface" content="Clinic Interface V24 - Deep Language Isolation Edition">
     <meta name="robots" content="index, follow">
     
-    <title>Dr. Wafa Alghamdi | Dermatology & Aesthetics</title>
+    <!-- Title handles both, but will display cleanly -->
+    <title>د. وفاء الغامدي | Dermatology & Aesthetics</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,11 +33,20 @@
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const db = firebase.firestore();
         const auth = firebase.auth();
+
+        // Language Memory Logic (Runs before page render to prevent flashing)
+        (function() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if(savedLang) {
+                document.documentElement.setAttribute('lang', savedLang);
+                document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
+            }
+        })();
     </script>
 
     <style>
         /* =========================================================
-           EX V23: ALLURE x CLINICAL JOURNAL THEME (Responsive)
+           EX V24: ALLURE x CLINICAL JOURNAL THEME (Deep Language Isolation)
            ========================================================= */
         :root{
             --void: #ffffff;
@@ -60,17 +70,21 @@
         *{box-sizing:border-box;margin:0;padding:0}
         html{scroll-behavior:smooth}
         
+        /* LANGUAGE ISOLATION LOGIC */
+        html[lang="ar"] .en-only { display: none !important; }
+        html[lang="en"] .ar-only { display: none !important; }
+
+        html[lang="ar"] { font-family: var(--font-ar); text-align: right; }
+        html[lang="en"] { font-family: var(--font-ui); text-align: left; }
+
         body{
             background-color: var(--void);
             color: var(--text-dark);
-            font-family: var(--font-ui);
             line-height: 1.8;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        body.lang-ar{direction:rtl; text-align:right; font-family: var(--font-ar);}
-        body.lang-en{direction:ltr; text-align:left;}
         ::selection{background:var(--allure-red); color:#fff;}
         a{color:inherit; text-decoration:none;}
 
@@ -81,8 +95,11 @@
             background: #000; color: #fff;
             font-family: var(--font-mono); font-size: .65rem; letter-spacing: .15em; text-transform: uppercase;
         }
-        body.lang-ar .utility-bar { font-family: var(--font-ar); font-size: 0.75rem; letter-spacing: 0; }
-        .utility-link{color: #fff; transition:0.3s; font-weight:600;}
+        html[lang="ar"] .utility-bar { font-family: var(--font-ar); font-size: 0.75rem; letter-spacing: 0; }
+        
+        .utility-link {
+            color: #fff; transition:0.3s; font-weight:600; display:flex; align-items:center; gap:8px;
+        }
         .utility-link:hover{color: var(--allure-red);}
         .utility-chip{padding:.25rem 1rem; border-radius:0px; background:var(--allure-red); color:#fff; font-weight:bold; letter-spacing: 2px;}
         @media(max-width: 600px){ .utility-chip { display: none; } .utility-bar { font-size: 0.6rem; padding: 0 3vw;} }
@@ -100,9 +117,9 @@
         }
         
         /* Enlarged Top Logo */
-        .brand-logo img { height: 80px; transform: scale(1.2); transition:0.3s; transform-origin: left center;}
-        body.lang-ar .brand-logo img { transform-origin: right center; }
-        .brand-logo img:hover { transform: scale(1.25); }
+        .brand-logo img { height: 80px; transform: scale(1.3); transition:0.3s; transform-origin: left center;}
+        html[lang="ar"] .brand-logo img { transform-origin: right center; }
+        .brand-logo img:hover { transform: scale(1.35); }
         @media(max-width: 768px){ .brand-logo img { height: 60px; transform: scale(1.1); } }
 
         .nav-actions { display:flex; gap:15px; align-items:center; }
@@ -123,15 +140,15 @@
             max-width: 1400px; margin: 0 auto; padding: 0 5vw; position:relative; z-index:2;
         }
         
-        .hero-text-content { padding-right: 50px; }
-        body.lang-ar .hero-text-content { padding-right: 0; padding-left: 50px; }
+        html[lang="en"] .hero-text-content { padding-right: 50px; }
+        html[lang="ar"] .hero-text-content { padding-left: 50px; }
         
         .mag-issue {
             font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.3em;
             color: var(--allure-red); margin-bottom: 20px; display:inline-block;
             text-transform: uppercase; font-weight:bold;
         }
-        body.lang-ar .mag-issue { font-family: var(--font-ar); letter-spacing: 0; }
+        html[lang="ar"] .mag-issue { font-family: var(--font-ar); letter-spacing: 0; }
 
         /* Responsive Hero Title */
         .hero-title {
@@ -139,7 +156,7 @@
             line-height: 1.1; color: var(--text-dark); margin-bottom: 20px; font-weight: 900;
             text-transform: uppercase; letter-spacing: -0.02em; word-wrap: break-word;
         }
-        body.lang-ar .hero-title { line-height: 1.3; }
+        html[lang="ar"] .hero-title { line-height: 1.3; }
         
         .hero-lead {
             font-size: clamp(1rem, 2vw, 1.25rem); color: var(--text-muted); line-height: 1.8; margin-bottom: 40px;
@@ -161,7 +178,7 @@
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             text-transform: uppercase; border: none; text-align: center;
         }
-        body.lang-ar .btn { font-family: var(--font-ar); letter-spacing: 0; }
+        html[lang="ar"] .btn { font-family: var(--font-ar); letter-spacing: 0; }
         .btn-primary { background: #000; color: #fff; }
         .btn-primary:hover { background: var(--allure-red); }
         .btn-outline { background: #fff; color: #000; border: 1px solid #000; }
@@ -187,7 +204,7 @@
         .founder-content h3 { font-family: var(--font-mag); font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--text-dark); margin-bottom: 15px; font-weight: 900; }
         .founder-content p { color: var(--text-muted); font-size: clamp(1rem, 2vw, 1.15rem); line-height: 2; margin-bottom: 35px; font-weight: 300; }
         .ed-tag-red { display:inline-block; padding: 8px 20px; background:var(--allure-red); color:#fff; font-weight:bold; font-size:0.8rem; text-transform:uppercase; margin-bottom:20px; letter-spacing: 1px;}
-        body.lang-ar .ed-tag-red { letter-spacing: 0; font-family: var(--font-ar); }
+        html[lang="ar"] .ed-tag-red { letter-spacing: 0; font-family: var(--font-ar); }
 
         /* ALLURE SKIN GALLERY */
         .skin-gallery { display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; align-items: center;}
@@ -223,7 +240,7 @@
             background: #111; padding: 40px 30px; text-align: left;
             border-top: 3px solid var(--allure-red); transition: 0.4s; cursor: pointer;
         }
-        body.lang-ar .ig-post { text-align: right; }
+        html[lang="ar"] .ig-post { text-align: right; }
         .ig-post:hover { background: #1a1a1a; transform: translateY(-10px); }
         .ig-post h4 { font-size: clamp(1.3rem, 2vw, 1.6rem); margin-bottom: 15px; color: #fff; font-family: var(--font-mag); font-weight: bold; line-height:1.4; }
         .ig-post p { font-size: 1rem; color: #aaa; line-height: 1.8; font-weight: 300; }
@@ -272,24 +289,24 @@
         .modal-content { background:#fff; width:min(500px, 100%); padding:40px; position:relative; box-shadow: 0 30px 80px rgba(0,0,0,0.4); border: 1px solid #333;}
         .modal-close { position:absolute; top:15px; right:15px; background:none; border:none; width:40px; height:40px; color:#000; font-size:2rem; cursor:pointer; transition:0.3s; display:grid; place-items:center;}
         .modal-close:hover { color: var(--allure-red); transform:rotate(90deg);}
-        body.lang-ar .modal-close { right:auto; left:15px; }
+        html[lang="ar"] .modal-close { right:auto; left:15px; }
 
         /* Cinematic Loader */
         #master-loader {
             position:fixed; inset:0; background:var(--void); z-index:2147483647; display:flex; flex-direction:column; justify-content:center; align-items:center; transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #master-loader.hide { opacity: 0; pointer-events: none; visibility: hidden; transform:scale(1.05);}
-        
-        .loader-logo { height: 160px; transform: scale(1.3); margin-bottom: 50px; animation: pulse 2.5s infinite; filter: contrast(1.2); }
+        /* Enlarged Loader Logo */
+        .loader-logo { height: 160px; transform: scale(1.4); margin-bottom: 50px; animation: pulse 2.5s infinite; filter: contrast(1.2); }
         .loader-bar { width: 250px; height: 2px; background: var(--border-light); overflow: hidden; }
         .loader-fill { height: 100%; background: var(--allure-red); width: 0%; transition: width 0.5s ease; }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform:scale(1.3);} 50% { opacity: 0.8; transform:scale(1.25);} }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform:scale(1.4);} 50% { opacity: 0.8; transform:scale(1.35);} }
 
         /* RESPONSIVE DESIGN (Mobiles & Tablets) */
         @media(max-width: 1024px){
             .hero-layout, .founder-layout { grid-template-columns: 1fr; text-align: center; gap: 40px; }
             .hero-text-content { padding: 0; }
-            body.lang-ar .hero-text-content { padding: 0; }
+            html[lang="ar"] .hero-text-content { padding: 0; }
             .hero-visual { aspect-ratio: 1/1; max-width: 600px; margin: 0 auto; }
             .skin-gallery { grid-template-columns: repeat(2, 1fr); }
             .ig-grid { grid-template-columns: repeat(2, 1fr); }
@@ -313,17 +330,20 @@
             .ex-oracle-fab { right:20px; bottom:20px; width:60px; height:60px; }
             .ex-oracle { right:10px; bottom:90px; width:calc(100vw - 20px); height: 75vh; }
             .brand-logo img { height: 50px; transform: scale(1.1); }
-            .loader-logo { height: 100px; transform: scale(1.1); }
+            .loader-logo { height: 100px; transform: scale(1.2); }
         }
     </style>
 </head>
 
-<body class="lang-ar">
+<body>
 
 <!-- CINEMATIC LOADER -->
 <div id="master-loader">
     <img src="image.png" alt="Dr Wafa Alghamdi Clinic" class="loader-logo">
-    <div style="font-family: var(--font-mono); color: var(--text-dark); font-size: 0.85rem; margin-bottom: 30px; letter-spacing: 0.3em; text-transform:uppercase; font-weight:bold;">Dermatology & Aesthetics</div>
+    <div style="font-family: var(--font-mono); color: var(--text-dark); font-size: 0.85rem; margin-bottom: 30px; letter-spacing: 0.3em; text-transform:uppercase; font-weight:bold;">
+        <span class="en-only">Dermatology & Aesthetics</span>
+        <span class="ar-only">الجلدية والتجميل</span>
+    </div>
     <div class="loader-bar"><div class="loader-fill" id="loader-fill"></div></div>
 </div>
 
@@ -337,7 +357,13 @@
     </div>
     <div style="display:flex; gap:20px; align-items:center;">
         <span class="utility-chip">MEDICAL CONCIERGE ACTIVE</span>
-        <a href="#" class="utility-link" style="font-weight:bold;" onclick="toggleLanguage()">
+        <!-- Language Switcher Icon + Text -->
+        <a href="#" class="utility-link" onclick="toggleLanguage(event)" aria-label="تغيير اللغة / Change Language">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
             <span class="en-only">العربية</span>
             <span class="ar-only">ENGLISH</span>
         </a>
@@ -351,10 +377,10 @@
     </a>
     <div class="nav-actions">
         <button class="nav-icon" onclick="document.getElementById('procedures').scrollIntoView({behavior:'smooth'})" aria-label="Procedures" title="Clinical Index">
-            <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16m-7 6h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 6h16M4 12h16m-7 6h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </button>
         <button class="nav-icon" onclick="document.getElementById('vault').scrollIntoView({behavior:'smooth'})" aria-label="Patient Portal" title="Patient Vault">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
         </button>
     </div>
 </nav>
@@ -363,7 +389,10 @@
 <section class="hero">
     <div class="hero-layout">
         <div class="hero-text-content reveal">
-            <span class="mag-issue">DERMATOLOGY & AESTHETICS CLINIC</span>
+            <span class="mag-issue">
+                <span class="en-only">DERMATOLOGY & AESTHETICS CLINIC</span>
+                <span class="ar-only">عيادة الجلدية والتجميل</span>
+            </span>
             <h1 class="hero-title">
                 <span class="ar-only">إشراقة<br>بشرتكِ.</span>
                 <span class="en-only">Radiance<br>& Beauty.</span>
@@ -382,7 +411,6 @@
             </div>
         </div>
         <div class="hero-visual reveal">
-            <!-- Autoplaying Video as requested -->
             <video src="20260728-0318-22.9222226.mp4" class="hero-video" autoplay muted loop playsinline></video>
         </div>
     </div>
@@ -391,7 +419,10 @@
 <!-- SKIN GALLERY -->
 <section class="section-padding bg-gray">
     <div class="section-header reveal">
-        <span class="mag-issue" style="color:var(--text-dark); border-bottom-color:#000;">HEALTHY GLOW</span>
+        <span class="mag-issue" style="color:var(--text-dark); border-bottom-color:#000;">
+            <span class="en-only">HEALTHY GLOW</span>
+            <span class="ar-only">إشراقة صحية</span>
+        </span>
         <h2 class="section-title">
             <span class="ar-only">بشرة صحية ونضرة.</span>
             <span class="en-only">Healthy, Radiant Skin.</span>
@@ -413,11 +444,13 @@
 <section class="section-padding">
     <div class="founder-layout reveal">
         <div class="founder-img-wrapper">
-            <!-- Correct Founder Image -->
             <img src="image_11.png" alt="Dr Wafa Alghamdi Portrait" class="founder-img">
         </div>
         <div class="founder-content">
-            <span class="ed-tag-red">Senior Registrar</span>
+            <span class="ed-tag-red">
+                <span class="en-only">Senior Registrar</span>
+                <span class="ar-only">نائب أول</span>
+            </span>
             <h3 class="ar-only">د. وفاء الغامدي</h3>
             <h3 class="en-only">Dr. Wafa Alghamdi</h3>
             <p class="ar-only">
@@ -428,7 +461,7 @@
                 Senior Registrar in Dermatology, Aesthetics, and Laser. I am dedicated to providing comprehensive medical and aesthetic care focused on your skin's health and natural beauty. 
                 My goal is to safely and precisely highlight your features using the latest certified medical technologies, ensuring natural, safe results that boost your confidence.
             </p>
-            <div class="signature" style="color:#000;">Wafa Alghamdi</div>
+            <div class="signature" style="color:#000; font-family: var(--font-mag);">Wafa Alghamdi</div>
         </div>
     </div>
 </section>
@@ -436,7 +469,10 @@
 <!-- CLINICAL INDEX -->
 <section id="procedures" class="section-padding bg-gray">
     <div class="section-header reveal">
-        <span class="mag-issue">CLINICAL INDEX</span>
+        <span class="mag-issue">
+            <span class="en-only">CLINICAL INDEX</span>
+            <span class="ar-only">الدليل الطبي</span>
+        </span>
         <h2 class="section-title">
             <span class="ar-only">دليل الإجراءات التجميلية</span>
             <span class="en-only">Aesthetic Procedures Index</span>
@@ -502,14 +538,14 @@
 <section class="ig-section">
     <div class="reveal">
         <h2 class="ig-title">THE SAGE CHRONICLES</h2>
-        <a href="https://instagram.com/dr.wafagh" target="_blank" class="ig-handle">@dr.wafagh ↗</a>
+        <a href="https://instagram.com/dr.wafagh" target="_blank" class="ig-handle" style="direction: ltr;">@dr.wafagh ↗</a>
         <p style="max-width: 700px; margin: 0 auto 60px auto; font-size: clamp(1rem, 2vw, 1.15rem); color: #ccc; font-weight: 300;">
             <span class="ar-only">منصة توعوية طبية تسلط الضوء على صحة الجلد والتشريح الطبي الصحيح، مباشرة من يوميات العيادة.</span>
             <span class="en-only">A medical educational platform highlighting skin health and proper medical anatomy, straight from the clinic's diary.</span>
         </p>
         
         <div class="ig-grid">
-            <!-- IG Post 1: Real Link integrated -->
+            <!-- IG Post 1 -->
             <div class="ig-post" onclick="window.open('https://www.instagram.com/reel/DbBP1frtf43/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank')">
                 <h4 class="ar-only">ليش ترجع الحبوب بعد الروكتان؟</h4>
                 <h4 class="en-only">Acne After Roaccutane?</h4>
@@ -517,7 +553,7 @@
                 <p class="en-only">Not completing the cumulative dose based on weight is a key reason acne returns for 20% of patients, along with untreated hormonal imbalances.</p>
             </div>
             
-            <!-- IG Post 2: Real Link integrated -->
+            <!-- IG Post 2 -->
             <div class="ig-post" onclick="window.open('https://www.instagram.com/reel/DZiG2AltvfJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank')">
                 <h4 class="ar-only">الفرق بين البوتوكس والفيلر</h4>
                 <h4 class="en-only">Botox vs. Fillers</h4>
@@ -525,7 +561,7 @@
                 <p class="en-only">Botox relaxes muscles to reduce dynamic wrinkles, while Fillers restore lost volume and harmoniously contour facial features.</p>
             </div>
             
-            <!-- IG Post 3: Real Link integrated -->
+            <!-- IG Post 3 -->
             <div class="ig-post" onclick="window.open('https://www.instagram.com/reel/Dac6Wt0uzUF/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank')">
                 <h4 class="ar-only">أهلاً بكم في العيادة</h4>
                 <h4 class="en-only">Welcome to the Clinic</h4>
@@ -543,25 +579,26 @@
 <section id="vault" class="section-padding">
     <div class="vault-container reveal">
         <div class="vault-header">
-            <h2>The Patient Portal</h2>
+            <h2 class="en-only">The Patient Portal</h2>
+            <h2 class="ar-only">بوابة المراجعين</h2>
             <p style="color:#aaa; margin-top:10px; font-family: var(--font-ui); font-size:1.1rem; font-weight:300;">
                 <span class="ar-only">بوابتك الآمنة للوصول إلى ملفك الطبي وخطة علاجك.</span>
                 <span class="en-only">Your secure gateway to access your medical file and treatment plan.</span>
             </p>
         </div>
         <div class="vault-body">
-            <form id="vault-form" onsubmit="event.preventDefault(); alert(document.body.classList.contains('lang-ar') ? 'الملف محمي. سيتم تحويلك للمساعد الطبي.' : 'File protected. Redirecting to Medical Assistant.'); window.toggleOracle(true);">
+            <form id="vault-form" onsubmit="event.preventDefault(); alert(document.documentElement.lang === 'ar' ? 'الملف محمي. سيتم تحويلك للمساعد الطبي.' : 'File protected. Redirecting to Medical Assistant.'); window.toggleOracle(true);">
                 <div class="input-group">
                     <label style="display:block; margin-bottom:10px; font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted); letter-spacing:0.1em; text-transform:uppercase; font-weight:bold;">
                         <span class="ar-only">رقم الملف (الجوال)</span><span class="en-only">File Number (Phone)</span>
                     </label>
-                    <input type="tel" class="t-input" placeholder="+966 5X XXX XXXX" required>
+                    <input type="tel" class="t-input" placeholder="+966 5X XXX XXXX" required style="direction: ltr;">
                 </div>
                 <div class="input-group">
                     <label style="display:block; margin-bottom:10px; font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted); letter-spacing:0.1em; text-transform:uppercase; font-weight:bold;">
                         <span class="ar-only">الرمز السري (Passcode)</span><span class="en-only">Secure Passcode</span>
                     </label>
-                    <input type="password" class="t-input" placeholder="••••••••" required>
+                    <input type="password" class="t-input" placeholder="••••••••" required style="direction: ltr;">
                 </div>
                 <button type="submit" class="btn btn-primary" style="width:100%; padding:22px; font-size:1.1rem;">
                     <span class="ar-only">الدخول للملف الطبي</span><span class="en-only">Access Medical File</span>
@@ -612,7 +649,7 @@
     <form class="oracle-form" onsubmit="event.preventDefault(); window.sendOracleMessage();">
         <input id="oracleInput" class="t-input" style="padding:18px 20px; border-radius:0px; font-size:1rem; border-color:var(--border-light);" autocomplete="off" placeholder="Ask about treatments, bookings...">
         <button class="oracle-btn-send" type="submit">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform: scaleX(-1);"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
     </form>
 </section>
@@ -633,15 +670,35 @@
             <input type="text" class="t-input" placeholder="Full Name / الاسم الكامل" required>
         </div>
         <div class="input-group" style="margin-bottom:35px;">
-            <input type="tel" class="t-input" placeholder="Phone Number / رقم الجوال" required>
+            <input type="tel" class="t-input" placeholder="Phone Number / رقم الجوال" required style="direction: ltr;">
         </div>
-        <button class="btn btn-primary" style="width:100%; padding:22px; font-size:1.1rem;" onclick="closeModal('waitlist-modal'); alert(document.body.classList.contains('lang-ar') ? 'تم تسجيلك بنجاح.' : 'Successfully added to the Waitlist.');">
+        <button class="btn btn-primary" style="width:100%; padding:22px; font-size:1.1rem;" onclick="closeModal('waitlist-modal'); alert(document.documentElement.lang === 'ar' ? 'تم تسجيلك بنجاح.' : 'Successfully added to the Waitlist.');">
             <span class="ar-only">تأكيد التسجيل</span><span class="en-only">Confirm Registration</span>
         </button>
     </div>
 </div>
 
 <script>
+    // --- LANGUAGE TOGGLE LOGIC (ISOLATED) ---
+    function toggleLanguage(e) {
+        if(e) e.preventDefault();
+        const html = document.documentElement;
+        const currentLang = html.getAttribute('lang') || 'ar';
+        const newLang = currentLang === 'ar' ? 'en' : 'ar';
+        
+        html.setAttribute('lang', newLang);
+        html.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
+        
+        localStorage.setItem('preferredLanguage', newLang);
+
+        // Optional: refresh oracle if it's open to translate its content
+        const oracle = document.getElementById('ex-oracle');
+        if(oracle && oracle.dataset.open === "true"){
+            document.getElementById('oracleBody').innerHTML = ''; // clear chat
+            window.toggleOracle(true); // restart
+        }
+    }
+
     // --- LOADER LOGIC ---
     window.addEventListener('load', () => {
         let fill = document.getElementById('loader-fill');
@@ -670,12 +727,6 @@
     }, {threshold: 0.15});
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // --- LANGUAGE TOGGLE ---
-    function toggleLanguage() {
-        document.body.classList.toggle('lang-ar');
-        document.body.classList.toggle('lang-en');
-    }
-
     // --- MODALS ---
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
@@ -690,7 +741,7 @@
         oracle.dataset.open = isOpen;
         
         const body = document.getElementById('oracleBody');
-        const isAr = document.body.classList.contains('lang-ar');
+        const isAr = document.documentElement.lang === 'ar';
         
         if(isOpen && body.children.length === 0) {
             appendOracleMsg("bot", isAr ? 
@@ -722,7 +773,7 @@
         input.value = '';
         const loader = appendOracleMsg("bot", "<span style='opacity:0.5; letter-spacing:2px;'>...</span>");
         
-        const isAr = document.body.classList.contains('lang-ar');
+        const isAr = document.documentElement.lang === 'ar';
         
         setTimeout(() => {
             loader.remove();
@@ -739,8 +790,8 @@
             }
             else if(lowerText.includes('بوتكس') || lowerText.includes('botox') || lowerText.includes('فيلر') || lowerText.includes('filler')) {
                 reply = isAr ? 
-                    "<strong>البوتوكس والفيلر:</strong><br>البوتوكس يستخدم لإرخاء العضلات وتقليل الخطوط التعبيرية، بينما الفيلر يستخدم لتعويض الحجم المفقود وتحديد الملامح مثل الشفاه والوجنتين بتناسق طبيعي تام." : 
-                    "<strong>Botox & Fillers:</strong><br>Botox relaxes muscles to reduce expression lines, while Fillers are used to restore volume and contour features like lips and cheeks with natural harmony.";
+                    "<strong>البوتوكس والفيلر:</strong><br>البوتوكس يستخدم لإرخاء العضلات وتقليل الخطوط التعبيرية (التجاعيد الحركية)، بينما الفيلر يستخدم لتعويض الحجم المفقود وتحديد الملامح مثل الشفاه والوجنتين بتناسق طبيعي تام." : 
+                    "<strong>Botox & Fillers:</strong><br>Botox relaxes muscles to reduce dynamic expression lines, while Fillers are used to restore volume and contour features like lips and cheeks with natural harmony.";
             }
             else if(lowerText.includes('شمس') || lowerText.includes('sunscreen') || lowerText.includes('حماية')) {
                 reply = isAr ? 
