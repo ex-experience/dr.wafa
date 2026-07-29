@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="description" content="WAFA — Saudi luxury digital beauty magazine, clinical journal and visual culture platform by Dr. Wafa Alghamdi." />
   <meta name="theme-color" content="#ffffff" />
+  <meta name="color-scheme" content="light" />
   <meta name="robots" content="index, follow" />
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self' https: data: blob:;
@@ -16,6 +17,7 @@
                  connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://firebasestorage.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com;">
   <title>WAFA Magazine | Dr. Wafa Alghamdi — Saudi Beauty, Medicine & Visual Culture</title>
 
+  <link rel="preload" as="image" href="image_11.png" fetchpriority="high" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
@@ -116,21 +118,61 @@
     .top-nav{
       position:fixed;inset:0 0 auto;z-index:1000;
       height:88px;padding:0 5vw;
-      display:flex;align-items:center;justify-content:space-between;
-      background:rgba(255,255,255,.78);backdrop-filter:blur(22px);
-      border-bottom:1px solid transparent;transition:.35s var(--ease)
+      display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:28px;
+      background:rgba(255,255,255,.76);
+      -webkit-backdrop-filter:blur(22px) saturate(1.25);
+      backdrop-filter:blur(22px) saturate(1.25);
+      border-bottom:1px solid transparent;
+      transform:translateY(0);
+      transition:
+        transform .52s var(--ease),
+        height .35s var(--ease),
+        background .35s var(--ease),
+        border-color .35s var(--ease),
+        box-shadow .35s var(--ease);
+      will-change:transform
     }
-    .top-nav.scrolled{height:70px;border-color:var(--line);background:rgba(255,255,255,.94)}
-    .brand{display:flex;align-items:center;gap:12px}
+    .top-nav.scrolled{
+      height:70px;border-color:var(--line);
+      background:rgba(255,255,255,.93);
+      box-shadow:0 12px 34px rgba(20,12,15,.055)
+    }
+    .top-nav.nav-hidden{transform:translateY(calc(-100% - 12px));box-shadow:none}
+    .top-nav:focus-within{transform:translateY(0)}
+    .brand{display:flex;align-items:center;gap:12px;min-width:max-content}
     .brand img{height:54px;width:auto}
+    .top-nav.scrolled .brand img{height:46px}
     .brand-text strong{display:block}
     .brand-text span{font-size:.72rem;color:var(--muted)}
-    .nav-actions{display:flex;align-items:center;gap:10px}
+    .nav-links{
+      display:flex;align-items:center;justify-content:center;gap:clamp(16px,2.3vw,34px);
+      color:#4b4649;font-size:.77rem;font-weight:700;letter-spacing:.035em
+    }
+    .nav-links a{position:relative;padding:12px 0;white-space:nowrap}
+    .nav-links a::after{
+      content:"";position:absolute;inset:auto 0 4px;height:1px;
+      background:var(--rose-deep);transform:scaleX(0);transform-origin:center;
+      transition:transform .35s var(--ease)
+    }
+    .nav-links a:hover::after,.nav-links a.is-active::after{transform:scaleX(1)}
+    .nav-actions{display:flex;align-items:center;gap:10px;min-width:max-content}
+    .nav-cta{
+      min-height:44px;padding:11px 18px;border-radius:999px;
+      background:var(--ink);color:#fff;font-size:.78rem;font-weight:700;
+      transition:.35s var(--ease)
+    }
+    .nav-cta:hover{background:var(--rose-deep);transform:translateY(-2px)}
     .icon-btn{
       width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
-      background:#fff;display:grid;place-items:center;cursor:pointer
+      background:#fff;display:grid;place-items:center;cursor:pointer;
+      transition:.3s var(--ease)
     }
-    .lang-btn{padding:11px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:700}
+    .icon-btn:hover{border-color:rgba(189,111,124,.5);transform:translateY(-2px)}
+    .lang-btn{
+      padding:11px 16px;border-radius:999px;border:1px solid var(--line);
+      background:#fff;cursor:pointer;font-weight:700;transition:.3s var(--ease)
+    }
+    .lang-btn:hover{border-color:rgba(189,111,124,.5);transform:translateY(-2px)}
 
     .hero{
       min-height:100vh;position:relative;display:grid;place-items:center;
@@ -186,16 +228,103 @@
     }
     .input:focus,.textarea:focus,.select:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(217,137,150,.12)}
     .textarea{min-height:120px;resize:vertical}
-    .upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
-    .upload-box{
-      min-height:132px;border:1px dashed rgba(255,255,255,.27);
-      border-radius:16px;display:grid;place-items:center;text-align:center;
-      position:relative;overflow:hidden;cursor:pointer;background:rgba(0,0,0,.22)
+    .upload-summary{
+      display:grid;grid-template-columns:1fr auto;align-items:center;gap:14px;
+      margin:20px 0 12px;color:#d8d8de;font-size:.8rem
     }
-    .upload-box:hover{border-color:var(--rose)}
-    .upload-box input{position:absolute;inset:0;opacity:0;cursor:pointer}
-    .upload-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
-    .upload-box span{font-size:.78rem;color:#aaa}
+    .upload-summary strong{font-family:var(--font-en);color:#fff;font-variant-numeric:tabular-nums}
+    .upload-summary-track{
+      grid-column:1/-1;height:4px;border-radius:999px;overflow:hidden;
+      background:rgba(255,255,255,.1)
+    }
+    .upload-summary-track i{
+      display:block;width:0;height:100%;border-radius:inherit;
+      background:linear-gradient(90deg,var(--rose),#f0c6ce);
+      transition:width .5s var(--ease)
+    }
+    .upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0 20px}
+    .upload-box{
+      --upload-progress:0%;
+      min-height:154px;border:1px dashed rgba(255,255,255,.28);
+      border-radius:18px;display:grid;place-items:center;text-align:center;
+      position:relative;overflow:hidden;cursor:pointer;
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.035),rgba(0,0,0,.08)),
+        rgba(0,0,0,.22);
+      isolation:isolate;
+      transition:
+        transform .35s var(--ease),
+        border-color .35s var(--ease),
+        background .35s var(--ease),
+        box-shadow .35s var(--ease)
+    }
+    .upload-box::before{
+      content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+      background:linear-gradient(180deg,transparent 38%,rgba(5,5,7,.76));
+      opacity:0;transition:opacity .35s var(--ease)
+    }
+    .upload-box::after{
+      content:"";position:absolute;inset:auto 0 0;height:3px;z-index:5;
+      width:var(--upload-progress);
+      background:linear-gradient(90deg,var(--rose),#f3c6ce);
+      transition:width .2s linear
+    }
+    .upload-box:hover,.upload-box.is-dragover{
+      transform:translateY(-4px);border-color:rgba(217,137,150,.9);
+      box-shadow:0 18px 42px rgba(0,0,0,.18)
+    }
+    .upload-box.has-file{border-style:solid;border-color:rgba(217,137,150,.72)}
+    .upload-box.has-file::before{opacity:1}
+    .upload-box.is-uploading{border-color:var(--gold)}
+    .upload-box.is-uploaded{
+      border-color:#62c786;
+      box-shadow:0 0 0 1px rgba(98,199,134,.18),0 18px 42px rgba(0,0,0,.15)
+    }
+    .upload-box.is-invalid{
+      border-color:#ff8888;background:rgba(180,35,24,.12);
+      animation:uploadShake .38s ease
+    }
+    @keyframes uploadShake{
+      25%{transform:translateX(-4px)}50%{transform:translateX(4px)}
+      75%{transform:translateX(-2px)}
+    }
+    .upload-box input{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:6}
+    .upload-box img{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      display:none;z-index:0;transform:scale(1.01);
+      transition:transform .65s var(--ease),filter .35s var(--ease)
+    }
+    .upload-box.has-file img{display:block}
+    .upload-box:hover img{transform:scale(1.045)}
+    .upload-copy{
+      position:relative;z-index:2;padding:18px;display:grid;gap:7px;
+      transition:opacity .25s var(--ease),transform .35s var(--ease)
+    }
+    .upload-box.has-file .upload-copy{opacity:0;transform:translateY(8px)}
+    .upload-angle{font-size:.82rem;color:#e8e8ec;font-weight:700}
+    .upload-hint{font-size:.67rem;color:#8f8f97;line-height:1.5}
+    .upload-check{
+      position:absolute;z-index:4;top:12px;inset-inline-end:12px;
+      width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+      background:#62c786;color:#07140b;font-weight:900;
+      opacity:0;transform:scale(.6);transition:.35s var(--ease);
+      box-shadow:0 8px 22px rgba(0,0,0,.2)
+    }
+    .upload-box.has-file .upload-check{opacity:1;transform:scale(1)}
+    .upload-meta{
+      position:absolute;z-index:4;inset:auto 12px 12px;
+      color:#fff;font-size:.66rem;line-height:1.45;text-align:start;
+      opacity:0;transform:translateY(6px);transition:.35s var(--ease);
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+    }
+    .upload-box.has-file .upload-meta,.upload-box.is-invalid .upload-meta{opacity:1;transform:none}
+    .upload-progress-label{
+      position:absolute;z-index:4;inset:12px auto auto 12px;
+      padding:5px 8px;border-radius:999px;background:rgba(0,0,0,.62);
+      color:#fff;font-family:var(--font-en);font-size:.62rem;
+      opacity:0;transition:.25s var(--ease)
+    }
+    .upload-box.is-uploading .upload-progress-label{opacity:1}
     .consent{
       display:flex;align-items:flex-start;gap:10px;margin:15px 0;color:#c0c0c6;font-size:.85rem;line-height:1.7
     }
@@ -253,6 +382,11 @@
     .modal-close{float:left;border:0;background:var(--soft);border-radius:999px;padding:10px 15px;cursor:pointer}
     html[dir="ltr"] .modal-close{float:right}
 
+    @media(max-width:1080px){
+      .nav-links{display:none}
+      .top-nav{grid-template-columns:auto 1fr}
+      .nav-actions{justify-self:end}
+    }
     @media(max-width:960px){
       .grid-3{grid-template-columns:1fr 1fr}
       .story-layout,.vr-wrap{grid-template-columns:1fr}
@@ -260,8 +394,11 @@
     }
     @media(max-width:680px){
       .section{padding:82px 0}
-      .top-nav{height:72px;padding:0 4vw}
+      .top-nav{height:72px;padding:0 4vw;gap:10px}
       .brand-text{display:none}
+      .nav-cta{padding:10px 13px;font-size:.7rem}
+      .lang-btn{padding:10px 12px}
+      .icon-btn{width:42px;height:42px}
       .hero-content{padding-top:130px}
       .grid-2,.grid-3,.early-form{grid-template-columns:1fr}
       .early-form .full{grid-column:auto}
@@ -272,11 +409,25 @@
       .assistant{right:14px;bottom:92px}
       .fab{right:16px;bottom:16px}
     }
+
+    @media(max-width:460px){
+      #assistantOpenBtn{display:none}
+      .nav-actions{gap:7px}
+      .nav-cta{padding-inline:12px}
+      .brand img{height:44px}
+    }
   
 /* ===== WAFA GLOBAL MAGAZINE VISUAL SYSTEM ===== */
 :root{
-  --mag-black:#050505;--mag-cream:#f2ede4;--mag-red:#c81f38;
-  --mag-blue:#1737ff;--mag-lime:#dfff00;--mag-sand:#d4b9aa;
+  --mag-black:#050505;
+  --mag-cream:#f2ede4;
+  --mag-red:#8d263d;
+  --mag-velvet:#66152b;
+  --mag-velvet-deep:#2a0b14;
+  --mag-champagne:#c8a96a;
+  --mag-charcoal:#171316;
+  --mag-blush:#d8b7b0;
+  --mag-sand:#d4b9aa;
 }
 .mag-container{width:min(1440px,94vw);margin:auto}
 .mag-label{display:flex;justify-content:space-between;gap:18px;font-size:.66rem;
@@ -358,22 +509,69 @@ html[lang="ar"] .mag-masthead{font-family:var(--font-ar);font-weight:800}
 .mag-luxury-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.74) contrast(1.08)}
 .mag-vertical{writing-mode:vertical-rl;letter-spacing:.26em;font-size:.62rem;text-transform:uppercase}
 
-/* Experimental issue */
-.mag-exp{background:var(--mag-blue);color:#fff}
-.mag-exp-board{min-height:760px;background:var(--mag-lime);color:#111;position:relative;overflow:hidden}
-.mag-exp-board:after{content:"BEAUTY / IDENTITY / FUTURE";position:absolute;left:-2%;bottom:-3%;
- color:var(--mag-blue);font-family:var(--font-editorial);font-size:clamp(4rem,11vw,11rem);
- white-space:nowrap;letter-spacing:-.07em}
-.mag-exp-a,.mag-exp-b{position:absolute;margin:0;z-index:2}
-.mag-exp-a{left:8%;top:10%;width:42%;height:67%;transform:rotate(-4deg);
- box-shadow:22px 24px 0 var(--mag-blue)}
-.mag-exp-b{right:7%;top:20%;width:34%;height:51%;transform:rotate(6deg);border:12px solid #fff}
-.mag-exp-a img,.mag-exp-b img{width:100%;height:100%;object-fit:cover;filter:contrast(1.12) saturate(1.08)}
-.mag-exp-copy{position:absolute;right:8%;top:7%;width:35%;font-size:.7rem;
- letter-spacing:.14em;text-transform:uppercase;font-weight:800;z-index:4}
-.mag-stamp{position:absolute;left:53%;top:10%;z-index:5;width:115px;height:115px;
- border:2px solid var(--mag-red);border-radius:50%;display:grid;place-items:center;text-align:center;
- color:var(--mag-red);font-weight:800;transform:rotate(14deg)}
+/* Future Beauty — controlled Saudi avant-garde */
+.mag-exp{
+  position:relative;color:#f7efe9;
+  background:
+    radial-gradient(circle at 86% 8%,rgba(200,169,106,.18),transparent 26%),
+    linear-gradient(135deg,var(--mag-charcoal),var(--mag-velvet-deep) 48%,var(--mag-velvet));
+}
+.mag-exp::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:44px 44px
+}
+.mag-exp .mag-container{position:relative}
+.mag-exp-board{
+  min-height:760px;color:#1b1316;position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 76% 24%,rgba(200,169,106,.24),transparent 24%),
+    linear-gradient(145deg,#f1e9df 0%,#d9c2ba 52%,#b98a91 100%);
+  border:1px solid rgba(255,255,255,.28);
+  box-shadow:0 44px 120px rgba(18,4,9,.38)
+}
+.mag-exp-board::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;
+  background:
+    linear-gradient(115deg,transparent 0 48%,rgba(255,255,255,.55) 49%,transparent 50%),
+    radial-gradient(circle at 20% 18%,rgba(102,21,43,.22),transparent 26%)
+}
+.mag-exp-board::after{
+  content:"BEAUTY / IDENTITY / FUTURE";position:absolute;left:-2%;bottom:-3%;
+  color:var(--mag-velvet);font-family:var(--font-editorial);
+  font-size:clamp(4rem,11vw,11rem);white-space:nowrap;
+  letter-spacing:-.07em;opacity:.16
+}
+.mag-exp-a,.mag-exp-b{position:absolute;margin:0;z-index:2;overflow:hidden}
+.mag-exp-a{
+  left:8%;top:10%;width:42%;height:67%;transform:rotate(-3deg);
+  box-shadow:22px 24px 0 rgba(102,21,43,.92),0 32px 70px rgba(42,11,20,.2)
+}
+.mag-exp-b{
+  right:7%;top:20%;width:34%;height:51%;transform:rotate(4deg);
+  border:10px solid rgba(247,239,233,.96);
+  box-shadow:0 28px 70px rgba(42,11,20,.24)
+}
+.mag-exp-a img,.mag-exp-b img{
+  width:100%;height:100%;object-fit:cover;
+  filter:contrast(1.08) saturate(.78) sepia(.06)
+}
+.mag-exp-copy{
+  position:absolute;right:8%;top:7%;width:35%;font-size:.7rem;
+  letter-spacing:.14em;text-transform:uppercase;font-weight:800;z-index:4;
+  color:var(--mag-velvet-deep)
+}
+.mag-stamp{
+  position:absolute;left:53%;top:10%;z-index:5;width:115px;height:115px;
+  border:1px solid var(--mag-champagne);border-radius:50%;
+  display:grid;place-items:center;text-align:center;
+  color:var(--mag-velvet);background:rgba(242,237,228,.68);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  font-weight:800;transform:rotate(11deg);
+  box-shadow:0 14px 34px rgba(42,11,20,.14)
+}
 
 /* Art issue */
 .mag-art{background:#111;color:#eee}
@@ -409,20 +607,50 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
 .mag-product-note{position:absolute;right:4%;bottom:6%;max-width:310px;
  border-top:1px solid #111;padding-top:14px;font-size:.77rem;line-height:1.8}
 
-/* Eight standards */
-.mag-bible{background:#f7f7f7;color:#111}
-.mag-bible-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #111;border-left:1px solid #111}
-.mag-bible-item{min-height:300px;padding:24px;border-right:1px solid #111;border-bottom:1px solid #111;
- display:flex;flex-direction:column;justify-content:space-between;transition:.35s}
-.mag-bible-item:hover{background:#111;color:#fff}
-.mag-bible-item b{font-family:var(--font-editorial);font-size:3.2rem;font-weight:400}
-.mag-bible-item p{font-size:.8rem;line-height:1.85;opacity:.76;margin:0}
+/* Eight standards — editorial index, lower density */
+.mag-bible{
+  color:#171316;
+  background:
+    radial-gradient(circle at 100% 0,rgba(200,169,106,.13),transparent 25%),
+    #f5f1ec
+}
+.mag-bible-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px
+}
+.mag-bible-item{
+  min-height:210px;padding:30px;
+  border:1px solid rgba(23,19,22,.12);
+  background:rgba(255,255,255,.52);
+  display:grid;grid-template-columns:86px minmax(0,1fr);
+  gap:26px;align-items:start;
+  transition:transform .4s var(--ease),background .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease)
+}
+.mag-bible-item:hover{
+  transform:translateY(-5px);background:#fff;
+  border-color:rgba(102,21,43,.24);
+  box-shadow:0 24px 60px rgba(42,11,20,.09)
+}
+.mag-bible-item b{
+  font-family:var(--font-editorial);font-size:4.2rem;line-height:.85;
+  font-weight:400;color:var(--mag-velvet);opacity:.3
+}
+.mag-bible-item h3{
+  margin:2px 0 16px;font-family:var(--font-editorial);
+  font-size:clamp(1.55rem,2.4vw,2.35rem);font-weight:400
+}
+html[lang="ar"] .mag-bible-item h3{font-family:var(--font-ar)}
+.mag-bible-item p{
+  max-width:42ch;font-size:.82rem;line-height:1.95;
+  color:#5d565a;margin:0
+}
 
 @media(max-width:1020px){
  .mag-manifesto-grid,.mag-clean-grid{grid-template-columns:1fr 1fr}
  .mag-detail-stack{grid-column:1/-1;grid-template-columns:1fr 1fr;grid-template-rows:none}
  .mag-luxury-grid{grid-template-columns:1fr 1.2fr}.mag-vertical{display:none}
  .mag-bible-grid{grid-template-columns:1fr 1fr}
+ .mag-bible-item{grid-template-columns:70px minmax(0,1fr)}
 }
 @media(max-width:720px){
  .mag-section{padding:82px 0}.mag-head{grid-template-columns:1fr}
@@ -437,22 +665,63 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
  .mag-stamp{left:5%;top:6%;width:86px;height:86px;font-size:.65rem}
  .mag-art-photo{min-height:590px}.mag-art-copy{min-height:590px;padding:28px}
  .mag-product-stage{min-height:670px}.mag-product-object{height:430px}
- .mag-bible-grid{grid-template-columns:1fr}.mag-bible-item{min-height:220px}
+ .mag-bible-grid{grid-template-columns:1fr}.mag-bible-item{min-height:190px;padding:24px;grid-template-columns:56px 1fr;gap:18px}
+ .mag-bible-item b{font-size:3.2rem}
 }
+
+    /* ===== Production polish: accessibility, performance, motion ===== */
+    .skip-link{
+      position:fixed;z-index:3000;inset-inline-start:18px;top:14px;
+      padding:12px 18px;border-radius:999px;background:var(--ink);color:#fff;
+      transform:translateY(-150%);transition:transform .25s var(--ease)
+    }
+    .skip-link:focus{transform:translateY(0)}
+    :focus-visible{
+      outline:3px solid rgba(200,169,106,.72);
+      outline-offset:4px
+    }
+    main section{scroll-margin-top:90px}
+    @supports (content-visibility:auto){
+      .mag-section,.section{
+        content-visibility:auto;
+        contain-intrinsic-size:auto 900px
+      }
+      .mag-cover,.hero{content-visibility:visible}
+    }
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+        scroll-behavior:auto!important
+      }
+      .top-nav{transform:none!important}
+    }
 
 </style>
 </head>
 
 <body>
-  <nav class="top-nav" id="navbar">
+  <a class="skip-link" href="#top"><span class="ar-only">تخطي إلى المحتوى</span><span class="en-only">Skip to content</span></a>
+  <nav class="top-nav" id="navbar" aria-label="Primary navigation">
     <a href="#top" class="brand">
-      <img src="image.png" alt="Dr Wafa Alghamdi Logo" />
+      <img src="image.png" alt="Dr Wafa Alghamdi Logo" decoding="async" fetchpriority="high" />
       <div class="brand-text">
         <strong>Dr. Wafa Alghamdi</strong>
         <span>Digital Medical Journal</span>
       </div>
     </a>
+    <div class="nav-links" aria-label="Magazine sections">
+      <a href="#mag-clean" data-nav-section="mag-clean"><span class="ar-only">البشرة</span><span class="en-only">Skin</span></a>
+      <a href="#journal" data-nav-section="journal"><span class="ar-only">المجلة</span><span class="en-only">Journal</span></a>
+      <a href="#visual-consultation" data-nav-section="visual-consultation"><span class="ar-only">التصور البصري</span><span class="en-only">Visual Preview</span></a>
+      <a href="#early-access" data-nav-section="early-access"><span class="ar-only">الوصول المبكر</span><span class="en-only">Early Access</span></a>
+    </div>
     <div class="nav-actions">
+      <a class="nav-cta" href="#visual-consultation">
+        <span class="ar-only">ابدئي الاستشارة</span><span class="en-only">Start Consultation</span>
+      </a>
       <button class="lang-btn" id="langBtn" type="button">
         <span class="ar-only">EN</span>
         <span class="en-only">العربية</span>
@@ -465,7 +734,7 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
 
 <section class="mag-cover" id="mag-cover">
   <div class="mag-cover-frame">
-    <img src="image_11.png" alt="WAFA magazine cover" />
+    <img src="image_11.png" alt="WAFA magazine cover" loading="eager" decoding="async" fetchpriority="high" />
     <div class="mag-cover-meta"><span>SAUDI ARABIA · ISSUE 00 · 2026</span><span>SKIN · AESTHETICS · CULTURE</span></div>
     <div class="mag-masthead"><span class="ar-only">وفاء</span><span class="en-only">WAFA</span></div>
     <div class="mag-cover-story">
@@ -501,9 +770,9 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
  <div class="mag-container">
   <header class="mag-head"><div class="mag-num">01</div><h2 class="mag-serif"><span class="ar-only">وضوح<br>البشرة.</span><span class="en-only">Skin<br>Clarity.</span></h2><p><span class="ar-only">إضاءة دقيقة، ألوان جلد طبيعية، وتفاصيل قريبة بلا فلاتر تجميلية.</span><span class="en-only">Precise light, natural skin tone, and close detail without beauty filters.</span></p></header>
   <div class="mag-clean-grid">
-   <figure class="mag-photo"><img src="image_4.png" alt="True skin editorial"><figcaption class="mag-tag">TRUE SKIN / MACRO 01</figcaption></figure>
+   <figure class="mag-photo"><img src="image_4.png" alt="True skin editorial" loading="lazy" decoding="async" fetchpriority="low"><figcaption class="mag-tag">TRUE SKIN / MACRO 01</figcaption></figure>
    <article class="mag-clean-copy"><div><div class="mag-label"><span>CLINICAL EDIT</span><span>NO FILTER</span></div><div class="mag-line"></div><h3 class="mag-serif"><span class="ar-only">الجمال يبدأ من الحقيقة.</span><span class="en-only">Beauty begins with truth.</span></h3></div><p><span class="ar-only">الملمس والمسام والضوء الحقيقي عناصر معرفة وليست عيوباً يجب محوها. المعالجة تحافظ على هوية البشرة والتشريح.</span><span class="en-only">Texture, pores, and real light are sources of knowledge—not flaws to erase. Retouching preserves identity and anatomy.</span></p></article>
-   <div class="mag-detail-stack"><figure><img src="image_5.png" alt="Beauty detail"><figcaption class="mag-tag">DETAIL / 02</figcaption></figure><figure><img src="image_9.png" alt="Recovery detail"><figcaption class="mag-tag">RECOVERY / 03</figcaption></figure></div>
+   <div class="mag-detail-stack"><figure><img src="image_5.png" alt="Beauty detail" loading="lazy" decoding="async" fetchpriority="low"><figcaption class="mag-tag">DETAIL / 02</figcaption></figure><figure><img src="image_9.png" alt="Recovery detail" loading="lazy" decoding="async" fetchpriority="low"><figcaption class="mag-tag">RECOVERY / 03</figcaption></figure></div>
   </div>
  </div>
 </section>
@@ -513,7 +782,7 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
   <header class="mag-head"><div class="mag-num">02</div><h2 class="mag-serif"><span class="ar-only">الفخامة<br>الهادئة.</span><span class="en-only">Quiet<br>Luxury.</span></h2><p><span class="ar-only">مساحات سلبية واسعة، تكوين واحد قوي، وخطوط تحرر الصورة بدلاً من منافستها.</span><span class="en-only">Generous negative space, one dominant composition, and typography that releases the image.</span></p></header>
   <div class="mag-luxury-grid">
    <article class="mag-luxury-copy"><div class="mag-label"><span>THE PROFILE</span><span>VOL. 02</span></div><div class="mag-line"></div><h3 class="mag-serif"><span class="ar-only">بين العلم<br>والحدس.</span><span class="en-only">Between science<br>and intuition.</span></h3><p><span class="ar-only">الصورة الفاخرة تحتاج ضوءاً مدروساً، خامة محسوسة، حركة هادئة، وشخصية تترك أثراً دون أن ترفع صوتها.</span><span class="en-only">Luxury imagery needs considered light, tactile material, quiet movement, and a personality that leaves an impression without raising its voice.</span></p></article>
-   <figure class="mag-luxury-photo"><img src="image_11.png" alt="Luxury editorial portrait"></figure>
+   <figure class="mag-luxury-photo"><img src="image_11.png" alt="Luxury editorial portrait" loading="lazy" decoding="async" fetchpriority="low"></figure>
    <div class="mag-vertical">MEDICINE · AESTHETICS · HUMANITY</div>
   </div>
  </div>
@@ -521,15 +790,15 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
 
 <section class="mag-section mag-exp" id="mag-exp">
  <div class="mag-container">
-  <header class="mag-head"><div class="mag-num">03</div><h2 class="mag-serif"><span class="ar-only">جمال<br>المستقبل.</span><span class="en-only">Future<br>Beauty.</span></h2><p><span class="ar-only">ألوان كهربائية، زوايا غير متوقعة، وتداخلات طباعية تصنع لحظة بصرية جريئة.</span><span class="en-only">Electric colour, unexpected angles, and typographic collision create a bold visual moment.</span></p></header>
-  <div class="mag-exp-board"><div class="mag-exp-copy">SAUDI BEAUTY IS NOT A TREND. IT IS A NEW VISUAL LANGUAGE.</div><div class="mag-stamp">NEW<br>SAUDI<br>VISION</div><figure class="mag-exp-a"><img src="image_4.png" alt="Experimental portrait"></figure><figure class="mag-exp-b"><img src="image_5.png" alt="Experimental detail"></figure></div>
+  <header class="mag-head"><div class="mag-num">03</div><h2 class="mag-serif"><span class="ar-only">جمال<br>المستقبل.</span><span class="en-only">Future<br>Beauty.</span></h2><p><span class="ar-only">درجات مخملية وفحمية، لمسات شامبانيا، وزوايا غير متوقعة تصنع جرأة معاصرة دون كسر الفخامة الهادئة.</span><span class="en-only">Velvet and charcoal tones, champagne accents, and unexpected angles create contemporary boldness without breaking quiet luxury.</span></p></header>
+  <div class="mag-exp-board"><div class="mag-exp-copy">SAUDI BEAUTY IS NOT A TREND. IT IS A NEW VISUAL LANGUAGE.</div><div class="mag-stamp">NEW<br>SAUDI<br>VISION</div><figure class="mag-exp-a"><img src="image_4.png" alt="Experimental portrait" loading="lazy" decoding="async" fetchpriority="low"></figure><figure class="mag-exp-b"><img src="image_5.png" alt="Experimental detail" loading="lazy" decoding="async" fetchpriority="low"></figure></div>
  </div>
 </section>
 
 <section class="mag-section mag-art" id="mag-art">
  <div class="mag-container">
   <header class="mag-head"><div class="mag-num">04</div><h2 class="mag-serif"><span class="ar-only">الجمال<br>كفن.</span><span class="en-only">Beauty<br>as Art.</span></h2><p><span class="ar-only">ضوء نحتي وأبيض وأسود عميق وصورة تتعامل مع الوجه كمساحة فنية.</span><span class="en-only">Sculptural light, deep monochrome, and imagery that treats the face as an artistic field.</span></p></header>
-  <div class="mag-art-grid"><figure class="mag-art-photo"><img src="image_9.png" alt="Art beauty portrait"></figure><article class="mag-art-copy"><div class="mag-label"><span>ART DIRECTION</span><span>ISSUE 04</span></div><h3 class="mag-serif"><span class="ar-only">الصورة<br>تفكر.</span><span class="en-only">The image<br>thinks.</span></h3><blockquote><span class="ar-only">«حين يتوقف التصوير عن شرح الجمال ويبدأ في طرح الأسئلة، تتحول العلامة إلى ثقافة.»</span><span class="en-only">“When photography stops explaining beauty and begins asking questions, a brand becomes culture.”</span></blockquote></article></div>
+  <div class="mag-art-grid"><figure class="mag-art-photo"><img src="image_9.png" alt="Art beauty portrait" loading="lazy" decoding="async" fetchpriority="low"></figure><article class="mag-art-copy"><div class="mag-label"><span>ART DIRECTION</span><span>ISSUE 04</span></div><h3 class="mag-serif"><span class="ar-only">الصورة<br>تفكر.</span><span class="en-only">The image<br>thinks.</span></h3><blockquote><span class="ar-only">«حين يتوقف التصوير عن شرح الجمال ويبدأ في طرح الأسئلة، تتحول العلامة إلى ثقافة.»</span><span class="en-only">“When photography stops explaining beauty and begins asking questions, a brand becomes culture.”</span></blockquote></article></div>
  </div>
 </section>
 
@@ -545,7 +814,7 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
   <header class="mag-head"><div class="mag-num">06</div><h2 class="mag-serif"><span class="ar-only">دستور<br>الصورة.</span><span class="en-only">Image<br>Bible.</span></h2><p><span class="ar-only">ثمانية معايير تضبط كل حملة ومقال وصورة وفيلم داخل المنصة.</span><span class="en-only">Eight standards governing every campaign, article, image, and film.</span></p></header>
   <div class="mag-bible-grid">
    <article class="mag-bible-item"><b>01</b><div><h3>Lighting</h3><p><span class="ar-only">ضوء ناعم للبشرة، نحتي للبورتريه، وصلب للمفاهيم التجريبية فقط.</span><span class="en-only">Soft for skin, sculptural for portraiture, hard only for experimental concepts.</span></p></div></article>
-   <article class="mag-bible-item"><b>02</b><div><h3>Colour</h3><p><span class="ar-only">ألوان جلد صادقة، قاعدة هادئة، ولون كهربائي واحد للصدمة البصرية.</span><span class="en-only">Truthful skin tone, restrained base palette, one electric accent.</span></p></div></article>
+   <article class="mag-bible-item"><b>02</b><div><h3>Colour</h3><p><span class="ar-only">ألوان جلد صادقة، قاعدة هادئة، ولمسة مخملية أو شامبانيا واحدة للتركيز البصري.</span><span class="en-only">Truthful skin tone, a restrained base palette, and one velvet or champagne accent.</span></p></div></article>
    <article class="mag-bible-item"><b>03</b><div><h3>Space</h3><p><span class="ar-only">المساحة السلبية عنصر فخامة وتركيز وليست فراغاً غير مستخدم.</span><span class="en-only">Negative space is a luxury and focus device.</span></p></div></article>
    <article class="mag-bible-item"><b>04</b><div><h3>Type</h3><p><span class="ar-only">عناوين ضخمة ونصوص قصيرة وفصل واضح بين التحرير والمعلومة الطبية.</span><span class="en-only">Large headlines, concise copy, clear editorial-medical contrast.</span></p></div></article>
    <article class="mag-bible-item"><b>05</b><div><h3>Product</h3><p><span class="ar-only">بطل واحد وخامات حقيقية وانعكاسات مضبوطة وظلال ذات معنى.</span><span class="en-only">One hero, real materials, controlled reflections, meaningful shadow.</span></p></div></article>
@@ -558,7 +827,7 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
 
     <section class="hero" id="cinematic-prologue">
       <div class="hero-media">
-        <video src="20260728-0318-22.9222226.mp4" autoplay muted loop playsinline></video>
+        <video src="20260728-0318-22.9222226.mp4" poster="image_11.png" preload="metadata" autoplay muted loop playsinline></video>
       </div>
       <div class="hero-content">
         <span class="eyebrow">
@@ -590,7 +859,7 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
 
     <section class="section" id="story">
       <div class="container story-layout">
-        <div class="story-photo"><img src="image_11.png" alt="Dr Wafa Alghamdi" /></div>
+        <div class="story-photo"><img src="image_11.png" alt="Dr Wafa Alghamdi" loading="lazy" decoding="async" fetchpriority="low" /></div>
         <div>
           <span class="eyebrow">
             <span class="ar-only">القصة</span><span class="en-only">The Story</span>
@@ -625,7 +894,7 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
 
         <div class="grid grid-3" style="margin-top:42px">
           <article class="card journal-card">
-            <img src="image_4.png" alt="Skin Intelligence" />
+            <img src="image_4.png" alt="Skin Intelligence" loading="lazy" decoding="async" fetchpriority="low" />
             <div class="body">
               <div class="journal-meta">Skin Intelligence</div>
               <h3><span class="ar-only">لماذا تعود الحبوب؟</span><span class="en-only">Why Does Acne Return?</span></h3>
@@ -633,7 +902,7 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
             </div>
           </article>
           <article class="card journal-card">
-            <img src="image_5.png" alt="Aesthetic Decisions" />
+            <img src="image_5.png" alt="Aesthetic Decisions" loading="lazy" decoding="async" fetchpriority="low" />
             <div class="body">
               <div class="journal-meta">Aesthetic Decisions</div>
               <h3><span class="ar-only">متى يكون عدم الإجراء هو القرار الأفضل؟</span><span class="en-only">When Is No Procedure the Best Decision?</span></h3>
@@ -641,7 +910,7 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
             </div>
           </article>
           <article class="card journal-card">
-            <img src="image_9.png" alt="Recovery Journal" />
+            <img src="image_9.png" alt="Recovery Journal" loading="lazy" decoding="async" fetchpriority="low" />
             <div class="body">
               <div class="journal-meta">Recovery Journal</div>
               <h3><span class="ar-only">ما بعد الإجراء: ماذا تتوقعين؟</span><span class="en-only">After the Procedure: What to Expect</span></h3>
@@ -712,13 +981,78 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
                 <textarea class="textarea" id="vrGoal" maxlength="600" required></textarea>
               </div>
 
+              <div class="upload-summary" aria-live="polite">
+                <span><span class="ar-only">اكتمال زوايا التصوير</span><span class="en-only">Photography angles completed</span></span>
+                <strong id="uploadCount">0 / 6</strong>
+                <div class="upload-summary-track" aria-hidden="true"><i id="uploadSummaryBar"></i></div>
+              </div>
               <div class="upload-grid">
-                <label class="upload-box"><span><span class="ar-only">أمامية</span><span class="en-only">Front</span></span><img id="preview1" alt="" /><input id="file1" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
-                <label class="upload-box"><span><span class="ar-only">45° يمين</span><span class="en-only">45° Right</span></span><img id="preview2" alt="" /><input id="file2" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
-                <label class="upload-box"><span><span class="ar-only">45° يسار</span><span class="en-only">45° Left</span></span><img id="preview3" alt="" /><input id="file3" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
-                <label class="upload-box"><span><span class="ar-only">90° يمين</span><span class="en-only">90° Right</span></span><img id="preview4" alt="" /><input id="file4" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
-                <label class="upload-box"><span><span class="ar-only">90° يسار</span><span class="en-only">90° Left</span></span><img id="preview5" alt="" /><input id="file5" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
-                <label class="upload-box"><span><span class="ar-only">تفصيل قريب</span><span class="en-only">Close detail</span></span><img id="preview6" alt="" /><input id="file6" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
+                <label class="upload-box" data-slot="1">
+                  <span class="upload-copy">
+                    <span class="upload-angle"><span class="ar-only">أمامية</span><span class="en-only">Front</span></span>
+                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
+                  </span>
+                  <img id="preview1" alt="" decoding="async" />
+                  <span class="upload-check" aria-hidden="true">✓</span>
+                  <span class="upload-progress-label" aria-hidden="true">0%</span>
+                  <span class="upload-meta" aria-live="polite"></span>
+                  <input id="file1" type="file" accept="image/jpeg,image/png,image/webp" aria-label="Front" required />
+                </label>
+                <label class="upload-box" data-slot="2">
+                  <span class="upload-copy">
+                    <span class="upload-angle"><span class="ar-only">45° يمين</span><span class="en-only">45° Right</span></span>
+                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
+                  </span>
+                  <img id="preview2" alt="" decoding="async" />
+                  <span class="upload-check" aria-hidden="true">✓</span>
+                  <span class="upload-progress-label" aria-hidden="true">0%</span>
+                  <span class="upload-meta" aria-live="polite"></span>
+                  <input id="file2" type="file" accept="image/jpeg,image/png,image/webp" aria-label="45° Right" required />
+                </label>
+                <label class="upload-box" data-slot="3">
+                  <span class="upload-copy">
+                    <span class="upload-angle"><span class="ar-only">45° يسار</span><span class="en-only">45° Left</span></span>
+                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
+                  </span>
+                  <img id="preview3" alt="" decoding="async" />
+                  <span class="upload-check" aria-hidden="true">✓</span>
+                  <span class="upload-progress-label" aria-hidden="true">0%</span>
+                  <span class="upload-meta" aria-live="polite"></span>
+                  <input id="file3" type="file" accept="image/jpeg,image/png,image/webp" aria-label="45° Left" required />
+                </label>
+                <label class="upload-box" data-slot="4">
+                  <span class="upload-copy">
+                    <span class="upload-angle"><span class="ar-only">90° يمين</span><span class="en-only">90° Right</span></span>
+                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
+                  </span>
+                  <img id="preview4" alt="" decoding="async" />
+                  <span class="upload-check" aria-hidden="true">✓</span>
+                  <span class="upload-progress-label" aria-hidden="true">0%</span>
+                  <span class="upload-meta" aria-live="polite"></span>
+                  <input id="file4" type="file" accept="image/jpeg,image/png,image/webp" aria-label="90° Right" required />
+                </label>
+                <label class="upload-box" data-slot="5">
+                  <span class="upload-copy">
+                    <span class="upload-angle"><span class="ar-only">90° يسار</span><span class="en-only">90° Left</span></span>
+                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
+                  </span>
+                  <img id="preview5" alt="" decoding="async" />
+                  <span class="upload-check" aria-hidden="true">✓</span>
+                  <span class="upload-progress-label" aria-hidden="true">0%</span>
+                  <span class="upload-meta" aria-live="polite"></span>
+                  <input id="file5" type="file" accept="image/jpeg,image/png,image/webp" aria-label="90° Left" required />
+                </label>
+                <label class="upload-box" data-slot="6">
+                  <span class="upload-copy">
+                    <span class="upload-angle"><span class="ar-only">تفصيل قريب</span><span class="en-only">Close detail</span></span>
+                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
+                  </span>
+                  <img id="preview6" alt="" decoding="async" />
+                  <span class="upload-check" aria-hidden="true">✓</span>
+                  <span class="upload-progress-label" aria-hidden="true">0%</span>
+                  <span class="upload-meta" aria-live="polite"></span>
+                  <input id="file6" type="file" accept="image/jpeg,image/png,image/webp" aria-label="Close detail" required />
+                </label>
               </div>
 
               <label class="consent">
@@ -794,7 +1128,7 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
   </main>
 
   <footer>
-    <img src="image.png" alt="Dr Wafa Alghamdi" />
+    <img src="image.png" alt="Dr Wafa Alghamdi" loading="lazy" decoding="async" fetchpriority="low" />
     <p><span class="ar-only">الدقة في الممارسة. والإنسان أولاً في كل قرار.</span><span class="en-only">Precision in practice. Humanity in every decision.</span></p>
     <div class="footer-links">
       <a href="https://instagram.com/dr.wafagh" target="_blank" rel="noopener">Instagram</a>
@@ -911,9 +1245,61 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
        3) NAV
        ========================================================= */
     const navbar = document.getElementById("navbar");
+    let lastScrollY = Math.max(0, window.scrollY);
+    let navTicking = false;
+    let navLockedVisible = false;
+
+    function updateSmartNav() {
+      const currentY = Math.max(0, window.scrollY);
+      const delta = currentY - lastScrollY;
+
+      navbar.classList.toggle("scrolled", currentY > 40);
+
+      if (!navLockedVisible && currentY > 140 && delta > 7) {
+        navbar.classList.add("nav-hidden");
+      } else if (delta < -4 || currentY < 90 || navLockedVisible) {
+        navbar.classList.remove("nav-hidden");
+      }
+
+      lastScrollY = currentY;
+      navTicking = false;
+    }
+
     addEventListener("scroll", () => {
-      navbar.classList.toggle("scrolled", scrollY > 40);
+      if (!navTicking) {
+        requestAnimationFrame(updateSmartNav);
+        navTicking = true;
+      }
     }, { passive:true });
+
+    navbar.addEventListener("focusin", () => {
+      navLockedVisible = true;
+      navbar.classList.remove("nav-hidden");
+    });
+    navbar.addEventListener("focusout", () => {
+      navLockedVisible = false;
+    });
+
+    // Highlight the currently viewed primary section.
+    const navSectionLinks = [...document.querySelectorAll("[data-nav-section]")];
+    const navSectionObserver = "IntersectionObserver" in window
+      ? new IntersectionObserver(entries => {
+          const visible = entries
+            .filter(entry => entry.isIntersecting)
+            .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!visible) return;
+          navSectionLinks.forEach(link => {
+            link.classList.toggle("is-active", link.dataset.navSection === visible.target.id);
+          });
+        }, { rootMargin:"-28% 0px -58% 0px", threshold:[0,.2,.5] })
+      : null;
+
+    if (navSectionObserver) {
+      navSectionLinks.forEach(link => {
+        const section = document.getElementById(link.dataset.navSection);
+        if (section) navSectionObserver.observe(section);
+      });
+    }
 
     /* =========================================================
        4) MODALS
@@ -945,30 +1331,111 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
       return { ok:true };
     }
 
+    const previewObjectUrls = new Map();
+    const uploadCount = document.getElementById("uploadCount");
+    const uploadSummaryBar = document.getElementById("uploadSummaryBar");
+
+    function readableFileSize(bytes) {
+      if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    }
+
+    function updateUploadSummary() {
+      const completed = [...document.querySelectorAll('.upload-box')]
+        .filter(box => box.classList.contains("has-file")).length;
+      uploadCount.textContent = `${completed} / 6`;
+      uploadSummaryBar.style.width = `${(completed / 6) * 100}%`;
+    }
+
+    function resetUploadBox(input) {
+      const box = input.closest(".upload-box");
+      const preview = box.querySelector("img");
+      const meta = box.querySelector(".upload-meta");
+      const progressLabel = box.querySelector(".upload-progress-label");
+      const oldUrl = previewObjectUrls.get(input.id);
+
+      if (oldUrl) {
+        URL.revokeObjectURL(oldUrl);
+        previewObjectUrls.delete(input.id);
+      }
+
+      box.classList.remove("has-file","is-invalid","is-uploading","is-uploaded","is-dragover");
+      box.style.setProperty("--upload-progress","0%");
+      input.value = "";
+      preview.removeAttribute("src");
+      preview.alt = "";
+      meta.textContent = "";
+      progressLabel.textContent = "0%";
+      updateUploadSummary();
+    }
+
+    function applySelectedFile(input) {
+      const file = input.files && input.files[0];
+      const box = input.closest(".upload-box");
+      const preview = box.querySelector("img");
+      const meta = box.querySelector(".upload-meta");
+      const check = validateFile(file);
+
+      box.classList.remove("is-invalid","is-uploaded","is-uploading");
+
+      if (!check.ok) {
+        resetUploadBox(input);
+        box.classList.add("is-invalid");
+        meta.textContent = isArabic()
+          ? "صيغة غير مدعومة أو الحجم أكبر من 8MB"
+          : "Unsupported format or file exceeds 8 MB";
+        setTimeout(() => box.classList.remove("is-invalid"), 900);
+        return;
+      }
+
+      const oldUrl = previewObjectUrls.get(input.id);
+      if (oldUrl) URL.revokeObjectURL(oldUrl);
+
+      const url = URL.createObjectURL(file);
+      previewObjectUrls.set(input.id, url);
+      preview.src = url;
+      preview.alt = isArabic() ? "معاينة الصورة المختارة" : "Selected image preview";
+      meta.textContent = `${file.name} · ${readableFileSize(file.size)}`;
+      box.classList.add("has-file");
+      box.style.setProperty("--upload-progress","0%");
+      updateUploadSummary();
+    }
+
     for (let i = 1; i <= 6; i++) {
       const input = document.getElementById("file" + i);
-      const preview = document.getElementById("preview" + i);
+      const box = input.closest(".upload-box");
 
-      input.addEventListener("change", () => {
-        const file = input.files[0];
-        const check = validateFile(file);
+      input.addEventListener("change", () => applySelectedFile(input));
 
-        if (!check.ok) {
-          input.value = "";
-          preview.removeAttribute("src");
-          preview.style.display = "none";
-          alert(isArabic()
-            ? "الملف غير صالح. استخدمي JPG أو PNG أو WEBP بحجم لا يتجاوز 8MB."
-            : "Invalid file. Use JPG, PNG, or WEBP up to 8 MB.");
-          return;
+      ["dragenter","dragover"].forEach(type => {
+        box.addEventListener(type, event => {
+          event.preventDefault();
+          box.classList.add("is-dragover");
+        });
+      });
+
+      ["dragleave","drop"].forEach(type => {
+        box.addEventListener(type, event => {
+          event.preventDefault();
+          box.classList.remove("is-dragover");
+        });
+      });
+
+      box.addEventListener("drop", event => {
+        const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+        if (!file) return;
+        try {
+          const transfer = new DataTransfer();
+          transfer.items.add(file);
+          input.files = transfer.files;
+          applySelectedFile(input);
+        } catch (error) {
+          console.warn("Drag-and-drop file assignment is not supported in this browser.", error);
         }
-
-        const url = URL.createObjectURL(file);
-        preview.src = url;
-        preview.style.display = "block";
-        preview.onload = () => URL.revokeObjectURL(url);
       });
     }
+
+    updateUploadSummary();
 
     function sanitiseText(value) {
       return String(value || "").replace(/[<>]/g, "").trim();
@@ -1056,7 +1523,33 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
             }
           };
 
-          await ref.put(file, metadata);
+          const input = document.getElementById("file" + (i + 1));
+          const box = input.closest(".upload-box");
+          const progressLabel = box.querySelector(".upload-progress-label");
+          box.classList.add("is-uploading");
+          box.classList.remove("is-uploaded");
+
+          await new Promise((resolve, reject) => {
+            const task = ref.put(file, metadata);
+            task.on("state_changed",
+              snapshot => {
+                const progress = snapshot.totalBytes
+                  ? Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+                  : 0;
+                box.style.setProperty("--upload-progress", `${progress}%`);
+                progressLabel.textContent = `${progress}%`;
+              },
+              reject,
+              () => {
+                box.classList.remove("is-uploading");
+                box.classList.add("is-uploaded");
+                box.style.setProperty("--upload-progress","100%");
+                progressLabel.textContent = "100%";
+                resolve();
+              }
+            );
+          });
+
           uploaded.push({ path, angle:i + 1 });
         }
 
@@ -1082,9 +1575,7 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
 
         event.target.reset();
         for (let i = 1; i <= 6; i++) {
-          const preview = document.getElementById("preview" + i);
-          preview.removeAttribute("src");
-          preview.style.display = "none";
+          resetUploadBox(document.getElementById("file" + i));
         }
       } catch (error) {
         console.error("Visual consultation submission failed:", error);
@@ -1094,9 +1585,9 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
           : "Submission failed and receipt was not confirmed. Please try again or contact the clinic.";
       } finally {
         btn.disabled = false;
-        btn.innerHTML = isArabic()
-          ? '<span class="ar-only">إرسال الطلب بأمان</span>'
-          : '<span class="en-only">Submit Securely</span>';
+        btn.innerHTML =
+          '<span class="ar-only">إرسال الطلب بأمان</span>' +
+          '<span class="en-only">Submit Securely</span>';
       }
     });
 
@@ -1174,6 +1665,7 @@ html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
     const assistantBody = document.getElementById("assistantBody");
 
     function openAssistant() {
+      navbar.classList.remove("nav-hidden");
       assistant.classList.add("open");
       assistant.setAttribute("aria-hidden","false");
       if (!assistantBody.children.length) resetAssistantGreeting();
@@ -1332,6 +1824,7 @@ service firebase.storage {
 PRODUCTION NOTES
 =========================================================
 1. Replace Firebase credentials.
+0. Run the included image optimisation utility before deployment to generate WebP/AVIF assets, then update production image references through your build pipeline.
 2. Enable Anonymous Authentication only if legally and operationally approved.
 3. Enable Firebase App Check.
 4. Create a secure admin dashboard with role-based access.
