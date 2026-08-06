@@ -1,1839 +1,2284 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="WAFA — Saudi luxury digital beauty magazine, clinical journal and visual culture platform by Dr. Wafa Alghamdi." />
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="color-scheme" content="light" />
-  <meta name="robots" content="index, follow" />
-  <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' https: data: blob:;
-                 script-src 'self' 'unsafe-inline' https://www.gstatic.com https://cdnjs.cloudflare.com;
-                 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-                 font-src 'self' https://fonts.gstatic.com data:;
-                 img-src 'self' data: blob: https:;
-                 media-src 'self' blob: https:;
-                 connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://firebasestorage.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com;">
-  <title>WAFA Magazine | Dr. Wafa Alghamdi — Saudi Beauty, Medicine & Visual Culture</title>
-
-  <link rel="preload" as="image" href="image_11.png" fetchpriority="high" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-
-  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-storage-compat.js"></script>
-
-  <style>
-    :root{
-      --white:#fff;
-      --paper:#fbfbfc;
-      --soft:#f5f5f7;
-      --ink:#151518;
-      --muted:#76767d;
-      --rose:#d98996;
-      --rose-deep:#bd6f7c;
-      --rose-soft:#fff2f4;
-      --gold:#c8a96a;
-      --line:rgba(21,21,24,.10);
-      --danger:#b42318;
-      --success:#137333;
-      --dark:#09090b;
-      --font-ar:'Noto Kufi Arabic',sans-serif;
-      --font-en:'Inter',sans-serif;
-      --font-editorial:'Playfair Display',serif;
-      --ease:cubic-bezier(.16,1,.3,1);
-      --shadow:0 24px 70px rgba(0,0,0,.08);
-      --radius-xl:32px;
-      --radius-lg:24px;
-      --radius-md:16px;
-    }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      background:var(--white);
-      color:var(--ink);
-      overflow-x:hidden;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
-    html[lang="ar"] body{font-family:var(--font-ar);text-align:right}
-    html[lang="en"] body{font-family:var(--font-en);text-align:left}
-    html[lang="ar"] .en-only{display:none!important}
-    html[lang="en"] .ar-only{display:none!important}
-    a{text-decoration:none;color:inherit}
-    button,input,textarea,select{font:inherit}
-    img,video{max-width:100%;display:block}
-    ::selection{background:var(--rose);color:#fff}
-
-    .container{width:min(1240px,90vw);margin:auto}
-    .section{padding:120px 0}
-    .section.alt{background:var(--soft)}
-    .section.dark{background:var(--dark);color:#fff}
-    .eyebrow{
-      display:inline-flex;align-items:center;gap:10px;
-      border:1px solid var(--line);border-radius:999px;
-      padding:9px 16px;font-size:.78rem;letter-spacing:.14em;
-      text-transform:uppercase;background:rgba(255,255,255,.8);
-      backdrop-filter:blur(14px)
-    }
-    .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--rose)}
-    .title{
-      font-family:var(--font-editorial);
-      font-size:clamp(2.7rem,6vw,5.6rem);
-      line-height:1.05;margin:22px 0 18px
-    }
-    html[lang="ar"] .title{font-family:var(--font-ar);line-height:1.35}
-    .lead{font-size:clamp(1rem,2vw,1.25rem);color:var(--muted);line-height:2;max-width:820px}
-    .grid{display:grid;gap:28px}
-    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .card{
-      background:#fff;border:1px solid var(--line);
-      border-radius:var(--radius-lg);padding:30px;
-      box-shadow:0 14px 45px rgba(0,0,0,.04);
-      transition:.45s var(--ease)
-    }
-    .card:hover{transform:translateY(-8px);box-shadow:var(--shadow);border-color:rgba(217,137,150,.35)}
-    .card h3{margin:0 0 12px;font-size:1.35rem}
-    .card p{margin:0;color:var(--muted);line-height:1.85}
-    .btn{
-      border:0;border-radius:999px;padding:16px 28px;cursor:pointer;
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      transition:.35s var(--ease);font-weight:700
-    }
-    .btn-dark{background:var(--ink);color:#fff}
-    .btn-dark:hover{background:var(--rose);transform:translateY(-3px)}
-    .btn-light{background:#fff;color:var(--ink);border:1px solid var(--line)}
-    .btn-light:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(0,0,0,.08)}
-    .btn-rose{background:var(--rose);color:#fff}
-    .btn-rose:hover{background:var(--rose-deep);transform:translateY(-3px)}
-    .btn[disabled]{opacity:.55;cursor:not-allowed;transform:none}
-
-    .top-nav{
-      position:fixed;inset:0 0 auto;z-index:1000;
-      height:88px;padding:0 5vw;
-      display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:28px;
-      background:rgba(255,255,255,.76);
-      -webkit-backdrop-filter:blur(22px) saturate(1.25);
-      backdrop-filter:blur(22px) saturate(1.25);
-      border-bottom:1px solid transparent;
-      transform:translateY(0);
-      transition:
-        transform .52s var(--ease),
-        height .35s var(--ease),
-        background .35s var(--ease),
-        border-color .35s var(--ease),
-        box-shadow .35s var(--ease);
-      will-change:transform
-    }
-    .top-nav.scrolled{
-      height:70px;border-color:var(--line);
-      background:rgba(255,255,255,.93);
-      box-shadow:0 12px 34px rgba(20,12,15,.055)
-    }
-    .top-nav.nav-hidden{transform:translateY(calc(-100% - 12px));box-shadow:none}
-    .top-nav:focus-within{transform:translateY(0)}
-    .brand{display:flex;align-items:center;gap:12px;min-width:max-content}
-    .brand img{height:54px;width:auto}
-    .top-nav.scrolled .brand img{height:46px}
-    .brand-text strong{display:block}
-    .brand-text span{font-size:.72rem;color:var(--muted)}
-    .nav-links{
-      display:flex;align-items:center;justify-content:center;gap:clamp(16px,2.3vw,34px);
-      color:#4b4649;font-size:.77rem;font-weight:700;letter-spacing:.035em
-    }
-    .nav-links a{position:relative;padding:12px 0;white-space:nowrap}
-    .nav-links a::after{
-      content:"";position:absolute;inset:auto 0 4px;height:1px;
-      background:var(--rose-deep);transform:scaleX(0);transform-origin:center;
-      transition:transform .35s var(--ease)
-    }
-    .nav-links a:hover::after,.nav-links a.is-active::after{transform:scaleX(1)}
-    .nav-actions{display:flex;align-items:center;gap:10px;min-width:max-content}
-    .nav-cta{
-      min-height:44px;padding:11px 18px;border-radius:999px;
-      background:var(--ink);color:#fff;font-size:.78rem;font-weight:700;
-      transition:.35s var(--ease)
-    }
-    .nav-cta:hover{background:var(--rose-deep);transform:translateY(-2px)}
-    .icon-btn{
-      width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
-      background:#fff;display:grid;place-items:center;cursor:pointer;
-      transition:.3s var(--ease)
-    }
-    .icon-btn:hover{border-color:rgba(189,111,124,.5);transform:translateY(-2px)}
-    .lang-btn{
-      padding:11px 16px;border-radius:999px;border:1px solid var(--line);
-      background:#fff;cursor:pointer;font-weight:700;transition:.3s var(--ease)
-    }
-    .lang-btn:hover{border-color:rgba(189,111,124,.5);transform:translateY(-2px)}
-
-    .hero{
-      min-height:100vh;position:relative;display:grid;place-items:center;
-      background:linear-gradient(180deg,#fff7f8 0%,#fff 100%);
-      overflow:hidden
-    }
-    .hero-media{position:absolute;inset:0;z-index:0}
-    .hero-media video{width:100%;height:100%;object-fit:cover;filter:brightness(.72) saturate(.9)}
-    .hero-media::after{
-      content:"";position:absolute;inset:0;
-      background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.74) 72%,#fff)
-    }
-    .hero-content{position:relative;z-index:1;text-align:center;padding:170px 5vw 90px;max-width:1100px}
-    .hero-content .lead{margin:0 auto 36px;color:#4f4f55}
-    .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-    .hero-note{margin-top:26px;color:#67676d;font-size:.86rem}
-
-    .story-layout{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
-    .story-photo{border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/5}
-    .story-photo img{width:100%;height:100%;object-fit:cover}
-    .quote{border-inline-start:4px solid var(--rose);padding-inline-start:20px;color:var(--rose-deep);font-family:var(--font-editorial);font-size:1.45rem;line-height:1.7}
-    html[lang="ar"] .quote{font-family:var(--font-ar)}
-
-    .journal-card{padding:0;overflow:hidden}
-    .journal-card img{width:100%;aspect-ratio:16/10;object-fit:cover}
-    .journal-card .body{padding:25px}
-    .journal-meta{font-size:.74rem;color:var(--rose-deep);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
-
-    .journey{
-      background:linear-gradient(135deg,#0b0b0d,#16161b);
-      color:#fff;border-radius:40px;padding:48px
-    }
-    .journey-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px}
-    .journey-step{padding:22px;border:1px solid rgba(255,255,255,.12);border-radius:20px;background:rgba(255,255,255,.03)}
-    .journey-step b{display:block;color:var(--rose);margin-bottom:8px}
-    .journey-step p{color:#b8b8bf;margin:0;line-height:1.7;font-size:.92rem}
-
-    .vr-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:32px;align-items:start}
-    .vr-panel{
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:28px;padding:32px
-    }
-    .dark .lead{color:#b0b0b7}
-    .guide-list{list-style:none;padding:0;margin:24px 0 0}
-    .guide-list li{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.09);color:#c6c6cc}
-    .guide-list li strong{display:block;color:#fff;margin-bottom:6px}
-    .field{margin-bottom:18px}
-    .field label{display:block;margin-bottom:8px;font-size:.9rem;font-weight:700}
-    .input,.textarea,.select{
-      width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.15);
-      background:rgba(0,0,0,.28);color:#fff;padding:16px;outline:none
-    }
-    .input:focus,.textarea:focus,.select:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(217,137,150,.12)}
-    .textarea{min-height:120px;resize:vertical}
-    .upload-summary{
-      display:grid;grid-template-columns:1fr auto;align-items:center;gap:14px;
-      margin:20px 0 12px;color:#d8d8de;font-size:.8rem
-    }
-    .upload-summary strong{font-family:var(--font-en);color:#fff;font-variant-numeric:tabular-nums}
-    .upload-summary-track{
-      grid-column:1/-1;height:4px;border-radius:999px;overflow:hidden;
-      background:rgba(255,255,255,.1)
-    }
-    .upload-summary-track i{
-      display:block;width:0;height:100%;border-radius:inherit;
-      background:linear-gradient(90deg,var(--rose),#f0c6ce);
-      transition:width .5s var(--ease)
-    }
-    .upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0 20px}
-    .upload-box{
-      --upload-progress:0%;
-      min-height:154px;border:1px dashed rgba(255,255,255,.28);
-      border-radius:18px;display:grid;place-items:center;text-align:center;
-      position:relative;overflow:hidden;cursor:pointer;
-      background:
-        linear-gradient(180deg,rgba(255,255,255,.035),rgba(0,0,0,.08)),
-        rgba(0,0,0,.22);
-      isolation:isolate;
-      transition:
-        transform .35s var(--ease),
-        border-color .35s var(--ease),
-        background .35s var(--ease),
-        box-shadow .35s var(--ease)
-    }
-    .upload-box::before{
-      content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-      background:linear-gradient(180deg,transparent 38%,rgba(5,5,7,.76));
-      opacity:0;transition:opacity .35s var(--ease)
-    }
-    .upload-box::after{
-      content:"";position:absolute;inset:auto 0 0;height:3px;z-index:5;
-      width:var(--upload-progress);
-      background:linear-gradient(90deg,var(--rose),#f3c6ce);
-      transition:width .2s linear
-    }
-    .upload-box:hover,.upload-box.is-dragover{
-      transform:translateY(-4px);border-color:rgba(217,137,150,.9);
-      box-shadow:0 18px 42px rgba(0,0,0,.18)
-    }
-    .upload-box.has-file{border-style:solid;border-color:rgba(217,137,150,.72)}
-    .upload-box.has-file::before{opacity:1}
-    .upload-box.is-uploading{border-color:var(--gold)}
-    .upload-box.is-uploaded{
-      border-color:#62c786;
-      box-shadow:0 0 0 1px rgba(98,199,134,.18),0 18px 42px rgba(0,0,0,.15)
-    }
-    .upload-box.is-invalid{
-      border-color:#ff8888;background:rgba(180,35,24,.12);
-      animation:uploadShake .38s ease
-    }
-    @keyframes uploadShake{
-      25%{transform:translateX(-4px)}50%{transform:translateX(4px)}
-      75%{transform:translateX(-2px)}
-    }
-    .upload-box input{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:6}
-    .upload-box img{
-      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-      display:none;z-index:0;transform:scale(1.01);
-      transition:transform .65s var(--ease),filter .35s var(--ease)
-    }
-    .upload-box.has-file img{display:block}
-    .upload-box:hover img{transform:scale(1.045)}
-    .upload-copy{
-      position:relative;z-index:2;padding:18px;display:grid;gap:7px;
-      transition:opacity .25s var(--ease),transform .35s var(--ease)
-    }
-    .upload-box.has-file .upload-copy{opacity:0;transform:translateY(8px)}
-    .upload-angle{font-size:.82rem;color:#e8e8ec;font-weight:700}
-    .upload-hint{font-size:.67rem;color:#8f8f97;line-height:1.5}
-    .upload-check{
-      position:absolute;z-index:4;top:12px;inset-inline-end:12px;
-      width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
-      background:#62c786;color:#07140b;font-weight:900;
-      opacity:0;transform:scale(.6);transition:.35s var(--ease);
-      box-shadow:0 8px 22px rgba(0,0,0,.2)
-    }
-    .upload-box.has-file .upload-check{opacity:1;transform:scale(1)}
-    .upload-meta{
-      position:absolute;z-index:4;inset:auto 12px 12px;
-      color:#fff;font-size:.66rem;line-height:1.45;text-align:start;
-      opacity:0;transform:translateY(6px);transition:.35s var(--ease);
-      overflow:hidden;text-overflow:ellipsis;white-space:nowrap
-    }
-    .upload-box.has-file .upload-meta,.upload-box.is-invalid .upload-meta{opacity:1;transform:none}
-    .upload-progress-label{
-      position:absolute;z-index:4;inset:12px auto auto 12px;
-      padding:5px 8px;border-radius:999px;background:rgba(0,0,0,.62);
-      color:#fff;font-family:var(--font-en);font-size:.62rem;
-      opacity:0;transition:.25s var(--ease)
-    }
-    .upload-box.is-uploading .upload-progress-label{opacity:1}
-    .consent{
-      display:flex;align-items:flex-start;gap:10px;margin:15px 0;color:#c0c0c6;font-size:.85rem;line-height:1.7
-    }
-    .consent input{margin-top:5px}
-    .status{min-height:24px;margin-top:12px;font-size:.9rem}
-    .fineprint{font-size:.76rem;color:#92929a;line-height:1.8;margin-top:16px}
-
-    .early-form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .early-form .full{grid-column:1/-1}
-    .light-input{
-      width:100%;border:1px solid var(--line);border-radius:14px;padding:15px;background:#fff;outline:none
-    }
-    .light-input:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(217,137,150,.12)}
-
-    footer{padding:80px 5vw 36px;text-align:center;border-top:1px solid var(--line)}
-    footer img{height:74px;margin:0 auto 24px}
-    .footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin:26px 0;color:var(--muted);font-size:.9rem}
-
-    .fab{
-      position:fixed;right:24px;bottom:24px;z-index:1200;
-      width:66px;height:66px;border-radius:50%;border:0;background:var(--ink);color:#fff;
-      display:grid;place-items:center;cursor:pointer;box-shadow:0 18px 50px rgba(0,0,0,.28)
-    }
-    html[dir="rtl"] .fab{right:24px;left:auto}
-    html[dir="ltr"] .fab{left:auto;right:24px}
-
-    .assistant{
-      position:fixed;right:24px;bottom:102px;z-index:1199;
-      width:min(410px,calc(100vw - 28px));height:min(650px,74vh);
-      background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:0 30px 90px rgba(0,0,0,.18);
-      display:flex;flex-direction:column;overflow:hidden;
-      opacity:0;visibility:hidden;transform:translateY(18px) scale(.97);transition:.4s var(--ease)
-    }
-    .assistant.open{opacity:1;visibility:visible;transform:none}
-    .assistant-head{padding:20px;background:var(--rose-soft);display:flex;justify-content:space-between;align-items:center}
-    .assistant-head h3{margin:0;font-size:1.1rem}
-    .assistant-head button{border:0;background:none;font-size:1.7rem;cursor:pointer}
-    .assistant-body{flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:12px}
-    .msg{max-width:86%;padding:13px 16px;border-radius:18px;line-height:1.65;font-size:.9rem;white-space:pre-wrap}
-    .msg.bot{background:var(--soft);align-self:flex-start}
-    .msg.user{background:var(--rose);color:#fff;align-self:flex-end}
-    .assistant-form{display:flex;gap:8px;padding:14px;border-top:1px solid var(--line)}
-    .assistant-form input{flex:1;border:1px solid var(--line);border-radius:999px;padding:14px 17px;outline:none}
-    .assistant-form button{width:48px;height:48px;border-radius:50%;border:0;background:var(--ink);color:#fff;cursor:pointer}
-    .assistant-disclaimer{padding:0 16px 12px;color:#8a8a90;font-size:.69rem;line-height:1.5}
-
-    .modal{
-      position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.55);
-      display:none;align-items:center;justify-content:center;padding:18px
-    }
-    .modal.open{display:flex}
-    .modal-card{background:#fff;border-radius:24px;max-width:760px;max-height:88vh;overflow:auto;padding:30px}
-    .modal-card h2{margin-top:0}
-    .modal-card p,.modal-card li{color:var(--muted);line-height:1.8}
-    .modal-close{float:left;border:0;background:var(--soft);border-radius:999px;padding:10px 15px;cursor:pointer}
-    html[dir="ltr"] .modal-close{float:right}
-
-    @media(max-width:1080px){
-      .nav-links{display:none}
-      .top-nav{grid-template-columns:auto 1fr}
-      .nav-actions{justify-self:end}
-    }
-    @media(max-width:960px){
-      .grid-3{grid-template-columns:1fr 1fr}
-      .story-layout,.vr-wrap{grid-template-columns:1fr}
-      .journey-grid{grid-template-columns:1fr 1fr}
-    }
-    @media(max-width:680px){
-      .section{padding:82px 0}
-      .top-nav{height:72px;padding:0 4vw;gap:10px}
-      .brand-text{display:none}
-      .nav-cta{padding:10px 13px;font-size:.7rem}
-      .lang-btn{padding:10px 12px}
-      .icon-btn{width:42px;height:42px}
-      .hero-content{padding-top:130px}
-      .grid-2,.grid-3,.early-form{grid-template-columns:1fr}
-      .early-form .full{grid-column:auto}
-      .journey{padding:26px;border-radius:26px}
-      .journey-grid{grid-template-columns:1fr}
-      .upload-grid{grid-template-columns:1fr 1fr}
-      .vr-panel{padding:22px}
-      .assistant{right:14px;bottom:92px}
-      .fab{right:16px;bottom:16px}
-    }
-
-    @media(max-width:460px){
-      #assistantOpenBtn{display:none}
-      .nav-actions{gap:7px}
-      .nav-cta{padding-inline:12px}
-      .brand img{height:44px}
-    }
-  
-/* ===== WAFA GLOBAL MAGAZINE VISUAL SYSTEM ===== */
-:root{
-  --mag-black:#050505;
-  --mag-cream:#f2ede4;
-  --mag-red:#8d263d;
-  --mag-velvet:#66152b;
-  --mag-velvet-deep:#2a0b14;
-  --mag-champagne:#c8a96a;
-  --mag-charcoal:#171316;
-  --mag-blush:#d8b7b0;
-  --mag-sand:#d4b9aa;
-}
-.mag-container{width:min(1440px,94vw);margin:auto}
-.mag-label{display:flex;justify-content:space-between;gap:18px;font-size:.66rem;
-  letter-spacing:.18em;text-transform:uppercase;font-weight:800}
-.mag-line{height:1px;background:currentColor;opacity:.22;margin:18px 0 34px}
-.mag-serif{font-family:var(--font-editorial);letter-spacing:-.065em;line-height:.86;font-weight:400}
-html[lang="ar"] .mag-serif{font-family:var(--font-ar);line-height:1.08}
-.mag-num{font-family:var(--font-editorial);font-size:clamp(5rem,13vw,13rem);
-  line-height:.7;color:transparent;-webkit-text-stroke:1px currentColor;opacity:.16}
-.mag-section{padding:120px 0;overflow:hidden}
-.mag-head{display:grid;grid-template-columns:auto 1fr minmax(220px,340px);
-  gap:28px;align-items:end;margin-bottom:46px}
-.mag-head h2{font-size:clamp(4rem,10vw,10rem);margin:0}
-.mag-head p{line-height:1.8;opacity:.72;margin:0 0 8px;font-size:.87rem}
-
-/* Cover */
-.mag-cover{min-height:100svh;background:#e9e1d7;padding:105px 3vw 28px;display:grid;place-items:center}
-.mag-cover-frame{position:relative;width:min(1480px,94vw);height:min(870px,82svh);overflow:hidden;background:#bda99c}
-.mag-cover-frame>img{width:100%;height:100%;object-fit:cover;object-position:center 22%;
-  filter:saturate(.76) contrast(1.07) brightness(.93)}
-.mag-cover-frame:after{content:"";position:absolute;inset:0;background:
- linear-gradient(180deg,rgba(0,0,0,.08),transparent 42%,rgba(0,0,0,.38))}
-.mag-masthead{position:absolute;z-index:2;top:2%;left:50%;transform:translateX(-50%);
- width:96%;text-align:center;color:#fff;mix-blend-mode:difference;
- font-family:var(--font-editorial);font-size:clamp(5rem,15vw,13.5rem);
- line-height:.8;letter-spacing:-.08em;font-weight:600}
-html[lang="ar"] .mag-masthead{font-family:var(--font-ar);font-weight:800}
-.mag-cover-meta{position:absolute;z-index:3;top:24px;left:26px;right:26px;
- display:flex;justify-content:space-between;color:#fff;font-size:.65rem;letter-spacing:.16em}
-.mag-cover-story{position:absolute;z-index:3;left:4%;bottom:5%;width:min(660px,82%);color:#fff}
-.mag-cover-story h1{font-size:clamp(3.3rem,8vw,8rem);margin:0 0 20px}
-.mag-cover-story p{max-width:520px;line-height:1.85;font-size:.9rem}
-.mag-code{position:absolute;z-index:3;right:24px;bottom:24px;color:#fff;
- writing-mode:vertical-rl;font-size:.56rem;letter-spacing:.2em}
-
-/* Ticker */
-.mag-ticker{background:#050505;color:#fff;overflow:hidden}
-.mag-ticker-track{display:flex;width:max-content;padding:16px 0;animation:magTicker 28s linear infinite}
-.mag-ticker span{font-family:var(--font-editorial);font-style:italic;
- font-size:1.08rem;margin:0 30px;white-space:nowrap}
-.mag-ticker i{width:7px;height:7px;border-radius:50%;background:var(--mag-red);align-self:center}
-@keyframes magTicker{to{transform:translateX(-50%)}}
-
-/* Manifesto */
-.mag-manifesto{background:var(--mag-cream);color:#111}
-.mag-manifesto-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:40px}
-.mag-manifesto h2{font-size:clamp(4rem,9vw,9rem);margin:28px 0}
-.mag-manifesto p{max-width:760px;line-height:2;font-size:1.05rem}
-.mag-code-card{min-height:560px;background:#111;color:#fff;padding:30px;
- display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
-.mag-code-card:before{content:"";position:absolute;width:380px;height:380px;border-radius:50%;
- right:-150px;top:-140px;background:radial-gradient(circle,var(--mag-red),transparent 66%)}
-.mag-code-card strong{font-family:var(--font-editorial);font-size:3.5rem;font-weight:400;position:relative}
-.mag-code-card ol{position:relative;padding-inline-start:22px}
-.mag-code-card li{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.17);
- font-size:.75rem;letter-spacing:.08em}
-
-/* Clean issue */
-.mag-clean{background:#fff;color:#111}
-.mag-clean-grid{display:grid;grid-template-columns:1.05fr .75fr .65fr;gap:20px}
-.mag-photo{position:relative;overflow:hidden;background:#eee;min-height:620px;margin:0}
-.mag-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.04)}
-.mag-tag{position:absolute;left:14px;bottom:14px;background:#fff;color:#111;
- padding:8px 12px;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase}
-.mag-clean-copy{background:#f4f0eb;border-top:8px solid var(--mag-red);padding:28px;
- display:flex;flex-direction:column;justify-content:space-between}
-.mag-clean-copy h3{font-size:clamp(3rem,5vw,5rem);margin:0}
-.mag-clean-copy p{line-height:1.9;color:#444}
-.mag-detail-stack{display:grid;grid-template-rows:1fr 1fr;gap:20px}
-.mag-detail-stack figure{min-height:300px;margin:0;position:relative;overflow:hidden}
-.mag-detail-stack img{width:100%;height:100%;object-fit:cover}
-
-/* Luxury issue */
-.mag-luxury{background:#e9e1d7;color:#111}
-.mag-luxury-grid{display:grid;grid-template-columns:.72fr 1.3fr .4fr;gap:34px;align-items:center}
-.mag-luxury-copy h3{font-size:clamp(3.3rem,6vw,6.5rem);margin:24px 0}
-.mag-luxury-copy p{line-height:2;color:#4a4a4f}
-.mag-luxury-photo{height:760px;margin:0;overflow:hidden;box-shadow:0 35px 100px rgba(50,25,30,.16)}
-.mag-luxury-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.74) contrast(1.08)}
-.mag-vertical{writing-mode:vertical-rl;letter-spacing:.26em;font-size:.62rem;text-transform:uppercase}
-
-/* Future Beauty — controlled Saudi avant-garde */
-.mag-exp{
-  position:relative;color:#f7efe9;
-  background:
-    radial-gradient(circle at 86% 8%,rgba(200,169,106,.18),transparent 26%),
-    linear-gradient(135deg,var(--mag-charcoal),var(--mag-velvet-deep) 48%,var(--mag-velvet));
-}
-.mag-exp::before{
-  content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;
-  background-image:
-    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-  background-size:44px 44px
-}
-.mag-exp .mag-container{position:relative}
-.mag-exp-board{
-  min-height:760px;color:#1b1316;position:relative;overflow:hidden;
-  background:
-    radial-gradient(circle at 76% 24%,rgba(200,169,106,.24),transparent 24%),
-    linear-gradient(145deg,#f1e9df 0%,#d9c2ba 52%,#b98a91 100%);
-  border:1px solid rgba(255,255,255,.28);
-  box-shadow:0 44px 120px rgba(18,4,9,.38)
-}
-.mag-exp-board::before{
-  content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;
-  background:
-    linear-gradient(115deg,transparent 0 48%,rgba(255,255,255,.55) 49%,transparent 50%),
-    radial-gradient(circle at 20% 18%,rgba(102,21,43,.22),transparent 26%)
-}
-.mag-exp-board::after{
-  content:"BEAUTY / IDENTITY / FUTURE";position:absolute;left:-2%;bottom:-3%;
-  color:var(--mag-velvet);font-family:var(--font-editorial);
-  font-size:clamp(4rem,11vw,11rem);white-space:nowrap;
-  letter-spacing:-.07em;opacity:.16
-}
-.mag-exp-a,.mag-exp-b{position:absolute;margin:0;z-index:2;overflow:hidden}
-.mag-exp-a{
-  left:8%;top:10%;width:42%;height:67%;transform:rotate(-3deg);
-  box-shadow:22px 24px 0 rgba(102,21,43,.92),0 32px 70px rgba(42,11,20,.2)
-}
-.mag-exp-b{
-  right:7%;top:20%;width:34%;height:51%;transform:rotate(4deg);
-  border:10px solid rgba(247,239,233,.96);
-  box-shadow:0 28px 70px rgba(42,11,20,.24)
-}
-.mag-exp-a img,.mag-exp-b img{
-  width:100%;height:100%;object-fit:cover;
-  filter:contrast(1.08) saturate(.78) sepia(.06)
-}
-.mag-exp-copy{
-  position:absolute;right:8%;top:7%;width:35%;font-size:.7rem;
-  letter-spacing:.14em;text-transform:uppercase;font-weight:800;z-index:4;
-  color:var(--mag-velvet-deep)
-}
-.mag-stamp{
-  position:absolute;left:53%;top:10%;z-index:5;width:115px;height:115px;
-  border:1px solid var(--mag-champagne);border-radius:50%;
-  display:grid;place-items:center;text-align:center;
-  color:var(--mag-velvet);background:rgba(242,237,228,.68);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
-  font-weight:800;transform:rotate(11deg);
-  box-shadow:0 14px 34px rgba(42,11,20,.14)
-}
-
-/* Art issue */
-.mag-art{background:#111;color:#eee}
-.mag-art-grid{display:grid;grid-template-columns:1fr 1fr;min-height:820px}
-.mag-art-photo{margin:0;overflow:hidden;position:relative}
-.mag-art-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.2)}
-.mag-art-photo:after{content:"";position:absolute;inset:0;background:
- linear-gradient(135deg,transparent 45%,rgba(200,31,56,.55));mix-blend-mode:screen}
-.mag-art-copy{border:1px solid rgba(255,255,255,.16);padding:44px;
- display:flex;flex-direction:column;justify-content:space-between}
-.mag-art-copy h3{font-size:clamp(4rem,8vw,8rem);margin:0}
-.mag-art-copy blockquote{font-family:var(--font-editorial);font-size:1.65rem;line-height:1.55;margin:0}
-html[lang="ar"] .mag-art-copy blockquote{font-family:var(--font-ar)}
-
-/* Product still life */
-.mag-product{background:var(--mag-sand);color:#111}
-.mag-product-stage{min-height:760px;position:relative;overflow:hidden;
- background:linear-gradient(135deg,#ead3ca,#b9877d)}
-.mag-product-title{position:absolute;left:3%;top:4%;font-size:clamp(5rem,13vw,13rem);
- color:#fff;mix-blend-mode:overlay;z-index:3}
-.mag-orbit{position:absolute;width:690px;height:690px;border:1px solid rgba(0,0,0,.22);
- border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
-.mag-orbit:before,.mag-orbit:after{content:"";position:absolute;border:1px solid rgba(0,0,0,.16);
- border-radius:50%;inset:13%}
-.mag-orbit:after{inset:28%}
-.mag-product-object{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
- width:min(300px,38vw);height:510px;border-radius:42% 42% 17% 17%/15% 15% 8% 8%;
- background:linear-gradient(90deg,#090909,#383238 50%,#050505);
- box-shadow:0 60px 70px rgba(55,15,25,.32)}
-.mag-product-object:before{content:"WAFA";position:absolute;left:50%;top:50%;
- transform:translate(-50%,-50%) rotate(-90deg);color:#fff;font-family:var(--font-editorial);
- font-size:3.1rem;letter-spacing:.18em}
-.mag-product-note{position:absolute;right:4%;bottom:6%;max-width:310px;
- border-top:1px solid #111;padding-top:14px;font-size:.77rem;line-height:1.8}
-
-/* Eight standards — editorial index, lower density */
-.mag-bible{
-  color:#171316;
-  background:
-    radial-gradient(circle at 100% 0,rgba(200,169,106,.13),transparent 25%),
-    #f5f1ec
-}
-.mag-bible-grid{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px
-}
-.mag-bible-item{
-  min-height:210px;padding:30px;
-  border:1px solid rgba(23,19,22,.12);
-  background:rgba(255,255,255,.52);
-  display:grid;grid-template-columns:86px minmax(0,1fr);
-  gap:26px;align-items:start;
-  transition:transform .4s var(--ease),background .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease)
-}
-.mag-bible-item:hover{
-  transform:translateY(-5px);background:#fff;
-  border-color:rgba(102,21,43,.24);
-  box-shadow:0 24px 60px rgba(42,11,20,.09)
-}
-.mag-bible-item b{
-  font-family:var(--font-editorial);font-size:4.2rem;line-height:.85;
-  font-weight:400;color:var(--mag-velvet);opacity:.3
-}
-.mag-bible-item h3{
-  margin:2px 0 16px;font-family:var(--font-editorial);
-  font-size:clamp(1.55rem,2.4vw,2.35rem);font-weight:400
-}
-html[lang="ar"] .mag-bible-item h3{font-family:var(--font-ar)}
-.mag-bible-item p{
-  max-width:42ch;font-size:.82rem;line-height:1.95;
-  color:#5d565a;margin:0
-}
-
-@media(max-width:1020px){
- .mag-manifesto-grid,.mag-clean-grid{grid-template-columns:1fr 1fr}
- .mag-detail-stack{grid-column:1/-1;grid-template-columns:1fr 1fr;grid-template-rows:none}
- .mag-luxury-grid{grid-template-columns:1fr 1.2fr}.mag-vertical{display:none}
- .mag-bible-grid{grid-template-columns:1fr 1fr}
- .mag-bible-item{grid-template-columns:70px minmax(0,1fr)}
-}
-@media(max-width:720px){
- .mag-section{padding:82px 0}.mag-head{grid-template-columns:1fr}
- .mag-cover{padding:72px 0 0}.mag-cover-frame{width:100vw;height:calc(100svh - 72px)}
- .mag-masthead{font-size:21vw}.mag-cover-story{left:20px;bottom:30px;width:84%}
- .mag-cover-story h1{font-size:15vw}.mag-code{right:10px}
- .mag-manifesto-grid,.mag-clean-grid,.mag-luxury-grid,.mag-art-grid{grid-template-columns:1fr}
- .mag-code-card{min-height:440px}.mag-photo{min-height:520px}
- .mag-detail-stack{grid-template-columns:1fr}.mag-luxury-photo{height:570px}
- .mag-exp-board{min-height:710px}.mag-exp-a{left:5%;top:18%;width:67%;height:50%}
- .mag-exp-b{right:4%;top:40%;width:48%;height:36%}.mag-exp-copy{width:75%;right:5%}
- .mag-stamp{left:5%;top:6%;width:86px;height:86px;font-size:.65rem}
- .mag-art-photo{min-height:590px}.mag-art-copy{min-height:590px;padding:28px}
- .mag-product-stage{min-height:670px}.mag-product-object{height:430px}
- .mag-bible-grid{grid-template-columns:1fr}.mag-bible-item{min-height:190px;padding:24px;grid-template-columns:56px 1fr;gap:18px}
- .mag-bible-item b{font-size:3.2rem}
-}
-
-    /* ===== Production polish: accessibility, performance, motion ===== */
-    .skip-link{
-      position:fixed;z-index:3000;inset-inline-start:18px;top:14px;
-      padding:12px 18px;border-radius:999px;background:var(--ink);color:#fff;
-      transform:translateY(-150%);transition:transform .25s var(--ease)
-    }
-    .skip-link:focus{transform:translateY(0)}
-    :focus-visible{
-      outline:3px solid rgba(200,169,106,.72);
-      outline-offset:4px
-    }
-    main section{scroll-margin-top:90px}
-    @supports (content-visibility:auto){
-      .mag-section,.section{
-        content-visibility:auto;
-        contain-intrinsic-size:auto 900px
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#100b0d" />
+    <title>WAFA — Medical Editorial Platform</title>
+    <style>
+      :root {
+        --ink: #171214;
+        --paper: #f7f3ee;
+        --white: #fff;
+        --wine: #6b1730;
+        --wine2: #34101d;
+        --rose: #c88e99;
+        --gold: #c5a46a;
+        --line: rgba(23, 18, 20, 0.14);
+        --muted: #71696d;
+        --dark: #0d090b;
+        --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+        --shadow: 0 28px 80px rgba(42, 15, 25, 0.14);
       }
-      .mag-cover,.hero{content-visibility:visible}
-    }
-    @media (prefers-reduced-motion:reduce){
-      html{scroll-behavior:auto}
-      *,*::before,*::after{
-        animation-duration:.01ms!important;
-        animation-iteration-count:1!important;
-        transition-duration:.01ms!important;
-        scroll-behavior:auto!important
+      * {
+        box-sizing: border-box;
       }
-      .top-nav{transform:none!important}
-    }
-
-</style>
-</head>
-
-<body>
-  <a class="skip-link" href="#top"><span class="ar-only">تخطي إلى المحتوى</span><span class="en-only">Skip to content</span></a>
-  <nav class="top-nav" id="navbar" aria-label="Primary navigation">
-    <a href="#top" class="brand">
-      <img src="image.png" alt="Dr Wafa Alghamdi Logo" decoding="async" fetchpriority="high" />
-      <div class="brand-text">
-        <strong>Dr. Wafa Alghamdi</strong>
-        <span>Digital Medical Journal</span>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Arial, "Noto Sans Arabic", sans-serif;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      body.menu-open {
+        overflow: hidden;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      img,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      [data-en] {
+        display: none;
+      }
+      html[lang="en"] [data-ar] {
+        display: none;
+      }
+      html[lang="en"] [data-en] {
+        display: inline;
+      }
+      html[lang="en"] {
+        direction: ltr;
+      }
+      html[lang="ar"] {
+        direction: rtl;
+      }
+      .skip {
+        position: fixed;
+        top: 12px;
+        inset-inline-start: 12px;
+        z-index: 9999;
+        padding: 10px 15px;
+        background: #111;
+        color: #fff;
+        border-radius: 999px;
+        transform: translateY(-160%);
+      }
+      .skip:focus {
+        transform: none;
+      }
+      .header {
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 76px;
+        padding: 0 clamp(18px, 4vw, 64px);
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 28px;
+        background: rgba(247, 243, 238, 0.88);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid transparent;
+        transition: 0.35s var(--ease);
+      }
+      .header.scrolled {
+        height: 66px;
+        border-color: var(--line);
+        box-shadow: 0 12px 30px rgba(20, 8, 13, 0.06);
+      }
+      .brand {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        white-space: nowrap;
+      }
+      .brand b {
+        font:
+          700 1.45rem/1 Georgia,
+          serif;
+        letter-spacing: -0.06em;
+      }
+      .brand span {
+        font-size: 0.66rem;
+        letter-spacing: 0.16em;
+      }
+      .nav {
+        display: flex;
+        justify-content: center;
+        gap: clamp(18px, 3vw, 42px);
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+      .nav a {
+        position: relative;
+        padding: 12px 0;
+      }
+      .nav a:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 4px;
+        height: 1px;
+        background: var(--wine);
+        transform: scaleX(0);
+        transition: 0.3s;
+      }
+      .nav a:hover:after {
+        transform: scaleX(1);
+      }
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+      .lang,
+      .menu,
+      .icon {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.82);
+        min-width: 42px;
+        height: 42px;
+        border-radius: 999px;
+        padding: 0 13px;
+      }
+      .menu {
+        display: none;
+        width: 44px;
+        padding: 0;
+        place-items: center;
+        gap: 4px;
+      }
+      .menu i {
+        display: block;
+        width: 16px;
+        height: 1px;
+        background: #111;
+        transition: 0.3s;
+      }
+      .button {
+        border: 0;
+        min-height: 46px;
+        border-radius: 999px;
+        padding: 13px 21px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-weight: 700;
+        transition: 0.32s var(--ease);
+      }
+      .button:hover {
+        transform: translateY(-2px);
+      }
+      .button-dark {
+        background: var(--ink);
+        color: #fff;
+      }
+      .button-light {
+        background: #fff;
+        color: #111;
+      }
+      .button-ghost {
+        background: transparent;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.42);
+      }
+      .button-outline {
+        background: transparent;
+        border: 1px solid var(--line);
+      }
+      .mobile-menu {
+        position: fixed;
+        z-index: 980;
+        inset: 66px 0 0;
+        background: var(--paper);
+        padding: 38px 6vw;
+        display: grid;
+        align-content: start;
+        gap: 0;
+        transform: translateY(-110%);
+        opacity: 0;
+        transition: 0.45s var(--ease);
+      }
+      .mobile-menu.open {
+        transform: none;
+        opacity: 1;
+      }
+      .mobile-menu a {
+        font:
+          400 clamp(2rem, 8vw, 4rem)/1.2 Georgia,
+          serif;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .hero {
+        min-height: 100svh;
+        background:
+          radial-gradient(
+            circle at 18% 18%,
+            rgba(200, 142, 153, 0.33),
+            transparent 28%
+          ),
+          linear-gradient(135deg, #160d11, #5a1730 52%, #b17582);
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        align-items: end;
+        padding: 130px clamp(20px, 6vw, 90px) 70px;
+      }
+      .hero:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.05),
+          rgba(0, 0, 0, 0.4)
+        );
+        pointer-events: none;
+      }
+      .hero-meta {
+        position: absolute;
+        z-index: 2;
+        top: 104px;
+        left: 6vw;
+        right: 6vw;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.67rem;
+        letter-spacing: 0.16em;
+      }
+      .hero-copy {
+        position: relative;
+        z-index: 3;
+        max-width: 950px;
+      }
+      .eyebrow {
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .hero h1 {
+        font:
+          400 clamp(3.8rem, 9vw, 9rem)/0.92 Georgia,
+          serif;
+        letter-spacing: -0.075em;
+        margin: 18px 0 26px;
+      }
+      .hero-copy > p:not(.eyebrow) {
+        max-width: 720px;
+        font-size: clamp(1rem, 1.6vw, 1.25rem);
+        line-height: 1.9;
+        color: rgba(255, 255, 255, 0.82);
+      }
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+      .hero-side {
+        position: absolute;
+        z-index: 2;
+        inset-inline-end: 2vw;
+        top: 50%;
+        writing-mode: vertical-rl;
+        font-size: 0.62rem;
+        letter-spacing: 0.28em;
+      }
+      .hero-art {
+        position: absolute;
+        z-index: 1;
+        inset-inline-end: -2vw;
+        top: 8%;
+        width: min(58vw, 760px);
+        height: 86%;
+        opacity: 0.72;
+      }
+      .hero-art svg {
+        width: 100%;
+        height: 100%;
+      }
+      .marquee {
+        overflow: hidden;
+        background: #090708;
+        color: #fff;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .marquee div {
+        white-space: nowrap;
+        width: max-content;
+        padding: 13px 0;
+        font:
+          italic 1rem Georgia,
+          serif;
+        animation: ticker 30s linear infinite;
+      }
+      @keyframes ticker {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .section {
+        padding: clamp(80px, 10vw, 145px) clamp(20px, 6vw, 90px);
+        position: relative;
+      }
+      .section-no {
+        font:
+          400 clamp(4rem, 9vw, 9rem)/0.7 Georgia,
+          serif;
+        color: transparent;
+        -webkit-text-stroke: 1px currentColor;
+        opacity: 0.13;
+      }
+      .intro {
+        display: grid;
+        grid-template-columns: 0.32fr 1.2fr 0.72fr;
+        gap: 40px;
+        align-items: end;
+      }
+      .intro h2,
+      .section-head h2,
+      .gulf-copy h2,
+      .consultation-copy h2,
+      .trust h2 {
+        font:
+          400 clamp(2.8rem, 6.2vw, 6rem)/1 Georgia,
+          serif;
+        letter-spacing: -0.055em;
+        margin: 16px 0;
+      }
+      .intro-note p,
+      .gulf-copy > p,
+      .consultation-copy > p {
+        line-height: 2;
+        color: var(--muted);
+      }
+      .section-head {
+        display: grid;
+        grid-template-columns: 0.42fr 1fr;
+        gap: 40px;
+        align-items: end;
+        margin-bottom: 50px;
+      }
+      .section-head > div {
+        display: flex;
+        align-items: end;
+        gap: 20px;
+      }
+      .section-head .section-no {
+        font-size: clamp(4rem, 8vw, 8rem);
+      }
+      .section-head h2 {
+        margin: 0;
+      }
+      .atlas {
+        background: #fff;
+      }
+      .atlas-shell {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        min-height: 620px;
+        border: 1px solid var(--line);
+        background: #f8f5f1;
+      }
+      .atlas-tabs {
+        display: flex;
+        flex-direction: column;
+        border-inline-end: 1px solid var(--line);
+      }
+      .atlas-tab {
+        text-align: inherit;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 24px;
+        background: transparent;
+        font-weight: 700;
+        transition: 0.3s;
+      }
+      .atlas-tab:hover,
+      .atlas-tab.is-active {
+        background: var(--wine);
+        color: #fff;
+        padding-inline-start: 34px;
+      }
+      .atlas-card {
+        display: grid;
+        grid-template-columns: 1fr 0.88fr;
+        min-width: 0;
+      }
+      .atlas-visual {
+        position: relative;
+        overflow: hidden;
+        background: radial-gradient(
+          circle at 55% 42%,
+          #e8c9c9 0 13%,
+          #af7480 28%,
+          #4d1727 62%,
+          #120a0d 100%
+        );
+      }
+      .atlas-visual:before {
+        content: "";
+        position: absolute;
+        width: 48%;
+        height: 70%;
+        left: 28%;
+        top: 14%;
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        border-radius: 48% 46% 42% 50%;
+        box-shadow:
+          0 0 0 40px rgba(255, 255, 255, 0.03),
+          0 0 0 110px rgba(255, 255, 255, 0.025);
+      }
+      .scan {
+        position: absolute;
+        border: 1px solid rgba(255, 255, 255, 0.32);
+        border-radius: 50%;
+      }
+      .scan-1 {
+        width: 62%;
+        height: 34%;
+        left: 18%;
+        top: 24%;
+        transform: rotate(-8deg);
+      }
+      .scan-2 {
+        width: 48%;
+        height: 20%;
+        left: 30%;
+        top: 49%;
+        transform: rotate(13deg);
+      }
+      .scan-3 {
+        width: 28%;
+        height: 12%;
+        left: 34%;
+        top: 67%;
+      }
+      .atlas-content {
+        padding: clamp(28px, 5vw, 70px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .atlas-content h3 {
+        font:
+          400 clamp(2.4rem, 4.6vw, 4.8rem)/1 Georgia,
+          serif;
+        margin: 18px 0;
+      }
+      .atlas-content > p {
+        line-height: 1.95;
+        color: var(--muted);
+      }
+      .chips {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+      }
+      .chip {
+        padding: 9px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-size: 0.73rem;
+      }
+      .evidence {
+        background: var(--dark);
+        color: #fff;
+      }
+      .section-head.light .section-no {
+        color: transparent;
+      }
+      .evidence-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+      .evidence-card {
+        min-height: 290px;
+        padding: 28px;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        background: rgba(255, 255, 255, 0.025);
+        display: flex;
+        flex-direction: column;
+        transition: 0.35s;
+      }
+      .evidence-card:hover {
+        background: rgba(255, 255, 255, 0.07);
+        transform: translateY(-5px);
+      }
+      .evidence-card > b {
+        font:
+          400 4rem Georgia,
+          serif;
+        color: var(--rose);
+      }
+      .evidence-card h3 {
+        margin: auto 0 12px;
+        font-size: 1.22rem;
+      }
+      .evidence-card p {
+        color: #aaa2a6;
+        line-height: 1.8;
+        margin: 0;
+      }
+      .gulf {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 70px;
+        align-items: center;
+        background: #d5b9aa;
+      }
+      .gulf-visual {
+        aspect-ratio: 1/1;
+        display: grid;
+        place-items: center;
+        position: relative;
+        background:
+          radial-gradient(
+            circle,
+            #f1ddd2 0 16%,
+            #7c263c 17% 17.4%,
+            transparent 18%
+          ),
+          linear-gradient(135deg, #2c0e18, #8c3d50 55%, #cfaa9b);
+        color: #fff;
+        overflow: hidden;
+      }
+      .gulf-visual:before,
+      .gulf-visual:after {
+        content: "";
+        position: absolute;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+      }
+      .gulf-visual:before {
+        width: 72%;
+        height: 72%;
+      }
+      .gulf-visual:after {
+        width: 42%;
+        height: 42%;
+      }
+      .gulf-visual span {
+        font:
+          400 clamp(4rem, 10vw, 10rem) Georgia,
+          serif;
+        letter-spacing: -0.08em;
+      }
+      .gulf-visual small {
+        position: absolute;
+        bottom: 8%;
+        letter-spacing: 0.22em;
+      }
+      .gulf-list {
+        margin-top: 32px;
+        border-top: 1px solid rgba(23, 18, 20, 0.22);
+      }
+      .gulf-list div {
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        gap: 18px;
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(23, 18, 20, 0.22);
+      }
+      .gulf-list b {
+        font-family: Georgia, serif;
+        color: var(--wine);
+      }
+      .passport {
+        background: #f6f1eb;
+      }
+      .passport-shell {
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+      .passport-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 24px;
+        padding: 28px;
+        border-bottom: 1px solid var(--line);
+      }
+      .passport-top h3 {
+        font:
+          400 clamp(2.2rem, 4vw, 4rem) Georgia,
+          serif;
+        margin: 8px 0 0;
+      }
+      .passport-top label {
+        font-size: 0.74rem;
+        font-weight: 700;
+      }
+      .passport-top select {
+        display: block;
+        margin-top: 9px;
+        padding: 12px 38px 12px 12px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+      .timeline {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .timeline li {
+        min-height: 260px;
+        padding: 28px;
+        border-inline-end: 1px solid var(--line);
+      }
+      .timeline li:last-child {
+        border: 0;
+      }
+      .timeline b {
+        font:
+          400 3rem Georgia,
+          serif;
+        color: var(--wine);
+        opacity: 0.4;
+      }
+      .timeline h4 {
+        font-size: 1.1rem;
+        margin: 45px 0 12px;
+      }
+      .timeline p {
+        color: var(--muted);
+        line-height: 1.8;
+        font-size: 0.9rem;
+      }
+      .journal {
+        background: #fff;
+      }
+      .journal-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr 0.8fr;
+        gap: 18px;
+      }
+      .story {
+        border: 1px solid var(--line);
+        background: #faf8f5;
+        min-height: 430px;
+        display: flex;
+        flex-direction: column;
+      }
+      .story-main {
+        grid-row: span 1;
+      }
+      .story-art {
+        height: 62%;
+        min-height: 230px;
+        position: relative;
+        overflow: hidden;
+      }
+      .art-1 {
+        background: radial-gradient(
+          circle at 55% 40%,
+          #e6c4c4 0 12%,
+          #a96274 34%,
+          #29101a 70%
+        );
+      }
+      .art-1:before {
+        content: "NO";
+        position: absolute;
+        font:
+          400 12rem Georgia,
+          serif;
+        color: rgba(255, 255, 255, 0.16);
+        left: 5%;
+        bottom: -12%;
+      }
+      .art-2 {
+        background: linear-gradient(135deg, #efe4db, #9f7780);
+      }
+      .art-2:before {
+        content: "";
+        position: absolute;
+        width: 160px;
+        height: 220px;
+        border: 24px solid rgba(255, 255, 255, 0.45);
+        border-radius: 48%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .art-3 {
+        background: repeating-radial-gradient(
+          circle at 50% 50%,
+          #d7b3aa 0 8px,
+          #b87d79 9px 16px
+        );
+      }
+      .story > div:last-child {
+        padding: 25px;
+      }
+      .story small {
+        letter-spacing: 0.13em;
+        color: var(--wine);
+      }
+      .story h3 {
+        font:
+          400 clamp(1.6rem, 2.5vw, 2.8rem)/1.15 Georgia,
+          serif;
+        margin: 12px 0;
+      }
+      .story p {
+        color: var(--muted);
+        line-height: 1.8;
+      }
+      .consultation {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 70px;
+        background: linear-gradient(145deg, #130b0f, #3a1020);
+        color: #fff;
+      }
+      .consultation-copy {
+        position: sticky;
+        top: 110px;
+        align-self: start;
+      }
+      .consultation-copy > p {
+        color: #bcb2b7;
+      }
+      .vault {
+        background: #f6f1ec;
+        color: var(--ink);
+        padding: clamp(24px, 4vw, 48px);
+        min-height: 600px;
+      }
+      .vault-progress {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: 18px;
+        font: 700 0.72rem Arial;
+      }
+      .vault-progress i {
+        height: 3px;
+        background: #e2d7d4;
+      }
+      .vault-progress b {
+        display: block;
+        height: 100%;
+        width: 25%;
+        background: var(--wine);
+        transition: 0.35s;
+      }
+      .vault-step {
+        display: none;
+        padding: 70px 0 30px;
+      }
+      .vault-step.is-active {
+        display: block;
+      }
+      .vault-step h3 {
+        font:
+          400 clamp(2rem, 4vw, 4rem) Georgia,
+          serif;
+        margin: 15px 0 30px;
+      }
+      .vault textarea,
+      .vault input,
+      .vault select {
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #9c9195;
+        background: transparent;
+        padding: 14px 2px;
+        outline: none;
+      }
+      .vault textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+      .vault input:focus,
+      .vault textarea:focus,
+      .vault select:focus {
+        border-color: var(--wine);
+      }
+      .choices {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .choices label {
+        cursor: pointer;
+      }
+      .choices input {
+        position: absolute;
+        opacity: 0;
+      }
+      .choices span {
+        min-height: 145px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        transition: 0.3s;
+      }
+      .choices input:checked + span {
+        background: var(--wine);
+        color: #fff;
+        border-color: var(--wine);
+      }
+      .choices b {
+        font-size: 1.15rem;
+      }
+      .choices small {
+        margin-top: 5px;
+        opacity: 0.65;
+      }
+      .fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+      }
+      .fields label {
+        font-size: 0.76rem;
+        font-weight: 700;
+      }
+      .check {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        line-height: 1.8;
+        margin: 18px 0;
+      }
+      .check input {
+        width: auto;
+        margin-top: 7px;
+      }
+      .vault-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 38px;
+      }
+      .status {
+        display: block;
+        margin-top: 20px;
+        min-height: 30px;
+        color: var(--wine);
+        font-weight: 700;
+      }
+      .trust {
+        padding: 90px clamp(20px, 6vw, 90px);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: end;
+        background: #d8b7b0;
+      }
+      .trust h2 {
+        font-size: clamp(2.4rem, 4.8vw, 4.8rem);
+      }
+      .trust-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-top: 1px solid rgba(23, 18, 20, 0.24);
+      }
+      .trust-grid span {
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(23, 18, 20, 0.24);
+      }
+      footer {
+        padding: 55px clamp(20px, 6vw, 90px);
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 30px;
+        align-items: center;
+        background: #090708;
+        color: #fff;
+      }
+      footer p {
+        color: #aaa2a6;
+        text-align: center;
+      }
+      footer small {
+        color: #777176;
+      }
+      .assistant-fab {
+        position: fixed;
+        z-index: 1100;
+        right: 22px;
+        bottom: 22px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 0;
+        background: var(--wine);
+        color: #fff;
+        font-size: 1.35rem;
+        box-shadow: 0 18px 45px rgba(40, 8, 20, 0.28);
+      }
+      .assistant {
+        position: fixed;
+        z-index: 1090;
+        right: 22px;
+        bottom: 92px;
+        width: min(390px, calc(100vw - 28px));
+        height: min(610px, 72vh);
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        color: var(--ink);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        transform: translateY(20px) scale(0.97);
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.35s var(--ease);
+      }
+      .assistant.open {
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+      }
+      .assistant header {
+        padding: 18px;
+        background: #f4e8e6;
+        display: flex;
+        justify-content: space-between;
+      }
+      .assistant header div {
+        display: grid;
+        gap: 4px;
+      }
+      .assistant header button {
+        border: 0;
+        background: transparent;
+        font-size: 1.5rem;
+      }
+      .assistant-messages {
+        flex: 1;
+        overflow: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .msg {
+        max-width: 85%;
+        padding: 11px 14px;
+        border-radius: 16px;
+        line-height: 1.65;
+        font-size: 0.88rem;
+      }
+      .msg.bot {
+        align-self: flex-start;
+        background: #f3efec;
+      }
+      .msg.user {
+        align-self: flex-end;
+        background: var(--wine);
+        color: #fff;
+      }
+      .assistant form {
+        display: flex;
+        gap: 8px;
+        padding: 12px;
+        border-top: 1px solid var(--line);
+      }
+      .assistant form input {
+        flex: 1;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 12px;
+      }
+      .assistant form button {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 0;
+        background: var(--ink);
+        color: #fff;
+      }
+      .assistant-note {
+        padding: 0 14px 12px;
+        color: var(--muted);
+      }
+      .modal {
+        position: fixed;
+        z-index: 1500;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.62);
+        display: none;
+        place-items: center;
+        padding: 18px;
+      }
+      .modal.open {
+        display: grid;
+      }
+      .modal-card {
+        max-width: 760px;
+        background: #f7f3ee;
+        padding: clamp(28px, 5vw, 60px);
+        box-shadow: var(--shadow);
+      }
+      .modal-card h2 {
+        font:
+          400 clamp(2.5rem, 6vw, 5rem) Georgia,
+          serif;
+        margin: 0 0 22px;
+      }
+      .modal-card p {
+        line-height: 2;
+        color: var(--muted);
+      }
+      .modal-card button {
+        float: inline-end;
+        border: 1px solid var(--line);
+        background: #fff;
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.75s var(--ease),
+          transform 0.75s var(--ease);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+      @media (max-width: 1050px) {
+        .nav {
+          display: none;
+        }
+        .menu {
+          display: grid;
+        }
+        .header {
+          grid-template-columns: auto 1fr auto;
+        }
+        .desktop-cta {
+          display: none;
+        }
+        .intro {
+          grid-template-columns: 1fr 1fr;
+        }
+        .intro .section-no {
+          display: none;
+        }
+        .atlas-shell {
+          grid-template-columns: 1fr;
+        }
+        .atlas-tabs {
+          flex-direction: row;
+          overflow: auto;
+          border-inline-end: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .atlas-tab {
+          min-width: max-content;
+          border-bottom: 0;
+          border-inline-end: 1px solid var(--line);
+        }
+        .atlas-card {
+          min-height: 590px;
+        }
+        .evidence-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .timeline {
+          grid-template-columns: 1fr 1fr;
+        }
+        .timeline li {
+          border-bottom: 1px solid var(--line);
+        }
+        .journal-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .story-main {
+          grid-column: 1/-1;
+        }
+        .consultation {
+          grid-template-columns: 1fr;
+        }
+        .consultation-copy {
+          position: static;
+        }
+        .trust {
+          grid-template-columns: 1fr;
+        }
+        footer {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .brand {
+          justify-content: center;
+        }
+      }
+      @media (max-width: 700px) {
+        .header {
+          height: 66px;
+          padding: 0 16px;
+        }
+        .brand span {
+          display: none;
+        }
+        .hero {
+          padding: 112px 20px 48px;
+        }
+        .hero-meta {
+          top: 82px;
+          left: 20px;
+          right: 20px;
+        }
+        .hero h1 {
+          font-size: clamp(3.4rem, 17vw, 5.7rem);
+        }
+        .hero-art {
+          width: 105vw;
+          opacity: 0.4;
+        }
+        .hero-side {
+          display: none;
+        }
+        .section {
+          padding: 78px 20px;
+        }
+        .intro,
+        .section-head,
+        .gulf,
+        .consultation,
+        .trust {
+          grid-template-columns: 1fr;
+        }
+        .section-head > div {
+          display: none;
+        }
+        .atlas-card {
+          grid-template-columns: 1fr;
+        }
+        .atlas-visual {
+          min-height: 360px;
+        }
+        .evidence-grid,
+        .timeline,
+        .journal-grid,
+        .choices,
+        .fields,
+        .trust-grid {
+          grid-template-columns: 1fr;
+        }
+        .passport-top {
+          align-items: start;
+          flex-direction: column;
+        }
+        .timeline li {
+          min-height: auto;
+          border-inline-end: 0;
+        }
+        .story-main {
+          grid-column: auto;
+        }
+        .vault-step {
+          padding-top: 45px;
+        }
+        .assistant-fab {
+          right: 14px;
+          bottom: 14px;
+        }
+        .assistant {
+          right: 14px;
+          bottom: 84px;
+        }
+        .hero-actions .button {
+          width: 100%;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main"
+      ><span data-ar>تخطي إلى المحتوى</span
+      ><span data-en>Skip to content</span></a
+    >
+    <header class="header" id="header">
+      <a class="brand" href="#top"><b>WAFA</b><span>MEDICAL EDITORIAL</span></a>
+      <nav class="nav">
+        <a href="#atlas"
+          ><span data-ar>أطلس البشرة</span><span data-en>Skin Atlas</span></a
+        >
+        <a href="#evidence"
+          ><span data-ar>الدليل</span><span data-en>Evidence</span></a
+        >
+        <a href="#passport"
+          ><span data-ar>جواز الإجراء</span
+          ><span data-en>Procedure Passport</span></a
+        >
+        <a href="#journal"
+          ><span data-ar>المجلة</span><span data-en>Journal</span></a
+        >
+      </nav>
+      <div class="header-actions">
+        <button class="lang" id="langToggle" type="button">
+          <span data-ar>EN</span><span data-en>العربية</span>
+        </button>
+        <a class="button button-dark desktop-cta" href="#consultation"
+          ><span data-ar>ابدئي التقييم</span
+          ><span data-en>Begin assessment</span></a
+        >
+        <button
+          class="menu"
+          id="menuButton"
+          type="button"
+          aria-expanded="false"
+        >
+          <i></i><i></i>
+        </button>
       </div>
-    </a>
-    <div class="nav-links" aria-label="Magazine sections">
-      <a href="#mag-clean" data-nav-section="mag-clean"><span class="ar-only">البشرة</span><span class="en-only">Skin</span></a>
-      <a href="#journal" data-nav-section="journal"><span class="ar-only">المجلة</span><span class="en-only">Journal</span></a>
-      <a href="#visual-consultation" data-nav-section="visual-consultation"><span class="ar-only">التصور البصري</span><span class="en-only">Visual Preview</span></a>
-      <a href="#early-access" data-nav-section="early-access"><span class="ar-only">الوصول المبكر</span><span class="en-only">Early Access</span></a>
-    </div>
-    <div class="nav-actions">
-      <a class="nav-cta" href="#visual-consultation">
-        <span class="ar-only">ابدئي الاستشارة</span><span class="en-only">Start Consultation</span>
-      </a>
-      <button class="lang-btn" id="langBtn" type="button">
-        <span class="ar-only">EN</span>
-        <span class="en-only">العربية</span>
-      </button>
-      <button class="icon-btn" type="button" aria-label="Open medical assistant" id="assistantOpenBtn">✦</button>
-    </div>
-  </nav>
-
-  <main id="top">
-
-<section class="mag-cover" id="mag-cover">
-  <div class="mag-cover-frame">
-    <img src="image_11.png" alt="WAFA magazine cover" loading="eager" decoding="async" fetchpriority="high" />
-    <div class="mag-cover-meta"><span>SAUDI ARABIA · ISSUE 00 · 2026</span><span>SKIN · AESTHETICS · CULTURE</span></div>
-    <div class="mag-masthead"><span class="ar-only">وفاء</span><span class="en-only">WAFA</span></div>
-    <div class="mag-cover-story">
-      <h1 class="mag-serif"><span class="ar-only">جمالٌ<br>يرى الإنسان.</span><span class="en-only">Beauty<br>Sees Human.</span></h1>
-      <p><span class="ar-only">عدد تأسيسي عن الدقة الطبية، والهوية السعودية الجديدة، ومستقبل السرد البصري في الجلدية والتجميل.</span><span class="en-only">A founding issue on medical precision, new Saudi visual identity, and the future of beauty storytelling.</span></p>
-    </div>
-    <div class="mag-code">DR.WAFA / 00001 / JEDDAH</div>
-  </div>
-</section>
-
-<div class="mag-ticker" aria-hidden="true"><div class="mag-ticker-track">
-  <span>Clinical Beauty</span><i></i><span>Saudi Visual Culture</span><i></i><span>Skin Intelligence</span><i></i><span>Human Confidence</span><i></i>
-  <span>Clinical Beauty</span><i></i><span>Saudi Visual Culture</span><i></i><span>Skin Intelligence</span><i></i><span>Human Confidence</span><i></i>
-</div></div>
-
-<section class="mag-section mag-manifesto" id="mag-manifesto">
- <div class="mag-container mag-manifesto-grid">
-  <div>
-   <div class="mag-label"><span>01 / VISUAL MANIFESTO</span><span>JEDDAH · SAUDI ARABIA</span></div>
-   <div class="mag-line"></div>
-   <h2 class="mag-serif"><span class="ar-only">ليست مجلة واحدة.<br>إنها منظومة بصرية.</span><span class="en-only">Not one magazine.<br>A visual system.</span></h2>
-   <p><span class="ar-only">وضوح التصوير الطبي، وفخامة المساحات التحريرية، وجرأة التكوين المعاصر، وفنية الصورة الفرنسية؛ يعاد تركيبها داخل لغة سعودية أصلية ترتبط بالدقة والثقة والإنسانية.</span><span class="en-only">Clinical clarity, editorial luxury, contemporary boldness, and art-led imagery are recomposed into an original Saudi visual language.</span></p>
-  </div>
-  <aside class="mag-code-card"><strong>Visual<br>Code.</strong><ol>
-   <li>CLINICAL LIGHT / TRUE SKIN</li><li>EDITORIAL SPACE / QUIET LUXURY</li>
-   <li>SAUDI MATERIALITY / CONTEMPORARY FORM</li><li>BOLD ANGLES / CONTROLLED COLOUR</li>
-   <li>HUMAN STORY / MEDICAL AUTHORITY</li>
-  </ol></aside>
- </div>
-</section>
-
-<section class="mag-section mag-clean" id="mag-clean">
- <div class="mag-container">
-  <header class="mag-head"><div class="mag-num">01</div><h2 class="mag-serif"><span class="ar-only">وضوح<br>البشرة.</span><span class="en-only">Skin<br>Clarity.</span></h2><p><span class="ar-only">إضاءة دقيقة، ألوان جلد طبيعية، وتفاصيل قريبة بلا فلاتر تجميلية.</span><span class="en-only">Precise light, natural skin tone, and close detail without beauty filters.</span></p></header>
-  <div class="mag-clean-grid">
-   <figure class="mag-photo"><img src="image_4.png" alt="True skin editorial" loading="lazy" decoding="async" fetchpriority="low"><figcaption class="mag-tag">TRUE SKIN / MACRO 01</figcaption></figure>
-   <article class="mag-clean-copy"><div><div class="mag-label"><span>CLINICAL EDIT</span><span>NO FILTER</span></div><div class="mag-line"></div><h3 class="mag-serif"><span class="ar-only">الجمال يبدأ من الحقيقة.</span><span class="en-only">Beauty begins with truth.</span></h3></div><p><span class="ar-only">الملمس والمسام والضوء الحقيقي عناصر معرفة وليست عيوباً يجب محوها. المعالجة تحافظ على هوية البشرة والتشريح.</span><span class="en-only">Texture, pores, and real light are sources of knowledge—not flaws to erase. Retouching preserves identity and anatomy.</span></p></article>
-   <div class="mag-detail-stack"><figure><img src="image_5.png" alt="Beauty detail" loading="lazy" decoding="async" fetchpriority="low"><figcaption class="mag-tag">DETAIL / 02</figcaption></figure><figure><img src="image_9.png" alt="Recovery detail" loading="lazy" decoding="async" fetchpriority="low"><figcaption class="mag-tag">RECOVERY / 03</figcaption></figure></div>
-  </div>
- </div>
-</section>
-
-<section class="mag-section mag-luxury" id="mag-luxury">
- <div class="mag-container">
-  <header class="mag-head"><div class="mag-num">02</div><h2 class="mag-serif"><span class="ar-only">الفخامة<br>الهادئة.</span><span class="en-only">Quiet<br>Luxury.</span></h2><p><span class="ar-only">مساحات سلبية واسعة، تكوين واحد قوي، وخطوط تحرر الصورة بدلاً من منافستها.</span><span class="en-only">Generous negative space, one dominant composition, and typography that releases the image.</span></p></header>
-  <div class="mag-luxury-grid">
-   <article class="mag-luxury-copy"><div class="mag-label"><span>THE PROFILE</span><span>VOL. 02</span></div><div class="mag-line"></div><h3 class="mag-serif"><span class="ar-only">بين العلم<br>والحدس.</span><span class="en-only">Between science<br>and intuition.</span></h3><p><span class="ar-only">الصورة الفاخرة تحتاج ضوءاً مدروساً، خامة محسوسة، حركة هادئة، وشخصية تترك أثراً دون أن ترفع صوتها.</span><span class="en-only">Luxury imagery needs considered light, tactile material, quiet movement, and a personality that leaves an impression without raising its voice.</span></p></article>
-   <figure class="mag-luxury-photo"><img src="image_11.png" alt="Luxury editorial portrait" loading="lazy" decoding="async" fetchpriority="low"></figure>
-   <div class="mag-vertical">MEDICINE · AESTHETICS · HUMANITY</div>
-  </div>
- </div>
-</section>
-
-<section class="mag-section mag-exp" id="mag-exp">
- <div class="mag-container">
-  <header class="mag-head"><div class="mag-num">03</div><h2 class="mag-serif"><span class="ar-only">جمال<br>المستقبل.</span><span class="en-only">Future<br>Beauty.</span></h2><p><span class="ar-only">درجات مخملية وفحمية، لمسات شامبانيا، وزوايا غير متوقعة تصنع جرأة معاصرة دون كسر الفخامة الهادئة.</span><span class="en-only">Velvet and charcoal tones, champagne accents, and unexpected angles create contemporary boldness without breaking quiet luxury.</span></p></header>
-  <div class="mag-exp-board"><div class="mag-exp-copy">SAUDI BEAUTY IS NOT A TREND. IT IS A NEW VISUAL LANGUAGE.</div><div class="mag-stamp">NEW<br>SAUDI<br>VISION</div><figure class="mag-exp-a"><img src="image_4.png" alt="Experimental portrait" loading="lazy" decoding="async" fetchpriority="low"></figure><figure class="mag-exp-b"><img src="image_5.png" alt="Experimental detail" loading="lazy" decoding="async" fetchpriority="low"></figure></div>
- </div>
-</section>
-
-<section class="mag-section mag-art" id="mag-art">
- <div class="mag-container">
-  <header class="mag-head"><div class="mag-num">04</div><h2 class="mag-serif"><span class="ar-only">الجمال<br>كفن.</span><span class="en-only">Beauty<br>as Art.</span></h2><p><span class="ar-only">ضوء نحتي وأبيض وأسود عميق وصورة تتعامل مع الوجه كمساحة فنية.</span><span class="en-only">Sculptural light, deep monochrome, and imagery that treats the face as an artistic field.</span></p></header>
-  <div class="mag-art-grid"><figure class="mag-art-photo"><img src="image_9.png" alt="Art beauty portrait" loading="lazy" decoding="async" fetchpriority="low"></figure><article class="mag-art-copy"><div class="mag-label"><span>ART DIRECTION</span><span>ISSUE 04</span></div><h3 class="mag-serif"><span class="ar-only">الصورة<br>تفكر.</span><span class="en-only">The image<br>thinks.</span></h3><blockquote><span class="ar-only">«حين يتوقف التصوير عن شرح الجمال ويبدأ في طرح الأسئلة، تتحول العلامة إلى ثقافة.»</span><span class="en-only">“When photography stops explaining beauty and begins asking questions, a brand becomes culture.”</span></blockquote></article></div>
- </div>
-</section>
-
-<section class="mag-section mag-product" id="mag-product">
- <div class="mag-container">
-  <div class="mag-label"><span>05 / HERO PRODUCT COMPOSITION</span><span>OBJECT · LIGHT · SHADOW</span></div><div class="mag-line"></div>
-  <div class="mag-product-stage"><div class="mag-product-title mag-serif"><span class="ar-only">الطقس.</span><span class="en-only">RITUAL.</span></div><div class="mag-orbit"></div><div class="mag-product-object"></div><div class="mag-product-note"><strong>Hero Composition 01</strong><br><span class="ar-only">منتج واحد، مركز بصري واحد، طبقات ضوء، وظل يمنح الجسم وزنه وفخامته.</span><span class="en-only">One product, one visual centre, layered light, and a shadow that gives the object weight and luxury.</span></div></div>
- </div>
-</section>
-
-<section class="mag-section mag-bible" id="mag-bible">
- <div class="mag-container">
-  <header class="mag-head"><div class="mag-num">06</div><h2 class="mag-serif"><span class="ar-only">دستور<br>الصورة.</span><span class="en-only">Image<br>Bible.</span></h2><p><span class="ar-only">ثمانية معايير تضبط كل حملة ومقال وصورة وفيلم داخل المنصة.</span><span class="en-only">Eight standards governing every campaign, article, image, and film.</span></p></header>
-  <div class="mag-bible-grid">
-   <article class="mag-bible-item"><b>01</b><div><h3>Lighting</h3><p><span class="ar-only">ضوء ناعم للبشرة، نحتي للبورتريه، وصلب للمفاهيم التجريبية فقط.</span><span class="en-only">Soft for skin, sculptural for portraiture, hard only for experimental concepts.</span></p></div></article>
-   <article class="mag-bible-item"><b>02</b><div><h3>Colour</h3><p><span class="ar-only">ألوان جلد صادقة، قاعدة هادئة، ولمسة مخملية أو شامبانيا واحدة للتركيز البصري.</span><span class="en-only">Truthful skin tone, a restrained base palette, and one velvet or champagne accent.</span></p></div></article>
-   <article class="mag-bible-item"><b>03</b><div><h3>Space</h3><p><span class="ar-only">المساحة السلبية عنصر فخامة وتركيز وليست فراغاً غير مستخدم.</span><span class="en-only">Negative space is a luxury and focus device.</span></p></div></article>
-   <article class="mag-bible-item"><b>04</b><div><h3>Type</h3><p><span class="ar-only">عناوين ضخمة ونصوص قصيرة وفصل واضح بين التحرير والمعلومة الطبية.</span><span class="en-only">Large headlines, concise copy, clear editorial-medical contrast.</span></p></div></article>
-   <article class="mag-bible-item"><b>05</b><div><h3>Product</h3><p><span class="ar-only">بطل واحد وخامات حقيقية وانعكاسات مضبوطة وظلال ذات معنى.</span><span class="en-only">One hero, real materials, controlled reflections, meaningful shadow.</span></p></div></article>
-   <article class="mag-bible-item"><b>06</b><div><h3>Skin</h3><p><span class="ar-only">إزالة المؤقت والمشتت فقط؛ لا محو للملمس ولا تغيير للهوية.</span><span class="en-only">Remove temporary distraction only; never erase texture or identity.</span></p></div></article>
-   <article class="mag-bible-item"><b>07</b><div><h3>Angles</h3><p><span class="ar-only">مستوى العين للثقة، منخفضة للسلطة، والماكرو للمعرفة.</span><span class="en-only">Eye level for trust, low angle for authority, macro for knowledge.</span></p></div></article>
-   <article class="mag-bible-item"><b>08</b><div><h3>Direction</h3><p><span class="ar-only">كل صورة تحمل فكرة أو سؤالاً أو تحولاً؛ الجمال وحده ليس سرداً.</span><span class="en-only">Every image carries an idea, question, or transformation.</span></p></div></article>
-  </div>
- </div>
-</section>
-
-    <section class="hero" id="cinematic-prologue">
-      <div class="hero-media">
-        <video src="20260728-0318-22.9222226.mp4" poster="image_11.png" preload="metadata" autoplay muted loop playsinline></video>
-      </div>
-      <div class="hero-content">
-        <span class="eyebrow">
-          <span class="ar-only">الطب. الفن. الثقة الإنسانية.</span>
-          <span class="en-only">Medicine. Art. Human Confidence.</span>
-        </span>
-        <h1 class="title">
-          <span class="ar-only">لا نبدأ بالإجراء.<br>نبدأ بفهمك.</span>
-          <span class="en-only">We do not begin with a procedure.<br>We begin with understanding you.</span>
-        </h1>
-        <p class="lead">
-          <span class="ar-only">منصة طبية رقمية تجمع بين المعرفة، الاستشارة الواعية، السرد السريري، والتخطيط البصري الاسترشادي قبل الإجراءات.</span>
-          <span class="en-only">A digital medical platform bringing together trusted knowledge, informed consultation, clinical storytelling, and guided visual planning before procedures.</span>
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-dark" href="#journey">
-            <span class="ar-only">ابدئي رحلتك</span><span class="en-only">Start Your Journey</span>
-          </a>
-          <a class="btn btn-light" href="#journal">
-            <span class="ar-only">اقرئي المجلة</span><span class="en-only">Explore the Journal</span>
-          </a>
-        </div>
-        <div class="hero-note">
-          <span class="ar-only">المحتوى للتثقيف العام ولا يستبدل التقييم الطبي المباشر.</span>
-          <span class="en-only">Content is for general education and does not replace direct medical assessment.</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="story">
-      <div class="container story-layout">
-        <div class="story-photo"><img src="image_11.png" alt="Dr Wafa Alghamdi" loading="lazy" decoding="async" fetchpriority="low" /></div>
-        <div>
-          <span class="eyebrow">
-            <span class="ar-only">القصة</span><span class="en-only">The Story</span>
-          </span>
-          <h2 class="title" style="font-size:clamp(2.5rem,5vw,4.7rem)">
-            <span class="ar-only">فن أن ترى الإنسان أولاً.</span>
-            <span class="en-only">The art of seeing the person first.</span>
-          </h2>
-          <div class="quote">
-            <span class="ar-only">«أفضل نتيجة ليست التي يلاحظ فيها الجميع الإجراء، بل التي يشعر فيها الإنسان بانسجام أكبر مع نفسه.»</span>
-            <span class="en-only">“The best result is not the one everyone notices, but the one that helps a person feel more aligned with themselves.”</span>
-          </div>
-          <p class="lead" style="margin-top:28px">
-            <span class="ar-only">تجمع د. وفاء الغامدي بين الدقة الطبية، والقرار الأخلاقي، والحس الجمالي المتزن. تبدأ كل حالة بالاستماع، ثم التقييم، ثم اختيار ما يناسب الفرد دون مبالغة أو وعود غير واقعية.</span>
-            <span class="en-only">Dr. Wafa Alghamdi combines medical precision, ethical decision-making, and balanced aesthetic judgement. Every case begins with listening, assessment, and an individualised plan without exaggeration or unrealistic promises.</span>
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section alt" id="journal">
-      <div class="container">
-        <span class="eyebrow"><span class="ar-only">Wafa Journal</span><span class="en-only">Wafa Journal</span></span>
-        <h2 class="title">
-          <span class="ar-only">المجلة الطبية الرقمية.</span>
-          <span class="en-only">The digital medical journal.</span>
-        </h2>
-        <p class="lead">
-          <span class="ar-only">محتوى طبي موثوق بأسلوب تحريري وسينمائي يساعد القارئ على فهم بشرته واتخاذ قرارات أكثر وعياً.</span>
-          <span class="en-only">Trusted medical content presented through editorial and cinematic storytelling to support better-informed decisions.</span>
-        </p>
-
-        <div class="grid grid-3" style="margin-top:42px">
-          <article class="card journal-card">
-            <img src="image_4.png" alt="Skin Intelligence" loading="lazy" decoding="async" fetchpriority="low" />
-            <div class="body">
-              <div class="journal-meta">Skin Intelligence</div>
-              <h3><span class="ar-only">لماذا تعود الحبوب؟</span><span class="en-only">Why Does Acne Return?</span></h3>
-              <p><span class="ar-only">قراءة مبسطة للعوامل المحتملة وأهمية التقييم الفردي.</span><span class="en-only">A clear guide to possible factors and why individual assessment matters.</span></p>
-            </div>
-          </article>
-          <article class="card journal-card">
-            <img src="image_5.png" alt="Aesthetic Decisions" loading="lazy" decoding="async" fetchpriority="low" />
-            <div class="body">
-              <div class="journal-meta">Aesthetic Decisions</div>
-              <h3><span class="ar-only">متى يكون عدم الإجراء هو القرار الأفضل؟</span><span class="en-only">When Is No Procedure the Best Decision?</span></h3>
-              <p><span class="ar-only">كيف تتقدم سلامة المراجع والنتيجة المتزنة على الرغبة اللحظية.</span><span class="en-only">Why patient safety and balance must come before a momentary request.</span></p>
-            </div>
-          </article>
-          <article class="card journal-card">
-            <img src="image_9.png" alt="Recovery Journal" loading="lazy" decoding="async" fetchpriority="low" />
-            <div class="body">
-              <div class="journal-meta">Recovery Journal</div>
-              <h3><span class="ar-only">ما بعد الإجراء: ماذا تتوقعين؟</span><span class="en-only">After the Procedure: What to Expect</span></h3>
-              <p><span class="ar-only">رحلة التعافي من أول يوم إلى النتيجة التدريجية.</span><span class="en-only">A transparent recovery journey from day one to gradual results.</span></p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="journey">
-      <div class="container">
-        <div class="journey">
-          <span class="eyebrow" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15)">
-            <span class="ar-only">Confidence Journey</span><span class="en-only">Confidence Journey</span>
-          </span>
-          <h2 class="title" style="font-size:clamp(2.4rem,5vw,4.8rem)">
-            <span class="ar-only">رحلتك قبل الوصول إلى العيادة.</span>
-            <span class="en-only">Your journey before arriving at the clinic.</span>
-          </h2>
-          <div class="journey-grid">
-            <div class="journey-step"><b>01</b><p><span class="ar-only">اختيار الهدف أو المشكلة الأساسية.</span><span class="en-only">Choose your primary concern or goal.</span></p></div>
-            <div class="journey-step"><b>02</b><p><span class="ar-only">قراءة المحتوى المعتمد والمتعلق بحالتك.</span><span class="en-only">Read approved content relevant to your concern.</span></p></div>
-            <div class="journey-step"><b>03</b><p><span class="ar-only">رفع المعلومات والصور عند الحاجة وبموافقة واضحة.</span><span class="en-only">Submit information and images only with explicit consent.</span></p></div>
-            <div class="journey-step"><b>04</b><p><span class="ar-only">تحويل الطلب إلى الفريق لتحديد الخطوة المناسبة.</span><span class="en-only">Route the request to the team for the appropriate next step.</span></p></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section dark" id="visual-consultation">
-      <div class="container">
-        <span class="eyebrow" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)">
-          <span class="ar-only">Visual Consultation Preview</span>
-          <span class="en-only">Visual Consultation Preview</span>
-        </span>
-        <h2 class="title">
-          <span class="ar-only">تصور بصري استرشادي قبل الإجراء.</span>
-          <span class="en-only">A guided visual preview before treatment.</span>
-        </h2>
-        <p class="lead">
-          <span class="ar-only">أداة تواصل تساعدك على مناقشة أهدافك مع الدكتورة. المحاكاة ليست ضماناً للنتيجة النهائية، ولا تُعد تشخيصاً أو خطة علاجية مستقلة.</span>
-          <span class="en-only">A communication tool to support discussion with the doctor. The preview is not a guarantee of the final result and is not an independent diagnosis or treatment plan.</span>
-        </p>
-
-        <div class="vr-wrap" style="margin-top:42px">
-          <div class="vr-panel">
-            <h3><span class="ar-only">إرشادات التصوير</span><span class="en-only">Photography Guidelines</span></h3>
-            <ul class="guide-list">
-              <li><strong><span class="ar-only">إضاءة أمامية واضحة</span><span class="en-only">Clear front lighting</span></strong><span class="ar-only">بدون فلاتر أو تعديل أو ظلال قوية.</span><span class="en-only">No filters, retouching, or strong shadows.</span></li>
-              <li><strong><span class="ar-only">تعبير محايد</span><span class="en-only">Neutral expression</span></strong><span class="ar-only">الحفاظ على الوجه مسترخياً وطبيعياً.</span><span class="en-only">Keep the face relaxed and natural.</span></li>
-              <li><strong><span class="ar-only">الخصوصية</span><span class="en-only">Privacy</span></strong><span class="ar-only">لا تُستخدم الصور للتسويق إلا بموافقة منفصلة.</span><span class="en-only">Images are not used for marketing without separate consent.</span></li>
-            </ul>
-          </div>
-
-          <div class="vr-panel">
-            <form id="vrForm" novalidate>
-              <div class="field">
-                <label for="vrName"><span class="ar-only">الاسم الكامل</span><span class="en-only">Full name</span></label>
-                <input class="input" id="vrName" type="text" maxlength="80" required />
-              </div>
-              <div class="field">
-                <label for="vrPhone"><span class="ar-only">رقم الجوال</span><span class="en-only">Mobile number</span></label>
-                <input class="input" id="vrPhone" type="tel" maxlength="20" inputmode="tel" required />
-              </div>
-              <div class="field">
-                <label for="vrGoal"><span class="ar-only">ما المنطقة أو الهدف الذي ترغبين في مناقشته؟</span><span class="en-only">Which area or goal would you like to discuss?</span></label>
-                <textarea class="textarea" id="vrGoal" maxlength="600" required></textarea>
-              </div>
-
-              <div class="upload-summary" aria-live="polite">
-                <span><span class="ar-only">اكتمال زوايا التصوير</span><span class="en-only">Photography angles completed</span></span>
-                <strong id="uploadCount">0 / 6</strong>
-                <div class="upload-summary-track" aria-hidden="true"><i id="uploadSummaryBar"></i></div>
-              </div>
-              <div class="upload-grid">
-                <label class="upload-box" data-slot="1">
-                  <span class="upload-copy">
-                    <span class="upload-angle"><span class="ar-only">أمامية</span><span class="en-only">Front</span></span>
-                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
-                  </span>
-                  <img id="preview1" alt="" decoding="async" />
-                  <span class="upload-check" aria-hidden="true">✓</span>
-                  <span class="upload-progress-label" aria-hidden="true">0%</span>
-                  <span class="upload-meta" aria-live="polite"></span>
-                  <input id="file1" type="file" accept="image/jpeg,image/png,image/webp" aria-label="Front" required />
-                </label>
-                <label class="upload-box" data-slot="2">
-                  <span class="upload-copy">
-                    <span class="upload-angle"><span class="ar-only">45° يمين</span><span class="en-only">45° Right</span></span>
-                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
-                  </span>
-                  <img id="preview2" alt="" decoding="async" />
-                  <span class="upload-check" aria-hidden="true">✓</span>
-                  <span class="upload-progress-label" aria-hidden="true">0%</span>
-                  <span class="upload-meta" aria-live="polite"></span>
-                  <input id="file2" type="file" accept="image/jpeg,image/png,image/webp" aria-label="45° Right" required />
-                </label>
-                <label class="upload-box" data-slot="3">
-                  <span class="upload-copy">
-                    <span class="upload-angle"><span class="ar-only">45° يسار</span><span class="en-only">45° Left</span></span>
-                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
-                  </span>
-                  <img id="preview3" alt="" decoding="async" />
-                  <span class="upload-check" aria-hidden="true">✓</span>
-                  <span class="upload-progress-label" aria-hidden="true">0%</span>
-                  <span class="upload-meta" aria-live="polite"></span>
-                  <input id="file3" type="file" accept="image/jpeg,image/png,image/webp" aria-label="45° Left" required />
-                </label>
-                <label class="upload-box" data-slot="4">
-                  <span class="upload-copy">
-                    <span class="upload-angle"><span class="ar-only">90° يمين</span><span class="en-only">90° Right</span></span>
-                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
-                  </span>
-                  <img id="preview4" alt="" decoding="async" />
-                  <span class="upload-check" aria-hidden="true">✓</span>
-                  <span class="upload-progress-label" aria-hidden="true">0%</span>
-                  <span class="upload-meta" aria-live="polite"></span>
-                  <input id="file4" type="file" accept="image/jpeg,image/png,image/webp" aria-label="90° Right" required />
-                </label>
-                <label class="upload-box" data-slot="5">
-                  <span class="upload-copy">
-                    <span class="upload-angle"><span class="ar-only">90° يسار</span><span class="en-only">90° Left</span></span>
-                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
-                  </span>
-                  <img id="preview5" alt="" decoding="async" />
-                  <span class="upload-check" aria-hidden="true">✓</span>
-                  <span class="upload-progress-label" aria-hidden="true">0%</span>
-                  <span class="upload-meta" aria-live="polite"></span>
-                  <input id="file5" type="file" accept="image/jpeg,image/png,image/webp" aria-label="90° Left" required />
-                </label>
-                <label class="upload-box" data-slot="6">
-                  <span class="upload-copy">
-                    <span class="upload-angle"><span class="ar-only">تفصيل قريب</span><span class="en-only">Close detail</span></span>
-                    <span class="upload-hint"><span class="ar-only">JPG · PNG · WEBP حتى 8MB</span><span class="en-only">JPG · PNG · WEBP up to 8 MB</span></span>
-                  </span>
-                  <img id="preview6" alt="" decoding="async" />
-                  <span class="upload-check" aria-hidden="true">✓</span>
-                  <span class="upload-progress-label" aria-hidden="true">0%</span>
-                  <span class="upload-meta" aria-live="polite"></span>
-                  <input id="file6" type="file" accept="image/jpeg,image/png,image/webp" aria-label="Close detail" required />
-                </label>
-              </div>
-
-              <label class="consent">
-                <input type="checkbox" id="privacyConsent" required />
-                <span>
-                  <span class="ar-only">أوافق صراحة على معالجة بياناتي وصوري لغرض مراجعة طلب الاستشارة البصرية، وأؤكد أن الصور تخصني وأن عمري 18 عاماً أو أكثر.</span>
-                  <span class="en-only">I explicitly consent to processing my data and images for reviewing this visual consultation request, confirm the images are mine, and confirm I am aged 18 or over.</span>
-                </span>
-              </label>
-
-              <label class="consent">
-                <input type="checkbox" id="simulationConsent" required />
-                <span>
-                  <span class="ar-only">أفهم أن أي تصور بصري هو أداة استرشادية ولا يمثل ضماناً للنتيجة الفعلية.</span>
-                  <span class="en-only">I understand that any visual preview is a guidance tool and does not guarantee the actual outcome.</span>
-                </span>
-              </label>
-
-              <button class="btn btn-rose" id="vrSubmit" type="submit" style="width:100%">
-                <span class="ar-only">إرسال الطلب بأمان</span><span class="en-only">Submit Securely</span>
-              </button>
-              <div class="status" id="vrStatus" aria-live="polite"></div>
-              <p class="fineprint">
-                <span class="ar-only">يجب ضبط قواعد Firestore وStorage ومنع الوصول العام قبل النشر. لا تستخدم هذه النسخة لتخزين بيانات مرضى حقيقية قبل المراجعة القانونية والأمنية.</span>
-                <span class="en-only">Firestore and Storage rules must block public access before launch. Do not use this version for real patient data until legal and security review is complete.</span>
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section alt" id="early-access">
-      <div class="container grid grid-2" style="align-items:start">
-        <div>
-          <span class="eyebrow">Wafa First Access</span>
-          <h2 class="title" style="font-size:clamp(2.5rem,5vw,4.8rem)">
-            <span class="ar-only">الوصول المبكر والمجتمع الطبي.</span>
-            <span class="en-only">Early access and the medical community.</span>
-          </h2>
-          <p class="lead">
-            <span class="ar-only">أولوية للمحتوى الجديد، المواعيد، الفعاليات، برامج الموديلز، والنشرات الطبية المعتمدة.</span>
-            <span class="en-only">Priority access to new content, appointments, events, model programmes, and approved medical newsletters.</span>
-          </p>
-        </div>
-
-        <div class="card">
-          <form id="earlyForm" class="early-form" novalidate>
-            <input class="light-input" id="earlyName" type="text" placeholder="الاسم / Name" maxlength="80" required />
-            <input class="light-input" id="earlyPhone" type="tel" placeholder="رقم الجوال / Mobile" maxlength="20" required />
-            <input class="light-input full" id="earlyEmail" type="email" placeholder="البريد الإلكتروني / Email" maxlength="120" />
-            <select class="light-input full" id="earlyInterest" required>
-              <option value="">الاهتمام / Interest</option>
-              <option value="skin">البشرة / Skin</option>
-              <option value="hair">الشعر / Hair</option>
-              <option value="laser">الليزر / Laser</option>
-              <option value="aesthetics">التجميل / Aesthetics</option>
-              <option value="models">برنامج الموديلز / Models Programme</option>
-              <option value="education">المحتوى التعليمي / Educational Content</option>
-            </select>
-            <label class="consent full" style="color:var(--muted)">
-              <input type="checkbox" id="marketingConsent" required />
-              <span><span class="ar-only">أوافق على تلقي تحديثات المنصة، ويمكنني إلغاء الاشتراك في أي وقت.</span><span class="en-only">I agree to receive platform updates and may unsubscribe at any time.</span></span>
-            </label>
-            <button class="btn btn-dark full" type="submit" id="earlySubmit">
-              <span class="ar-only">الانضمام إلى الوصول المبكر</span><span class="en-only">Join Early Access</span>
-            </button>
-            <div class="status full" id="earlyStatus" aria-live="polite"></div>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <img src="image.png" alt="Dr Wafa Alghamdi" loading="lazy" decoding="async" fetchpriority="low" />
-    <p><span class="ar-only">الدقة في الممارسة. والإنسان أولاً في كل قرار.</span><span class="en-only">Precision in practice. Humanity in every decision.</span></p>
-    <div class="footer-links">
-      <a href="https://instagram.com/dr.wafagh" target="_blank" rel="noopener">Instagram</a>
-      <button type="button" class="icon-btn" style="width:auto;padding:0 16px;border-radius:999px" data-modal-open="privacyModal"><span class="ar-only">الخصوصية</span><span class="en-only">Privacy</span></button>
-      <button type="button" class="icon-btn" style="width:auto;padding:0 16px;border-radius:999px" data-modal-open="termsModal"><span class="ar-only">الشروط الطبية</span><span class="en-only">Medical Terms</span></button>
-    </div>
-    <small>© 2026 Dr. Wafa Alghamdi — Visionary Direction by フサム | experience™</small>
-  </footer>
-
-  <button class="fab" id="assistantFab" type="button" aria-label="Open assistant">✦</button>
-
-  <section class="assistant" id="assistant" aria-hidden="true">
-    <header class="assistant-head">
-      <div>
-        <small>WAFA DIGITAL CARE</small>
-        <h3><span class="ar-only">المساعد المعلوماتي</span><span class="en-only">Information Assistant</span></h3>
-      </div>
-      <button type="button" id="assistantCloseBtn" aria-label="Close">×</button>
     </header>
-    <div class="assistant-body" id="assistantBody"></div>
-    <form class="assistant-form" id="assistantForm">
-      <input id="assistantInput" autocomplete="off" maxlength="500" />
-      <button type="submit">➤</button>
-    </form>
-    <div class="assistant-disclaimer">
-      <span class="ar-only">لا يقدم تشخيصاً أو وصفة علاجية. في الحالات الطارئة اتصلي بخدمات الطوارئ أو توجهي لأقرب منشأة صحية.</span>
-      <span class="en-only">This assistant does not diagnose or prescribe. For emergencies, contact emergency services or attend the nearest healthcare facility.</span>
+    <aside class="mobile-menu" id="mobileMenu">
+      <a href="#atlas"
+        >01 — <span data-ar>أطلس البشرة</span><span data-en>Skin Atlas</span></a
+      >
+      <a href="#evidence"
+        >02 — <span data-ar>الدليل الطبي</span><span data-en>Evidence</span></a
+      >
+      <a href="#passport"
+        >03 — <span data-ar>جواز الإجراء</span><span data-en>Passport</span></a
+      >
+      <a href="#journal"
+        >04 — <span data-ar>المجلة</span><span data-en>Journal</span></a
+      >
+      <a href="#consultation"
+        >05 — <span data-ar>الاستشارة</span><span data-en>Consultation</span></a
+      >
+    </aside>
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-art" aria-hidden="true">
+          <svg
+            viewBox="0 0 700 900"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M360 90C505 96 592 222 577 370C567 477 515 518 492 605C468 693 409 786 315 773C211 759 166 652 152 552C137 447 101 365 139 254C173 153 248 84 360 90Z"
+              stroke="rgba(255,255,255,.65)"
+              stroke-width="2"
+            />
+            <path
+              d="M306 184C334 219 339 286 321 337C301 394 293 452 315 510"
+              stroke="rgba(255,255,255,.45)"
+            />
+            <path
+              d="M237 326C279 302 328 306 365 330M353 330C409 294 466 300 504 329"
+              stroke="rgba(255,255,255,.46)"
+            />
+            <path
+              d="M258 417C300 446 390 446 444 410M286 541C332 574 400 570 438 535"
+              stroke="rgba(255,255,255,.42)"
+            />
+            <circle cx="350" cy="420" r="250" stroke="rgba(255,255,255,.14)" />
+            <circle cx="350" cy="420" r="320" stroke="rgba(255,255,255,.09)" />
+            <path
+              d="M40 200H660M40 420H660M40 640H660M150 40V850M350 40V850M550 40V850"
+              stroke="rgba(255,255,255,.07)"
+            />
+          </svg>
+        </div>
+        <div class="hero-meta">
+          <span>JEDDAH · SAUDI ARABIA</span><span>2026 / 2027</span>
+        </div>
+        <div class="hero-copy reveal">
+          <p class="eyebrow">
+            <span data-ar>الجلدية × التجميل × الثقافة البصرية</span
+            ><span data-en>DERMATOLOGY × AESTHETICS × VISUAL CULTURE</span>
+          </p>
+          <h1>
+            <span data-ar>الجلد ليس سطحاً.<br />إنه سيرة الإنسان.</span
+            ><span data-en
+              >Skin is not a surface.<br />It is human biography.</span
+            >
+          </h1>
+          <p>
+            <span data-ar
+              >منصة طبية تحريرية سعودية تجمع المعرفة الموثوقة، القرار الأخلاقي،
+              التجربة السينمائية، ورحلة استشارة واضحة قبل أي إجراء.</span
+            ><span data-en
+              >A Saudi medical editorial platform combining trusted knowledge,
+              ethical judgement, cinematic design and a clear consultation
+              journey.</span
+            >
+          </p>
+          <div class="hero-actions">
+            <a class="button button-light" href="#atlas"
+              ><span data-ar>ادخلي المنصة</span
+              ><span data-en>Enter platform</span></a
+            ><button
+              class="button button-ghost"
+              id="openManifesto"
+              type="button"
+            >
+              <span data-ar>شاهد الرؤية</span
+              ><span data-en>View manifesto</span>
+            </button>
+          </div>
+        </div>
+        <div class="hero-side">MEDICINE / IMAGE / HUMANITY</div>
+      </section>
+      <div class="marquee">
+        <div>
+          TRUE SKIN · EVIDENCE FIRST · NO FILTER · HUMAN IDENTITY · RESPONSIBLE
+          AESTHETICS · TRUE SKIN · EVIDENCE FIRST · NO FILTER · HUMAN IDENTITY ·
+          RESPONSIBLE AESTHETICS ·
+        </div>
+      </div>
+      <section class="section intro">
+        <div class="section-no">00</div>
+        <div class="intro-copy reveal">
+          <p class="eyebrow">
+            <span data-ar>المبدأ</span><span data-en>THE PRINCIPLE</span>
+          </p>
+          <h2>
+            <span data-ar>ليست مجلة تجميل.<br />إنها سلطة تحريرية طبية.</span
+            ><span data-en
+              >Not a beauty magazine.<br />A medical editorial authority.</span
+            >
+          </h2>
+        </div>
+        <div class="intro-note reveal">
+          <p>
+            <span data-ar
+              >كل مادة تميّز بوضوح بين التعليم الطبي، الرأي التحريري، الخدمة
+              السريرية، والمحتوى الإعلاني. لا وعود مطلقة، ولا تشخيص من صورة، ولا
+              إجراء بلا سياق تشريحي وطبي.</span
+            ><span data-en
+              >Every piece clearly separates medical education, editorial
+              opinion, clinical service and promotion. No absolute promises, no
+              diagnosis from an image and no procedure without anatomical and
+              medical context.</span
+            >
+          </p>
+        </div>
+      </section>
+      <section class="section atlas" id="atlas">
+        <header class="section-head reveal">
+          <div>
+            <span class="section-no">01</span>
+            <p class="eyebrow">SKIN ATLAS</p>
+          </div>
+          <h2>
+            <span data-ar>ابدئي من المشكلة،<br />لا من اسم الإجراء.</span
+            ><span data-en
+              >Begin with the concern,<br />not a procedure name.</span
+            >
+          </h2>
+        </header>
+        <div class="atlas-shell reveal">
+          <div class="atlas-tabs" role="tablist">
+            <button class="atlas-tab is-active" data-atlas="acne">
+              <span data-ar>حب الشباب</span><span data-en>Acne</span></button
+            ><button class="atlas-tab" data-atlas="pigment">
+              <span data-ar>التصبغات</span><span data-en>Pigment</span></button
+            ><button class="atlas-tab" data-atlas="aging">
+              <span data-ar>تغيرات العمر</span
+              ><span data-en>Ageing</span></button
+            ><button class="atlas-tab" data-atlas="hair">
+              <span data-ar>الشعر</span><span data-en>Hair</span></button
+            ><button class="atlas-tab" data-atlas="sensitive">
+              <span data-ar>البشرة الحساسة</span
+              ><span data-en>Sensitive skin</span>
+            </button>
+          </div>
+          <article class="atlas-card">
+            <div class="atlas-visual">
+              <div class="scan scan-1"></div>
+              <div class="scan scan-2"></div>
+              <div class="scan scan-3"></div>
+            </div>
+            <div class="atlas-content">
+              <p class="eyebrow">ANATOMY / PATHWAY / DECISION</p>
+              <h3 id="atlasTitle"></h3>
+              <p id="atlasSummary"></p>
+              <div class="chips" id="atlasLayers"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="section evidence" id="evidence">
+        <header class="section-head light reveal">
+          <div>
+            <span class="section-no">02</span>
+            <p class="eyebrow">EVIDENCE STUDIO</p>
+          </div>
+          <h2>
+            <span data-ar>ما نعرفه.<br />وما لم يُحسم بعد.</span
+            ><span data-en>What we know.<br />What remains uncertain.</span>
+          </h2>
+        </header>
+        <div class="evidence-grid">
+          <article class="evidence-card reveal">
+            <b>A</b>
+            <h3>
+              <span data-ar>دليل متماسك</span
+              ><span data-en>Established evidence</span>
+            </h3>
+            <p>
+              <span data-ar
+                >استخدامات معيارية مدعومة بمراجع واضحة ومراجعة سريرية.</span
+              ><span data-en
+                >Standard uses supported by clear references and clinical
+                review.</span
+              >
+            </p>
+          </article>
+          <article class="evidence-card reveal">
+            <b>B</b>
+            <h3>
+              <span data-ar>دليل مشروط</span
+              ><span data-en>Conditional evidence</span>
+            </h3>
+            <p>
+              <span data-ar>نتائج واعدة تعتمد على التشخيص والجهاز والخبرة.</span
+              ><span data-en
+                >Promising results dependent on diagnosis, device and
+                expertise.</span
+              >
+            </p>
+          </article>
+          <article class="evidence-card reveal">
+            <b>O</b>
+            <h3>Off-label</h3>
+            <p>
+              <span data-ar
+                >استخدام خارج النشرة يحتاج إفصاحاً واضحاً ومناقشة للبدائل
+                والمخاطر.</span
+              ><span data-en
+                >Use outside the label requiring disclosure, alternatives and
+                risk discussion.</span
+              >
+            </p>
+          </article>
+          <article class="evidence-card reveal">
+            <b>X</b>
+            <h3>
+              <span data-ar>تجريبي</span><span data-en>Experimental</span>
+            </h3>
+            <p>
+              <span data-ar
+                >لا يُسوّق كنتيجة مضمونة ولا كبديل عن علاج مثبت.</span
+              ><span data-en
+                >Never marketed as guaranteed or as a substitute for established
+                care.</span
+              >
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="section gulf">
+        <div class="gulf-visual reveal">
+          <span>GULF</span><small>SKIN INTELLIGENCE</small>
+        </div>
+        <div class="gulf-copy reveal">
+          <p class="eyebrow">REGIONAL INTELLIGENCE</p>
+          <h2>
+            <span data-ar>بشرة الخليج ليست هامشاً في البحث.</span
+            ><span data-en>Gulf skin is not a research footnote.</span>
+          </h2>
+          <div class="gulf-list">
+            <div>
+              <b>01</b><span data-ar>الحرارة والرطوبة والتعرق</span
+              ><span data-en>Heat, humidity and perspiration</span>
+            </div>
+            <div>
+              <b>02</b><span data-ar>التصبغ التالي للالتهاب</span
+              ><span data-en>Post-inflammatory pigmentation</span>
+            </div>
+            <div>
+              <b>03</b><span data-ar>التعافي في الشمس والمناسبات</span
+              ><span data-en>Recovery around sun and events</span>
+            </div>
+            <div>
+              <b>04</b><span data-ar>الخصوصية والثقافة المحلية</span
+              ><span data-en>Privacy and local culture</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section passport" id="passport">
+        <header class="section-head reveal">
+          <div>
+            <span class="section-no">03</span>
+            <p class="eyebrow">PROCEDURE PASSPORT</p>
+          </div>
+          <h2>
+            <span data-ar>النتيجة ليست لحظة.<br />إنها رحلة موثقة.</span
+            ><span data-en
+              >A result is not a moment.<br />It is a documented journey.</span
+            >
+          </h2>
+        </header>
+        <div class="passport-shell reveal">
+          <div class="passport-top">
+            <div>
+              <small id="passportCategory"></small>
+              <h3 id="passportTitle"></h3>
+            </div>
+            <label
+              ><span data-ar>اختاري الإجراء</span
+              ><span data-en>Select procedure</span
+              ><select id="procedureSelect">
+                <option value="laser">Fractional Laser</option>
+                <option value="toxin">Neuromodulator</option>
+                <option value="filler">Structural Filler</option>
+                <option value="rf">RF Microneedling</option>
+              </select></label
+            >
+          </div>
+          <ol class="timeline" id="passportTimeline"></ol>
+        </div>
+      </section>
+      <section class="section journal" id="journal">
+        <header class="section-head reveal">
+          <div>
+            <span class="section-no">04</span>
+            <p class="eyebrow">WAFA REVIEW</p>
+          </div>
+          <h2>
+            <span data-ar>محتوى يُقرأ كالمجلة.<br />ويُراجع كالطب.</span
+            ><span data-en
+              >Read like a magazine.<br />Reviewed like medicine.</span
+            >
+          </h2>
+        </header>
+        <div class="journal-grid">
+          <article class="story story-main reveal">
+            <div class="story-art art-1"></div>
+            <div>
+              <small>THE NO-PROCEDURE EDIT</small>
+              <h3>
+                <span data-ar>متى يكون عدم الإجراء هو القرار الأقوى؟</span
+                ><span data-en
+                  >When is no procedure the strongest decision?</span
+                >
+              </h3>
+              <p>
+                <span data-ar
+                  >عن التوقعات، المخاطر، التوقيت، وحدود التغيير المسؤول.</span
+                ><span data-en
+                  >Expectations, risk, timing and the limits of responsible
+                  change.</span
+                >
+              </p>
+            </div>
+          </article>
+          <article class="story reveal">
+            <div class="story-art art-2"></div>
+            <div>
+              <small>RECOVERY FILE</small>
+              <h3>
+                <span data-ar>ما بعد الليزر: يوم بيوم</span
+                ><span data-en>After laser: day by day</span>
+              </h3>
+            </div>
+          </article>
+          <article class="story reveal">
+            <div class="story-art art-3"></div>
+            <div>
+              <small>TRUE SKIN</small>
+              <h3>
+                <span data-ar>الملمس ليس عيباً</span
+                ><span data-en>Texture is not a flaw</span>
+              </h3>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="section consultation" id="consultation">
+        <div class="consultation-copy reveal">
+          <p class="eyebrow">PRIVATE CONSULTATION VAULT</p>
+          <h2>
+            <span data-ar>تقييم واضح.<br />بأقل بيانات لازمة.</span
+            ><span data-en>Clear assessment.<br />Only necessary data.</span>
+          </h2>
+          <p>
+            <span data-ar
+              >هذه النسخة التجريبية لا ترسل ولا تخزن البيانات. عند الربط الحقيقي
+              تُنقل الطلبات إلى خادم آمن ومراجعة بشرية.</span
+            ><span data-en
+              >This prototype sends and stores no data. Production intake must
+              use a secure server and human review.</span
+            >
+          </p>
+        </div>
+        <form class="vault reveal" id="consultationForm" novalidate>
+          <div class="vault-progress">
+            <span id="stepLabel">01 / 04</span><i><b id="progressBar"></b></i>
+          </div>
+          <section class="vault-step is-active" data-step="1">
+            <p class="eyebrow">01 / GOAL</p>
+            <h3>
+              <span data-ar>ما الهدف الأساسي؟</span
+              ><span data-en>What is the primary goal?</span>
+            </h3>
+            <textarea name="goal" maxlength="600" required></textarea>
+          </section>
+          <section class="vault-step" data-step="2">
+            <p class="eyebrow">02 / PATH</p>
+            <h3>
+              <span data-ar>اختاري المسار الأقرب</span
+              ><span data-en>Choose the closest pathway</span>
+            </h3>
+            <div class="choices">
+              <label
+                ><input type="radio" name="path" value="skin" required /><span
+                  ><b><span data-ar>البشرة</span><span data-en>Skin</span></b
+                  ><small>Dermatology</small></span
+                ></label
+              ><label
+                ><input
+                  type="radio"
+                  name="path"
+                  value="aesthetics"
+                  required
+                /><span
+                  ><b
+                    ><span data-ar>التجميل</span
+                    ><span data-en>Aesthetics</span></b
+                  ><small>Face / Body</small></span
+                ></label
+              ><label
+                ><input type="radio" name="path" value="hair" required /><span
+                  ><b><span data-ar>الشعر</span><span data-en>Hair</span></b
+                  ><small>Scalp / Loss</small></span
+                ></label
+              >
+            </div>
+          </section>
+          <section class="vault-step" data-step="3">
+            <p class="eyebrow">03 / DETAILS</p>
+            <h3>
+              <span data-ar>بيانات التواصل الأساسية</span
+              ><span data-en>Essential contact details</span>
+            </h3>
+            <div class="fields">
+              <label
+                ><span data-ar>الاسم</span><span data-en>Name</span
+                ><input name="name" maxlength="80" required /></label
+              ><label
+                ><span data-ar>الجوال</span><span data-en>Mobile</span
+                ><input
+                  name="phone"
+                  inputmode="tel"
+                  maxlength="20"
+                  required /></label
+              ><label
+                ><span data-ar>المدينة</span><span data-en>City</span
+                ><input name="city" maxlength="80" required /></label
+              ><label
+                ><span data-ar>الفئة العمرية</span><span data-en>Age range</span
+                ><select name="ageRange" required>
+                  <option value=""></option>
+                  <option>18–24</option>
+                  <option>25–34</option>
+                  <option>35–44</option>
+                  <option>45–54</option>
+                  <option>55+</option>
+                </select></label
+              >
+            </div>
+          </section>
+          <section class="vault-step" data-step="4">
+            <p class="eyebrow">04 / CONSENT</p>
+            <h3>
+              <span data-ar>الموافقة والفهم</span
+              ><span data-en>Consent and acknowledgement</span>
+            </h3>
+            <label class="check"
+              ><input type="checkbox" name="careConsent" required /><span
+                data-ar
+                >أوافق على استخدام البيانات لمراجعة طلب التواصل فقط.</span
+              ><span data-en
+                >I consent to use of the data only to review this contact
+                request.</span
+              ></label
+            ><label class="check"
+              ><input type="checkbox" name="educationAck" required /><span
+                data-ar
+                >أفهم أن النموذج لا يمثل تشخيصاً أو خطة علاج أو ضماناً
+                للنتيجة.</span
+              ><span data-en
+                >I understand this form is not a diagnosis, treatment plan or
+                result guarantee.</span
+              ></label
+            >
+          </section>
+          <div class="vault-actions">
+            <button class="button button-outline" id="prevStep" type="button">
+              <span data-ar>السابق</span><span data-en>Back</span></button
+            ><button class="button button-dark" id="nextStep" type="button">
+              <span data-ar>التالي</span><span data-en>Next</span></button
+            ><button
+              class="button button-dark"
+              id="submitConsultation"
+              type="submit"
+              hidden
+            >
+              <span data-ar>إنشاء رقم الطلب</span
+              ><span data-en>Create request reference</span>
+            </button>
+          </div>
+          <output class="status" id="consultationStatus"></output>
+        </form>
+      </section>
+      <section class="trust">
+        <div>
+          <p class="eyebrow">TRUST CENTER</p>
+          <h2>
+            <span data-ar
+              >الدليل، المراجع، التاريخ، والحدود — ظاهرة للمستخدم.</span
+            ><span data-en
+              >Evidence, reviewer, date and limitations — visible to the
+              user.</span
+            >
+          </h2>
+        </div>
+        <div class="trust-grid">
+          <span>Clinical Review</span><span>Claims Register</span
+          ><span>AI Boundaries</span><span>Privacy Rights</span>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="brand"><b>WAFA</b><span>MEDICAL EDITORIAL</span></div>
+      <p>
+        <span data-ar
+          >المعلومات تثقيفية ولا تغني عن الفحص السريري لدى ممارس مرخص.</span
+        ><span data-en
+          >Information is educational and does not replace clinical examination
+          by a licensed practitioner.</span
+        >
+      </p>
+      <small>© 2026 — Visionary Direction by フサム | experience™</small>
+    </footer>
+    <button class="assistant-fab" id="assistantFab" type="button">✦</button>
+    <aside class="assistant" id="assistantPanel">
+      <header>
+        <div>
+          <small>WAFA DIGITAL CARE</small
+          ><b
+            ><span data-ar>مساعد معلوماتي</span
+            ><span data-en>Information assistant</span></b
+          >
+        </div>
+        <button id="assistantClose" type="button">×</button>
+      </header>
+      <div class="assistant-messages" id="assistantMessages"></div>
+      <form id="assistantForm">
+        <input id="assistantInput" maxlength="400" autocomplete="off" /><button
+          type="submit"
+        >
+          ➤
+        </button>
+      </form>
+      <small class="assistant-note"
+        ><span data-ar>لا يشخص ولا يصف علاجاً.</span
+        ><span data-en>No diagnosis or prescribing.</span></small
+      >
+    </aside>
+    <div class="modal" id="manifestoModal">
+      <div class="modal-card">
+        <button id="closeManifesto">×</button>
+        <p class="eyebrow">WAFA MANIFESTO</p>
+        <h2>
+          <span data-ar>الطب يرى الحقيقة.<br />والتصميم يجعلها مفهومة.</span
+          ><span data-en
+            >Medicine sees truth.<br />Design makes it understandable.</span
+          >
+        </h2>
+        <p>
+          <span data-ar
+            >المنصة لا تبيع إجراءً قبل فهم المشكلة، ولا تستخدم الصورة لتضخيم
+            الوعود، ولا تخفي حدود المعرفة الطبية. الجمال هنا قرار مسؤول، لا
+            اندفاعاً بصرياً.</span
+          ><span data-en
+            >The platform does not sell a procedure before understanding the
+            concern, use imagery to inflate promises, or hide the limits of
+            medical knowledge. Beauty here is a responsible decision.</span
+          >
+        </p>
+      </div>
     </div>
-  </section>
-
-  <div class="modal" id="privacyModal">
-    <div class="modal-card">
-      <button class="modal-close" type="button" data-modal-close>×</button>
-      <h2><span class="ar-only">إشعار الخصوصية المبدئي</span><span class="en-only">Preliminary Privacy Notice</span></h2>
-      <p><span class="ar-only">هذه صياغة مبدئية وليست بديلاً عن مراجعة قانونية. يجب تحديد الجهة المتحكمة بالبيانات، أغراض المعالجة، مدة الاحتفاظ، آلية الحذف، وسياسة نقل البيانات قبل الإطلاق.</span><span class="en-only">This is preliminary wording and not a substitute for legal review. The data controller, processing purposes, retention periods, deletion process, and data transfer policy must be defined before launch.</span></p>
-      <ul>
-        <li><span class="ar-only">تستخدم البيانات فقط لغرض الخدمة التي وافق عليها المستخدم.</span><span class="en-only">Data is used only for the service to which the user consented.</span></li>
-        <li><span class="ar-only">لا تستخدم الصور لأغراض تسويقية دون موافقة مستقلة.</span><span class="en-only">Images are not used for marketing without separate consent.</span></li>
-        <li><span class="ar-only">يجب توفير وسيلة لطلب الوصول أو التصحيح أو الحذف.</span><span class="en-only">Users must be given a way to request access, correction, or deletion.</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="modal" id="termsModal">
-    <div class="modal-card">
-      <button class="modal-close" type="button" data-modal-close>×</button>
-      <h2><span class="ar-only">الشروط الطبية</span><span class="en-only">Medical Terms</span></h2>
-      <p><span class="ar-only">المحتوى والمساعد والمحاكاة البصرية أدوات تثقيف وتواصل، ولا تشكل تشخيصاً أو وصفة أو ضماناً للنتيجة. تعتمد الخطة الطبية على تقييم مباشر من ممارس مرخص.</span><span class="en-only">Content, the assistant, and visual previews are educational and communication tools. They do not constitute diagnosis, prescription, or a guaranteed result. Medical planning depends on direct assessment by a licensed practitioner.</span></p>
-    </div>
-  </div>
-
-  <script>
-    /* =========================================================
-       1) FIREBASE CONFIGURATION
-       Replace with the production project.
-       IMPORTANT: Configure Firestore Rules, Storage Rules,
-       Firebase App Check, Authentication, and audit logging.
-       ========================================================= */
-
-    const firebaseConfig = {
-      apiKey: "REPLACE_WITH_PRODUCTION_API_KEY",
-      authDomain: "REPLACE.firebaseapp.com",
-      projectId: "REPLACE",
-      storageBucket: "REPLACE.firebasestorage.app",
-      messagingSenderId: "REPLACE",
-      appId: "REPLACE"
-    };
-
-    let firebaseReady = false;
-    let db = null;
-    let storage = null;
-    let auth = null;
-
-    try {
-      if (firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith("REPLACE")) {
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-        db = firebase.firestore();
-        storage = firebase.storage();
-        auth = firebase.auth();
-        firebaseReady = true;
-      }
-    } catch (error) {
-      console.error("Firebase initialisation failed:", error);
-    }
-
-    /* =========================================================
-       2) LANGUAGE
-       ========================================================= */
-    const html = document.documentElement;
-    const savedLang = localStorage.getItem("preferredLanguage");
-    if (savedLang === "ar" || savedLang === "en") {
-      html.lang = savedLang;
-      html.dir = savedLang === "ar" ? "rtl" : "ltr";
-    }
-
-    function isArabic() { return html.lang === "ar"; }
-
-    document.getElementById("langBtn").addEventListener("click", () => {
-      const next = isArabic() ? "en" : "ar";
-      html.lang = next;
-      html.dir = next === "ar" ? "rtl" : "ltr";
-      localStorage.setItem("preferredLanguage", next);
-      setAssistantPlaceholder();
-      resetAssistantGreeting();
-    });
-
-    function setAssistantPlaceholder() {
-      document.getElementById("assistantInput").placeholder =
-        isArabic() ? "اكتبي استفسارك العام..." : "Type your general question...";
-    }
-    setAssistantPlaceholder();
-
-    /* =========================================================
-       3) NAV
-       ========================================================= */
-    const navbar = document.getElementById("navbar");
-    let lastScrollY = Math.max(0, window.scrollY);
-    let navTicking = false;
-    let navLockedVisible = false;
-
-    function updateSmartNav() {
-      const currentY = Math.max(0, window.scrollY);
-      const delta = currentY - lastScrollY;
-
-      navbar.classList.toggle("scrolled", currentY > 40);
-
-      if (!navLockedVisible && currentY > 140 && delta > 7) {
-        navbar.classList.add("nav-hidden");
-      } else if (delta < -4 || currentY < 90 || navLockedVisible) {
-        navbar.classList.remove("nav-hidden");
-      }
-
-      lastScrollY = currentY;
-      navTicking = false;
-    }
-
-    addEventListener("scroll", () => {
-      if (!navTicking) {
-        requestAnimationFrame(updateSmartNav);
-        navTicking = true;
-      }
-    }, { passive:true });
-
-    navbar.addEventListener("focusin", () => {
-      navLockedVisible = true;
-      navbar.classList.remove("nav-hidden");
-    });
-    navbar.addEventListener("focusout", () => {
-      navLockedVisible = false;
-    });
-
-    // Highlight the currently viewed primary section.
-    const navSectionLinks = [...document.querySelectorAll("[data-nav-section]")];
-    const navSectionObserver = "IntersectionObserver" in window
-      ? new IntersectionObserver(entries => {
-          const visible = entries
-            .filter(entry => entry.isIntersecting)
-            .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-          if (!visible) return;
-          navSectionLinks.forEach(link => {
-            link.classList.toggle("is-active", link.dataset.navSection === visible.target.id);
-          });
-        }, { rootMargin:"-28% 0px -58% 0px", threshold:[0,.2,.5] })
-      : null;
-
-    if (navSectionObserver) {
-      navSectionLinks.forEach(link => {
-        const section = document.getElementById(link.dataset.navSection);
-        if (section) navSectionObserver.observe(section);
-      });
-    }
-
-    /* =========================================================
-       4) MODALS
-       ========================================================= */
-    document.querySelectorAll("[data-modal-open]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.getElementById(btn.dataset.modalOpen).classList.add("open");
-      });
-    });
-    document.querySelectorAll("[data-modal-close]").forEach(btn => {
-      btn.addEventListener("click", () => btn.closest(".modal").classList.remove("open"));
-    });
-    document.querySelectorAll(".modal").forEach(modal => {
-      modal.addEventListener("click", e => {
-        if (e.target === modal) modal.classList.remove("open");
-      });
-    });
-
-    /* =========================================================
-       5) FILE PREVIEW & VALIDATION
-       ========================================================= */
-    const MAX_FILE_SIZE = 8 * 1024 * 1024;
-    const ALLOWED_TYPES = ["image/jpeg","image/png","image/webp"];
-
-    function validateFile(file) {
-      if (!file) return { ok:false, message:"missing" };
-      if (!ALLOWED_TYPES.includes(file.type)) return { ok:false, message:"type" };
-      if (file.size > MAX_FILE_SIZE) return { ok:false, message:"size" };
-      return { ok:true };
-    }
-
-    const previewObjectUrls = new Map();
-    const uploadCount = document.getElementById("uploadCount");
-    const uploadSummaryBar = document.getElementById("uploadSummaryBar");
-
-    function readableFileSize(bytes) {
-      if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
-      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-    }
-
-    function updateUploadSummary() {
-      const completed = [...document.querySelectorAll('.upload-box')]
-        .filter(box => box.classList.contains("has-file")).length;
-      uploadCount.textContent = `${completed} / 6`;
-      uploadSummaryBar.style.width = `${(completed / 6) * 100}%`;
-    }
-
-    function resetUploadBox(input) {
-      const box = input.closest(".upload-box");
-      const preview = box.querySelector("img");
-      const meta = box.querySelector(".upload-meta");
-      const progressLabel = box.querySelector(".upload-progress-label");
-      const oldUrl = previewObjectUrls.get(input.id);
-
-      if (oldUrl) {
-        URL.revokeObjectURL(oldUrl);
-        previewObjectUrls.delete(input.id);
-      }
-
-      box.classList.remove("has-file","is-invalid","is-uploading","is-uploaded","is-dragover");
-      box.style.setProperty("--upload-progress","0%");
-      input.value = "";
-      preview.removeAttribute("src");
-      preview.alt = "";
-      meta.textContent = "";
-      progressLabel.textContent = "0%";
-      updateUploadSummary();
-    }
-
-    function applySelectedFile(input) {
-      const file = input.files && input.files[0];
-      const box = input.closest(".upload-box");
-      const preview = box.querySelector("img");
-      const meta = box.querySelector(".upload-meta");
-      const check = validateFile(file);
-
-      box.classList.remove("is-invalid","is-uploaded","is-uploading");
-
-      if (!check.ok) {
-        resetUploadBox(input);
-        box.classList.add("is-invalid");
-        meta.textContent = isArabic()
-          ? "صيغة غير مدعومة أو الحجم أكبر من 8MB"
-          : "Unsupported format or file exceeds 8 MB";
-        setTimeout(() => box.classList.remove("is-invalid"), 900);
-        return;
-      }
-
-      const oldUrl = previewObjectUrls.get(input.id);
-      if (oldUrl) URL.revokeObjectURL(oldUrl);
-
-      const url = URL.createObjectURL(file);
-      previewObjectUrls.set(input.id, url);
-      preview.src = url;
-      preview.alt = isArabic() ? "معاينة الصورة المختارة" : "Selected image preview";
-      meta.textContent = `${file.name} · ${readableFileSize(file.size)}`;
-      box.classList.add("has-file");
-      box.style.setProperty("--upload-progress","0%");
-      updateUploadSummary();
-    }
-
-    for (let i = 1; i <= 6; i++) {
-      const input = document.getElementById("file" + i);
-      const box = input.closest(".upload-box");
-
-      input.addEventListener("change", () => applySelectedFile(input));
-
-      ["dragenter","dragover"].forEach(type => {
-        box.addEventListener(type, event => {
-          event.preventDefault();
-          box.classList.add("is-dragover");
-        });
-      });
-
-      ["dragleave","drop"].forEach(type => {
-        box.addEventListener(type, event => {
-          event.preventDefault();
-          box.classList.remove("is-dragover");
-        });
-      });
-
-      box.addEventListener("drop", event => {
-        const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
-        if (!file) return;
-        try {
-          const transfer = new DataTransfer();
-          transfer.items.add(file);
-          input.files = transfer.files;
-          applySelectedFile(input);
-        } catch (error) {
-          console.warn("Drag-and-drop file assignment is not supported in this browser.", error);
-        }
-      });
-    }
-
-    updateUploadSummary();
-
-    function sanitiseText(value) {
-      return String(value || "").replace(/[<>]/g, "").trim();
-    }
-
-    function validatePhone(value) {
-      return /^[0-9+\s()-]{7,20}$/.test(value);
-    }
-
-    function makeRequestId() {
-      if (crypto && crypto.randomUUID) return crypto.randomUUID();
-      return "req_" + Date.now() + "_" + Math.random().toString(36).slice(2);
-    }
-
-    /* =========================================================
-       6) VISUAL CONSULTATION SUBMISSION
-       ========================================================= */
-    document.getElementById("vrForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const btn = document.getElementById("vrSubmit");
-      const status = document.getElementById("vrStatus");
-      const name = sanitiseText(document.getElementById("vrName").value);
-      const phone = sanitiseText(document.getElementById("vrPhone").value);
-      const goal = sanitiseText(document.getElementById("vrGoal").value);
-      const privacyConsent = document.getElementById("privacyConsent").checked;
-      const simulationConsent = document.getElementById("simulationConsent").checked;
-
-      status.style.color = "";
-      status.textContent = "";
-
-      if (!name || !validatePhone(phone) || !goal || !privacyConsent || !simulationConsent) {
-        status.style.color = "#ff9f9f";
-        status.textContent = isArabic()
-          ? "تحققي من جميع الحقول والموافقات ورقم الجوال."
-          : "Please check all fields, consents, and the mobile number.";
-        return;
-      }
-
-      const files = [];
-      for (let i = 1; i <= 6; i++) {
-        const file = document.getElementById("file" + i).files[0];
-        const check = validateFile(file);
-        if (!check.ok) {
-          status.style.color = "#ff9f9f";
-          status.textContent = isArabic()
-            ? "يجب إرفاق الصور الست بصيغة صحيحة."
-            : "All six images must be provided in a valid format.";
-          return;
-        }
-        files.push(file);
-      }
-
-      if (!firebaseReady) {
-        status.style.color = "#ffb4b4";
-        status.textContent = isArabic()
-          ? "لم يتم ربط Firebase بعد. استبدل بيانات الإعدادات في الكود قبل الاستخدام."
-          : "Firebase is not configured. Replace the configuration values before use.";
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = isArabic() ? "جاري الرفع الآمن..." : "Uploading securely...";
-
-      try {
-        // Anonymous sign-in should be enabled in Firebase Authentication.
-        if (!auth.currentUser) await auth.signInAnonymously();
-
-        const uid = auth.currentUser.uid;
-        const requestId = makeRequestId();
-        const uploaded = [];
-
-        for (let i = 0; i < files.length; i++) {
-          const file = files[i];
-          const safeExt = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
-          const path = `visual-consultations/${uid}/${requestId}/angle-${i+1}.${safeExt}`;
-          const ref = storage.ref().child(path);
-
-          const metadata = {
-            contentType: file.type,
-            customMetadata: {
-              requestId,
-              ownerUid: uid,
-              angle: String(i + 1)
+    <script>
+      (() => {
+        "use strict";
+        const html = document.documentElement;
+        const isAr = () => html.lang === "ar";
+        const $ = (s, r = document) => r.querySelector(s),
+          $$ = (s, r = document) => [...r.querySelectorAll(s)];
+        const store = {
+          get(k) {
+            try {
+              return localStorage.getItem(k);
+            } catch (_) {
+              return null;
             }
-          };
-
-          const input = document.getElementById("file" + (i + 1));
-          const box = input.closest(".upload-box");
-          const progressLabel = box.querySelector(".upload-progress-label");
-          box.classList.add("is-uploading");
-          box.classList.remove("is-uploaded");
-
-          await new Promise((resolve, reject) => {
-            const task = ref.put(file, metadata);
-            task.on("state_changed",
-              snapshot => {
-                const progress = snapshot.totalBytes
-                  ? Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
-                  : 0;
-                box.style.setProperty("--upload-progress", `${progress}%`);
-                progressLabel.textContent = `${progress}%`;
-              },
-              reject,
-              () => {
-                box.classList.remove("is-uploading");
-                box.classList.add("is-uploaded");
-                box.style.setProperty("--upload-progress","100%");
-                progressLabel.textContent = "100%";
-                resolve();
-              }
-            );
-          });
-
-          uploaded.push({ path, angle:i + 1 });
+          },
+          set(k, v) {
+            try {
+              localStorage.setItem(k, v);
+            } catch (_) {}
+          },
+        };
+        const saved = store.get("wafa-lang");
+        if (saved === "en") {
+          html.lang = "en";
+          html.dir = "ltr";
         }
-
-        await db.collection("VisualConsultationRequests").doc(requestId).set({
-          ownerUid: uid,
-          name,
-          phone,
-          goal,
-          language: html.lang,
-          status: "new",
-          images: uploaded,
-          privacyConsent: true,
-          simulationConsent: true,
-          consentVersion: "2026-07-28-v1",
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          source: "website"
+        $("#langToggle").addEventListener("click", () => {
+          const next = isAr() ? "en" : "ar";
+          html.lang = next;
+          html.dir = next === "ar" ? "rtl" : "ltr";
+          store.set("wafa-lang", next);
+          renderAtlas(activeAtlas);
+          renderPassport($("#procedureSelect").value);
+          setAssistantPlaceholder();
         });
-
-        status.style.color = "#7ce39c";
-        status.textContent = isArabic()
-          ? "تم استلام الطلب بنجاح. سيقوم الفريق بمراجعته والتواصل معك."
-          : "Your request was received successfully. The team will review it and contact you.";
-
-        event.target.reset();
-        for (let i = 1; i <= 6; i++) {
-          resetUploadBox(document.getElementById("file" + i));
+        const header = $("#header");
+        addEventListener(
+          "scroll",
+          () => header.classList.toggle("scrolled", scrollY > 25),
+          { passive: true },
+        );
+        const menu = $("#mobileMenu"),
+          menuBtn = $("#menuButton");
+        function closeMenu() {
+          menu.classList.remove("open");
+          document.body.classList.remove("menu-open");
+          menuBtn.setAttribute("aria-expanded", "false");
         }
-      } catch (error) {
-        console.error("Visual consultation submission failed:", error);
-        status.style.color = "#ff9f9f";
-        status.textContent = isArabic()
-          ? "تعذر إرسال الطلب. لم يتم تأكيد الاستلام. حاولي مرة أخرى أو تواصلي مع العيادة."
-          : "Submission failed and receipt was not confirmed. Please try again or contact the clinic.";
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML =
-          '<span class="ar-only">إرسال الطلب بأمان</span>' +
-          '<span class="en-only">Submit Securely</span>';
-      }
-    });
-
-    /* =========================================================
-       7) EARLY ACCESS
-       ========================================================= */
-    document.getElementById("earlyForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const btn = document.getElementById("earlySubmit");
-      const status = document.getElementById("earlyStatus");
-      const name = sanitiseText(document.getElementById("earlyName").value);
-      const phone = sanitiseText(document.getElementById("earlyPhone").value);
-      const email = sanitiseText(document.getElementById("earlyEmail").value);
-      const interest = document.getElementById("earlyInterest").value;
-      const consent = document.getElementById("marketingConsent").checked;
-
-      if (!name || !validatePhone(phone) || !interest || !consent) {
-        status.style.color = "var(--danger)";
-        status.textContent = isArabic()
-          ? "أكملي الحقول المطلوبة والموافقة."
-          : "Please complete the required fields and consent.";
-        return;
-      }
-
-      if (!firebaseReady) {
-        status.style.color = "var(--danger)";
-        status.textContent = isArabic()
-          ? "لم يتم ربط Firebase بعد."
-          : "Firebase is not configured.";
-        return;
-      }
-
-      btn.disabled = true;
-
-      try {
-        if (!auth.currentUser) await auth.signInAnonymously();
-
-        await db.collection("EarlyAccess").add({
-          ownerUid: auth.currentUser.uid,
-          name,
-          phone,
-          email: email || null,
-          interest,
-          marketingConsent: true,
-          consentVersion: "2026-07-28-v1",
-          language: html.lang,
-          source: "website",
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        menuBtn.addEventListener("click", () => {
+          const open = !menu.classList.contains("open");
+          menu.classList.toggle("open", open);
+          document.body.classList.toggle("menu-open", open);
+          menuBtn.setAttribute("aria-expanded", String(open));
         });
-
-        status.style.color = "var(--success)";
-        status.textContent = isArabic()
-          ? "تم تسجيلك في قائمة الوصول المبكر."
-          : "You have joined the early access list.";
-        event.target.reset();
-      } catch (error) {
-        console.error("Early access submission failed:", error);
-        status.style.color = "var(--danger)";
-        status.textContent = isArabic()
-          ? "تعذر إكمال التسجيل. حاولي مرة أخرى."
-          : "Registration could not be completed. Please try again.";
-      } finally {
-        btn.disabled = false;
-      }
-    });
-
-    /* =========================================================
-       8) RESTRICTED INFORMATION ASSISTANT
-       This is intentionally not a diagnostic AI.
-       To connect a real model, call a protected server endpoint.
-       NEVER expose an AI API secret in browser JavaScript.
-       ========================================================= */
-    const assistant = document.getElementById("assistant");
-    const assistantBody = document.getElementById("assistantBody");
-
-    function openAssistant() {
-      navbar.classList.remove("nav-hidden");
-      assistant.classList.add("open");
-      assistant.setAttribute("aria-hidden","false");
-      if (!assistantBody.children.length) resetAssistantGreeting();
-    }
-    function closeAssistant() {
-      assistant.classList.remove("open");
-      assistant.setAttribute("aria-hidden","true");
-    }
-    document.getElementById("assistantFab").addEventListener("click", openAssistant);
-    document.getElementById("assistantOpenBtn").addEventListener("click", openAssistant);
-    document.getElementById("assistantCloseBtn").addEventListener("click", closeAssistant);
-
-    function appendMessage(role, text) {
-      const el = document.createElement("div");
-      el.className = "msg " + role;
-      el.textContent = text; // safer than innerHTML
-      assistantBody.appendChild(el);
-      assistantBody.scrollTop = assistantBody.scrollHeight;
-      return el;
-    }
-
-    function resetAssistantGreeting() {
-      assistantBody.innerHTML = "";
-      appendMessage("bot", isArabic()
-        ? "مرحباً بك. يمكنني تقديم معلومات عامة عن محتوى المنصة والخدمات وطريقة طلب الاستشارة. لا أقدم تشخيصاً أو وصفة علاجية."
-        : "Welcome. I can provide general information about the platform, services, and how to request a consultation. I do not diagnose or prescribe.");
-    }
-
-    function containsEmergencyTerms(text) {
-      const t = text.toLowerCase();
-      const terms = [
-        "صعوبة تنفس","اختناق","فقدان وعي","نزيف شديد","تورم شديد","ألم صدر","حساسية شديدة",
-        "difficulty breathing","unconscious","severe bleeding","chest pain","anaphylaxis","severe swelling"
-      ];
-      return terms.some(term => t.includes(term));
-    }
-
-    function localAssistantReply(text) {
-      const t = text.toLowerCase();
-
-      if (containsEmergencyTerms(text)) {
-        return isArabic()
-          ? "قد تشير الأعراض المذكورة إلى حالة تحتاج تقييماً عاجلاً. لا تنتظري رد المنصة؛ اتصلي بخدمات الطوارئ أو توجهي فوراً إلى أقرب منشأة صحية."
-          : "The symptoms mentioned may require urgent assessment. Do not wait for a platform response; contact emergency services or attend the nearest healthcare facility immediately.";
-      }
-
-      if (t.includes("بوتكس") || t.includes("botox") || t.includes("فيلر") || t.includes("filler")) {
-        return isArabic()
-          ? "يمكنني شرح الفرق العام: البوتوكس يعمل على تقليل نشاط عضلات محددة، بينما تستخدم مواد التعبئة لاستعادة أو تعديل الحجم في مناطق مختارة. تحديد الأنسب يتطلب تقييماً مباشراً للتشريح والتاريخ الطبي."
-          : "In general, botulinum toxin reduces activity in selected muscles, while fillers are used to restore or adjust volume in chosen areas. Suitability requires direct assessment of anatomy and medical history.";
-      }
-
-      if (t.includes("محاكاة") || t.includes("تصور") || t.includes("preview")) {
-        return isArabic()
-          ? "التصور البصري أداة لمناقشة الهدف قبل الإجراء، وليس ضماناً للنتيجة. يمكنك إرسال طلب عبر قسم التصور البصري بعد قراءة الموافقات."
-          : "The visual preview is a tool for discussing goals before treatment and is not a guarantee. You can submit a request through the visual consultation section after reviewing the consent information.";
-      }
-
-      if (t.includes("موعد") || t.includes("حجز") || t.includes("appointment") || t.includes("book")) {
-        return isArabic()
-          ? "يمكنك الانضمام إلى الوصول المبكر أو إرسال طلب استشارة، وسيقوم الفريق بالتواصل معك لتحديد نوع الموعد المناسب."
-          : "You can join early access or submit a consultation request. The team will contact you to determine the appropriate appointment type.";
-      }
-
-      return isArabic()
-        ? "أستطيع تقديم معلومات عامة فقط. لتقييم حالة شخصية أو تحديد علاج، يلزم التواصل مع الفريق وحجز تقييم طبي مباشر."
-        : "I can provide general information only. Personal assessment or treatment selection requires contacting the team and arranging a direct medical evaluation.";
-    }
-
-    document.getElementById("assistantForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const input = document.getElementById("assistantInput");
-      const text = sanitiseText(input.value);
-      if (!text) return;
-
-      appendMessage("user", text);
-      input.value = "";
-      const loading = appendMessage("bot", isArabic() ? "جارٍ تجهيز إجابة معلوماتية..." : "Preparing an informational reply...");
-
-      try {
-        // Production option:
-        // const response = await fetch("/api/medical-assistant", {
-        //   method: "POST",
-        //   headers: {"Content-Type":"application/json"},
-        //   body: JSON.stringify({ message:text, language:html.lang })
-        // });
-        // if (!response.ok) throw new Error("Assistant API failed");
-        // const data = await response.json();
-        // loading.textContent = data.reply;
-
-        await new Promise(resolve => setTimeout(resolve, 550));
-        loading.textContent = localAssistantReply(text);
-      } catch (error) {
-        loading.textContent = isArabic()
-          ? "تعذر تجهيز الإجابة حالياً. يرجى التواصل مع الفريق."
-          : "The reply could not be prepared. Please contact the team.";
-      }
-    });
-  </script>
-
-  <!-- =========================================================
-       FIREBASE RULES EXAMPLE - DO NOT PASTE INSIDE HTML IN PRODUCTION
-       Save as firestore.rules
-       =========================================================
-
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-
-    function signedIn() {
-      return request.auth != null;
-    }
-
-    match /VisualConsultationRequests/{requestId} {
-      allow create: if signedIn()
-        && request.resource.data.ownerUid == request.auth.uid
-        && request.resource.data.name is string
-        && request.resource.data.phone is string
-        && request.resource.data.goal is string
-        && request.resource.data.privacyConsent == true
-        && request.resource.data.simulationConsent == true;
-
-      allow read, update, delete: if false;
-    }
-
-    match /EarlyAccess/{docId} {
-      allow create: if signedIn()
-        && request.resource.data.ownerUid == request.auth.uid
-        && request.resource.data.marketingConsent == true;
-
-      allow read, update, delete: if false;
-    }
-  }
-}
-
-=========================================================
-FIREBASE STORAGE RULES EXAMPLE - Save as storage.rules
-=========================================================
-
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-
-    match /visual-consultations/{uid}/{requestId}/{fileName} {
-      allow write: if request.auth != null
-        && request.auth.uid == uid
-        && request.resource.size < 8 * 1024 * 1024
-        && request.resource.contentType.matches('image/(jpeg|png|webp)');
-
-      allow read: if false;
-    }
-  }
-}
-
-=========================================================
-PRODUCTION NOTES
-=========================================================
-1. Replace Firebase credentials.
-0. Run the included image optimisation utility before deployment to generate WebP/AVIF assets, then update production image references through your build pipeline.
-2. Enable Anonymous Authentication only if legally and operationally approved.
-3. Enable Firebase App Check.
-4. Create a secure admin dashboard with role-based access.
-5. Do not expose private images through permanent public URLs.
-6. Use server-side access and short-lived signed URLs for authorised staff.
-7. Add image malware scanning and EXIF handling.
-8. Add a complete PDPL-compliant privacy notice and consent log.
-9. Add a human review queue for all medical enquiries.
-10. Do not connect a generative model directly from browser JavaScript.
--->
-</body>
+        $$("#mobileMenu a").forEach((a) =>
+          a.addEventListener("click", closeMenu),
+        );
+        const observer = new IntersectionObserver(
+          (es) =>
+            es.forEach((e) => {
+              if (e.isIntersecting) e.target.classList.add("visible");
+            }),
+          { threshold: 0.1 },
+        );
+        $$(".reveal").forEach((el) => observer.observe(el));
+        const atlas = {
+          acne: {
+            ar: {
+              t: "حب الشباب والندبات",
+              s: "يبدأ التقييم بتمييز الالتهاب النشط عن الآثار والتندب، ثم مراجعة الحاجز الجلدي والعوامل الهرمونية والدوائية ونمط العناية.",
+            },
+            en: {
+              t: "Acne and scarring",
+              s: "Assessment separates active inflammation from marks and scars, then reviews skin barrier, hormonal or medication factors and the care routine.",
+            },
+            layers: ["Barrier", "Inflammation", "Sebum", "Scar depth"],
+          },
+          pigment: {
+            ar: {
+              t: "التصبغات والكلف",
+              s: "ليست كل البقع متشابهة. يختلف المسار حسب عمق الصبغة، الالتهاب، التعرض للشمس، الهرمونات ودرجة البشرة.",
+            },
+            en: {
+              t: "Pigmentation and melasma",
+              s: "Not all dark marks are alike. The pathway depends on pigment depth, inflammation, sun exposure, hormones and skin tone.",
+            },
+            layers: ["Melanin", "Vascular", "Inflammation", "UV"],
+          },
+          aging: {
+            ar: {
+              t: "تغيرات العمر",
+              s: "نفصل بين جودة الجلد، فقدان الحجم، حركة العضلات، ارتخاء الأربطة وتغيرات العظم قبل التفكير في أي إجراء.",
+            },
+            en: {
+              t: "Age-related change",
+              s: "We separate skin quality, volume loss, muscle movement, ligament laxity and skeletal change before considering a procedure.",
+            },
+            layers: ["Skin", "Fat", "Muscle", "Ligaments", "Bone"],
+          },
+          hair: {
+            ar: {
+              t: "الشعر وفروة الرأس",
+              s: "التساقط عرض له أسباب متعددة. التقييم المنظم يسبق الأجهزة والحقن والمكملات ويحدد متى نحتاج تحاليل أو إحالة.",
+            },
+            en: {
+              t: "Hair and scalp",
+              s: "Hair loss is a symptom with multiple causes. Structured assessment precedes devices, injections or supplements and identifies when tests or referral are needed.",
+            },
+            layers: ["Scalp", "Follicle", "Cycle", "Systemic"],
+          },
+          sensitive: {
+            ar: {
+              t: "البشرة الحساسة",
+              s: "الهدف الأول هو تهدئة الالتهاب واستعادة الحاجز وتحديد المحفزات قبل إدخال إجراءات قوية أو روتين معقد.",
+            },
+            en: {
+              t: "Sensitive skin",
+              s: "The first goal is to calm inflammation, restore the barrier and identify triggers before strong procedures or a complex routine.",
+            },
+            layers: ["Barrier", "Inflammation", "Trigger", "Tolerance"],
+          },
+        };
+        let activeAtlas = "acne";
+        function renderAtlas(key) {
+          activeAtlas = key;
+          const d = atlas[key],
+            l = isAr() ? d.ar : d.en;
+          $("#atlasTitle").textContent = l.t;
+          $("#atlasSummary").textContent = l.s;
+          $("#atlasLayers").innerHTML = d.layers
+            .map((x) => `<span class="chip">${x}</span>`)
+            .join("");
+          $$(".atlas-tab").forEach((b) =>
+            b.classList.toggle("is-active", b.dataset.atlas === key),
+          );
+        }
+        $$(".atlas-tab").forEach((b) =>
+          b.addEventListener("click", () => renderAtlas(b.dataset.atlas)),
+        );
+        renderAtlas(activeAtlas);
+        const procedures = {
+          laser: {
+            cat: "SKIN RESURFACING",
+            title: "Fractional Laser",
+            ar: [
+              [
+                "قبل الإجراء",
+                "تقييم نوع البشرة، النشاط الالتهابي، الأدوية، التعرض للشمس وخطر التصبغ.",
+              ],
+              [
+                "الأيام الأولى",
+                "احمرار وسخونة وتقشر بدرجات تختلف حسب الطاقة والمنطقة.",
+              ],
+              [
+                "التعافي",
+                "حماية صارمة من الشمس، روتين بسيط، وعدم العبث بالقشور.",
+              ],
+              [
+                "النتيجة",
+                "تظهر تدريجياً خلال أسابيع أو أشهر وقد تحتاج جلسات متعددة.",
+              ],
+            ],
+            en: [
+              [
+                "Before",
+                "Assess skin type, active inflammation, medicines, sun exposure and pigmentation risk.",
+              ],
+              [
+                "Early days",
+                "Redness, warmth and peeling vary with energy and area.",
+              ],
+              [
+                "Recovery",
+                "Strict sun protection, a simple routine and no picking.",
+              ],
+              [
+                "Result",
+                "Develops over weeks or months and may need multiple sessions.",
+              ],
+            ],
+          },
+          toxin: {
+            cat: "MUSCLE MODULATION",
+            title: "Neuromodulator",
+            ar: [
+              [
+                "قبل الإجراء",
+                "تقييم الحركة والتناسق والتاريخ العصبي العضلي والأدوية.",
+              ],
+              ["البداية", "قد يظهر ثقل بسيط أو صداع أو كدمات موضعية."],
+              [
+                "الاستقرار",
+                "تبدأ النتيجة خلال أيام وتستقر غالباً خلال نحو أسبوعين.",
+              ],
+              [
+                "المتابعة",
+                "تراجع النتيجة دورياً دون الإفراط في الجرعة أو تجميد التعبير.",
+              ],
+            ],
+            en: [
+              [
+                "Before",
+                "Assess movement, symmetry, neuromuscular history and medicines.",
+              ],
+              [
+                "Early",
+                "Mild heaviness, headache or local bruising can occur.",
+              ],
+              [
+                "Settling",
+                "Effect begins over days and commonly settles by about two weeks.",
+              ],
+              [
+                "Review",
+                "Review periodically without excessive dosing or freezing expression.",
+              ],
+            ],
+          },
+          filler: {
+            cat: "STRUCTURAL AESTHETICS",
+            title: "Structural Filler",
+            ar: [
+              [
+                "قبل الإجراء",
+                "تحليل تشريحي، تاريخ الحقن السابق، الأوعية والهدف الواقعي.",
+              ],
+              ["بعد الحقن", "تورم وكدمات وعدم تماثل مؤقت ممكنة."],
+              [
+                "الإنذارات",
+                "الألم غير المعتاد أو تغير اللون أو اضطراب الرؤية يستلزم تقييماً عاجلاً.",
+              ],
+              [
+                "النتيجة",
+                "تعتمد على المادة والمنطقة والتشريح ولا توجد مدة ثابتة للجميع.",
+              ],
+            ],
+            en: [
+              [
+                "Before",
+                "Anatomical analysis, prior filler history, vascular risk and realistic goal.",
+              ],
+              [
+                "After",
+                "Swelling, bruising and temporary asymmetry may occur.",
+              ],
+              [
+                "Red flags",
+                "Unusual pain, colour change or visual symptoms need urgent assessment.",
+              ],
+              [
+                "Result",
+                "Depends on product, area and anatomy; duration is not identical for everyone.",
+              ],
+            ],
+          },
+          rf: {
+            cat: "COLLAGEN REMODELLING",
+            title: "RF Microneedling",
+            ar: [
+              [
+                "قبل الإجراء",
+                "تقييم التصبغ، الندبات، العدوى النشطة والأجهزة المزروعة.",
+              ],
+              ["الأيام الأولى", "احمرار وانتفاخ خفيف وقشور نقطية متوقعة."],
+              [
+                "العناية",
+                "تجنب الحرارة والمواد المهيجة واستخدام الحماية الشمسية.",
+              ],
+              [
+                "النتيجة",
+                "إعادة تشكيل الكولاجين تدريجية ولا تعني شداً جراحياً.",
+              ],
+            ],
+            en: [
+              [
+                "Before",
+                "Assess pigmentation, scars, active infection and implanted devices.",
+              ],
+              [
+                "Early days",
+                "Redness, mild swelling and pinpoint crusts are expected.",
+              ],
+              ["Care", "Avoid heat and irritants and use sun protection."],
+              [
+                "Result",
+                "Collagen remodelling is gradual and is not equivalent to surgical lifting.",
+              ],
+            ],
+          },
+        };
+        function renderPassport(k) {
+          const p = procedures[k],
+            items = isAr() ? p.ar : p.en;
+          $("#passportCategory").textContent = p.cat;
+          $("#passportTitle").textContent = p.title;
+          $("#passportTimeline").innerHTML = items
+            .map(
+              (x, i) =>
+                `<li><b>0${i + 1}</b><h4>${x[0]}</h4><p>${x[1]}</p></li>`,
+            )
+            .join("");
+        }
+        $("#procedureSelect").addEventListener("change", (e) =>
+          renderPassport(e.target.value),
+        );
+        renderPassport("laser");
+        let step = 1;
+        const steps = $$(".vault-step"),
+          prev = $("#prevStep"),
+          next = $("#nextStep"),
+          submit = $("#submitConsultation"),
+          status = $("#consultationStatus");
+        function showStep(n) {
+          step = n;
+          steps.forEach((s) =>
+            s.classList.toggle("is-active", Number(s.dataset.step) === n),
+          );
+          $("#stepLabel").textContent = `0${n} / 04`;
+          $("#progressBar").style.width = `${n * 25}%`;
+          prev.style.visibility = n === 1 ? "hidden" : "visible";
+          next.hidden = n === 4;
+          submit.hidden = n !== 4;
+          status.textContent = "";
+        }
+        function validCurrent() {
+          const sec = $(`.vault-step[data-step="${step}"]`);
+          const fields = $$("input,textarea,select", sec);
+          for (const f of fields) {
+            if (!f.checkValidity()) {
+              f.reportValidity();
+              return false;
+            }
+          }
+          return true;
+        }
+        prev.addEventListener("click", () => showStep(Math.max(1, step - 1)));
+        next.addEventListener("click", () => {
+          if (validCurrent()) showStep(Math.min(4, step + 1));
+        });
+        $("#consultationForm").addEventListener("submit", (e) => {
+          e.preventDefault();
+          if (!validCurrent()) return;
+          const ref =
+            "WAFA-" +
+            new Date().getFullYear() +
+            "-" +
+            Math.random().toString(36).slice(2, 8).toUpperCase();
+          status.textContent = isAr()
+            ? `تم اختبار النموذج بنجاح. الرقم التجريبي: ${ref}`
+            : `Form test completed. Demo reference: ${ref}`;
+        });
+        showStep(1);
+        const panel = $("#assistantPanel"),
+          msgs = $("#assistantMessages"),
+          input = $("#assistantInput");
+        function addMsg(role, text) {
+          const d = document.createElement("div");
+          d.className = "msg " + role;
+          d.textContent = text;
+          msgs.appendChild(d);
+          msgs.scrollTop = msgs.scrollHeight;
+        }
+        function greeting() {
+          msgs.innerHTML = "";
+          addMsg(
+            "bot",
+            isAr()
+              ? "مرحباً. أشرح محتوى المنصة والخدمات بصورة عامة، ولا أقدم تشخيصاً أو وصفة علاجية."
+              : "Welcome. I explain platform content and services in general and do not diagnose or prescribe.",
+          );
+        }
+        function setAssistantPlaceholder() {
+          input.placeholder = isAr()
+            ? "اكتبي استفسارك العام..."
+            : "Type a general question...";
+          greeting();
+        }
+        $("#assistantFab").addEventListener("click", () => {
+          panel.classList.toggle("open");
+          if (!msgs.children.length) greeting();
+        });
+        $("#assistantClose").addEventListener("click", () =>
+          panel.classList.remove("open"),
+        );
+        $("#assistantForm").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const t = input.value.trim();
+          if (!t) return;
+          addMsg("user", t);
+          input.value = "";
+          const low = t.toLowerCase();
+          let r;
+          if (/موعد|حجز|appointment|book/.test(low))
+            r = isAr()
+              ? "استخدمي نموذج التقييم أسفل الصفحة، ثم يراجع الفريق الطلب لتحديد نوع الموعد المناسب."
+              : "Use the assessment form below; the team then reviews the request and determines the appropriate appointment type.";
+          else if (/فيلر|filler|بوتكس|botox|laser|ليزر/.test(low))
+            r = isAr()
+              ? "يمكن عرض معلومات عامة عن الدواعي والمخاطر والتعافي، لكن اختيار الإجراء يتطلب تقييماً سريرياً مباشراً."
+              : "General indications, risks and recovery can be explained, but selecting a procedure requires direct clinical assessment.";
+          else
+            r = isAr()
+              ? "أستطيع شرح أقسام المنصة والمعلومات العامة. الحالة الشخصية تحتاج فحصاً لدى ممارس مرخص."
+              : "I can explain the platform and general information. A personal case requires examination by a licensed practitioner.";
+          setTimeout(() => addMsg("bot", r), 250);
+        });
+        setAssistantPlaceholder();
+        const modal = $("#manifestoModal");
+        $("#openManifesto").addEventListener("click", () =>
+          modal.classList.add("open"),
+        );
+        $("#closeManifesto").addEventListener("click", () =>
+          modal.classList.remove("open"),
+        );
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) modal.classList.remove("open");
+        });
+        addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            modal.classList.remove("open");
+            panel.classList.remove("open");
+            closeMenu();
+          }
+        });
+      })();
+    </script>
+  </body>
 </html>
